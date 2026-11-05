@@ -64,9 +64,8 @@ const CONTENT = {
   /* -------------------------------------------------------------- landing */
 
   home: {
-    /* the first thing on the site: one line that says what this is, one
+    /* under the REVERIE heading: one line that says what this is, one
        short paragraph, then straight into the work */
-    eyebrow:  { en: "reverie — film · photo", th: "reverie — วิดีโอ · ภาพ" },
     headline: { en: "film and photo, made in lampang.", th: "รับถ่ายวิดีโอ ถ่ายภาพ ลำปาง" },
     body: {
       en: "one person who shoots it, cuts it, scores it and mixes it. no agency layer, no waiting three weeks for a first draft.",

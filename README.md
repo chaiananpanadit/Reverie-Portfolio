@@ -23,13 +23,14 @@ runs. To test on your phone over the same wifi, run `node serve.js` and open
 Every address works when it's shared or bookmarked: a customer who gets sent
 `…/#/rates` lands on the prices, not the home page.
 
-**On a phone** the five main pages sit in a tab bar along the bottom of the
-screen, where a thumb already is; contact is the orange one. Every page ends
+**On a phone** the five main pages sit in a bar along the bottom of the
+screen, where a thumb already is; contact is the orange cell, like the old
+"say hello" bar. Every page ends
 on the same "got a project?" block — instagram, the LINE id, and a link to all
 contacts — so getting in touch is never more than a tap away.
 
-**On a computer** the same five pages are along the top, with contact as the
-orange button.
+**On a computer** the same five pages are along the top, with contact in
+orange.
 
 ## Editing
 
@@ -96,8 +97,8 @@ which filter it shows under. `slug` is the address (`#/work/your-slug`).
 }
 ```
 
-Without a `cover` the grid card is set in type on a dark tile with a play
-button — that's how the sports day reels show, since there's no still for them.
+Without a `cover` the grid card is set in type on the paper's shade —
+that's how the sports day reels show, since there's no still for them.
 Covers are cropped to 4:5 on the grid, so keep the subject near the middle.
 About 1000px wide is plenty; the ones in `assets/media/covers/` are 30–300 KB.
 
@@ -122,8 +123,9 @@ Any number, top to bottom, in a project's `media`:
 - **instagram** takes the plain post or reel url — strip anything after the
   `?` in a share link (`?vrfl=`, `?srtk=`, `?igsh=` are tracking tokens).
   Two or more in a row sit side by side on a computer. Until Instagram's
-  script loads, or if a blocker stops it, a dark reel-shaped box with a
-  "watch on instagram" button holds the space. The account has to be public.
+  script loads, or if a blocker stops it, a hairline box the shape of a reel
+  with a "watch on instagram" link holds the space. The account has to be
+  public.
 - **embed** needs the embed url, not the share url.
 
 Inside `blurb`, `body` and `intro` you can use `<b>`, `<em>`, `<br>` and
@@ -146,28 +148,31 @@ icon. It's black on transparent; the dark theme inverts it.
 
 ## Look and feel
 
-Terracotta on sketchbook paper: warm off-white `#f3f1ed` rather than `#fff`,
-and a dark theme that's the same paper with the lights off. One accent colour —
-terracotta `#a8451c` (light) / `#e2794b` (dark) — on the things you can press:
-the contact button, the instagram button, numbering, underlines.
+The original minimal look: sketchbook paper (`#f3f1ed` rather than `#fff`),
+monospace type, hairline rules, uppercase headings set wide, and no cards,
+shadows, rounded corners or blocks of colour. The dark theme is the same paper
+with the lights off. One accent colour — terracotta `#a8451c` (light) /
+`#e2794b` (dark) — on the numbering (`01`, `02`…) and the things that matter
+most to press: contact, "ask for a price", the "fastest" tags.
 
 All colours are tokens at the top of [`css/style.css`](css/style.css), written
 once as `--l-*` (light) and `--d-*` (dark). Change `--l-accent` and
 `--d-accent` and every button follows.
 
-**Type** is IBM Plex Sans Thai — one family that covers both English and Thai,
-so a mixed sentence never changes face halfway — with IBM Plex Mono for small
-labels and prices. Both are in `assets/fonts/` (SIL Open Font License, see
-`OFL.txt`), so the site looks the same on every phone instead of falling back
-to whatever the phone has.
+**Type** is IBM Plex Mono for English and IBM Plex Sans Thai for Thai, in one
+stack, so a mixed sentence picks the right face for each character. Both are in
+`assets/fonts/` (SIL Open Font License, see `OFL.txt`), so the site looks the
+same on every phone instead of falling back to whatever mono the phone has.
+Thai is set a little larger, with taller lines and no letter-spacing.
 
 **Light and dark:** the site follows the phone's setting until someone taps the
 sun / moon, then remembers their choice. A small script in `<head>` applies a
 saved theme and language before the first paint so there's no flash.
 
-**Motion:** pages fade in (about a quarter of a second — nothing to wait for);
-photos scale slightly under a mouse. Anyone with "reduce motion" switched on
-gets none of it.
+**Motion:** as before, each block rises in turn and photos unveil top to
+bottom — but the page appears straight away, with no transition to wait
+through first. Under a mouse, rows nudge right and photos scale slightly.
+Anyone with "reduce motion" switched on gets none of it.
 
 **Tap targets** are at least 44px everywhere, and nothing scrolls sideways on a
 360px-wide phone in either language.
