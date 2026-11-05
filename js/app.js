@@ -1,6 +1,16 @@
 /* ==================================================================
-   app.js — routing, rendering, language switching and the transition.
+   app.js — routing, rendering, language and theme.
    You shouldn't need to touch this file; the words live in content.js.
+
+   Pages (the part after the # in the address):
+     #/                 home: intro + every project
+     #/film  #/photo    home, with the grid filtered to that discipline
+     #/work/<slug>      one project
+     #/services         what's on offer (#/services/film jumps to film)
+     #/rates            prices
+     #/about  #/gear    about, and the kit list
+     #/contact          the buttons to get in touch
+   Every address works when shared or bookmarked — nothing is forced home.
 ================================================================== */
 
 (function () {
@@ -8,23 +18,21 @@
 
   var C = window.CONTENT || CONTENT;
 
-  var view       = document.getElementById("view");
-  var navDisc    = document.getElementById("nav-disciplines");
-  var navMain    = document.getElementById("nav-primary");
-  var navWork    = document.getElementById("nav-work");
-  var navLabel   = document.getElementById("nav-work-label");
-  var sidebarNav = document.getElementById("sidebar-nav");
-  var toggle     = document.getElementById("menu-toggle");
-  var langBox    = document.getElementById("lang");
-  var wipe       = document.getElementById("wipe");
-  var slate      = document.getElementById("wipe-slate");
-  var helloBar   = document.getElementById("hello-bar");
+  function $(id) { return document.getElementById(id); }
+  var view    = $("view");
+  var main    = $("main");
+  var navTop  = $("nav-top");
+  var tabbar  = $("tabbar");
+  var foot    = $("foot");
+  var langBox = $("lang");
+  var skip    = $("skip-link");
 
   var DISC_ORDER = ["film", "photo"];
   var LANGS      = ["en", "th"];
   var STORE_KEY  = "reverie-lang";
+  var REDUCED    = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
   /* ------------------------------------------------------------ language */
 
@@ -44,9 +52,11 @@
     return v;
   }
 
-  function ui(key) {
+  function ui(key, vars) {
     var set = (C.ui && (C.ui[LANG] || C.ui.en)) || {};
-    return set[key] != null ? set[key] : "";
+    var s = set[key] != null ? set[key] : "";
+    if (vars) Object.keys(vars).forEach(function (k) { s = s.replace("{" + k + "}", vars[k]); });
+    return s;
   }
 
   function setLang(next) {
@@ -54,31 +64,23 @@
     LANG = next;
     try { localStorage.setItem(STORE_KEY, LANG); } catch (e) { /* ignore */ }
     document.documentElement.setAttribute("lang", LANG);
-    buildNav();
-    route(LANG === "th" ? "ไทย" : "english");     // flash the new language on the slate
-  }
-
-  function buildLangToggle() {
-    langBox.innerHTML = LANGS.map(function (code) {
-      var label = code === "th" ? "ไทย" : "EN";
-      return '<button type="button" class="lang-btn" data-lang="' + code + '"' +
-             (code === LANG ? ' aria-current="true"' : "") + ">" + label + "</button>";
-    }).join('<span class="lang-sep">/</span>');
+    buildChrome();
+    route({ keep: true });                 // same page, same place, new words
   }
 
   langBox.addEventListener("click", function (e) {
-    var btn = e.target.closest("[data-lang]");
-    if (btn) setLang(btn.getAttribute("data-lang"));
+    var b = e.target.closest("[data-lang]");
+    if (b) setLang(b.getAttribute("data-lang"));
   });
 
   /* --------------------------------------------------------------- theme */
   /* The palette itself is pure CSS — this only records the visitor's choice
      and lets it override the system preference. With nothing stored the site
-     follows the OS, which is why the attribute is removed rather than set. */
+     follows the OS. */
 
   var THEME_KEY = "reverie-theme";
   var darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  var themeBtn  = document.getElementById("theme-btn");
+  var themeBtn  = $("theme-btn");
 
   function activeTheme() {
     var forced = document.documentElement.getAttribute("data-theme");
@@ -86,22 +88,25 @@
     return darkQuery.matches ? "dark" : "light";
   }
 
-  function syncThemeBtn() {
-    // the icon shows the theme you're in; the label says what clicking does
+  function syncTheme() {
+    // the icon shows the theme you're in; the label says what tapping does
     var next = activeTheme() === "dark" ? ui("themeToLight") : ui("themeToDark");
     themeBtn.setAttribute("aria-label", next);
     themeBtn.setAttribute("title", next);
+    // the phone's own address bar follows the page, not the system
+    var bg = activeTheme() === "dark" ? "#121110" : "#f3f1ed";
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+      m.setAttribute("content", bg);
+    });
   }
 
   themeBtn.addEventListener("click", function () {
     var next = activeTheme() === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", next);
     try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* private mode */ }
-    syncThemeBtn();
+    syncTheme();
   });
-
-  // if they never picked, follow the OS live
-  darkQuery.addEventListener("change", syncThemeBtn);
+  darkQuery.addEventListener("change", syncTheme);
 
   /* ------------------------------------------------------------ helpers */
 
@@ -115,7 +120,7 @@
   function rich(s) {
     return esc(s)
       .replace(/&lt;(\/?)(b|em|i|strong|br)&gt;/g, "<$1$2>")
-      .replace(/&lt;a href=&quot;([^"<>]+)&quot;&gt;/g, '<a class="link-inline" href="$1">')
+      .replace(/&lt;a href=&quot;([^"<>]+)&quot;&gt;/g, '<a class="text-link" href="$1">')
       .replace(/&lt;\/a&gt;/g, "</a>");
   }
 
@@ -133,341 +138,553 @@
     return null;
   }
 
-  function workIn(discipline) {
-    return C.work.filter(function (w) { return w.discipline === discipline; });
+  function isExternal(href) { return /^https?:/.test(href || ""); }
+  function linkAttrs(href) {
+    return 'href="' + esc(href) + '"' + (isExternal(href) ? ' target="_blank" rel="noopener noreferrer"' : "");
   }
 
-  function cta(c) {
-    return c ? '<p><a class="link-inline" href="' + esc(c.href) + '">' +
-               esc(t(c.label)) + "</a></p>" : "";
+  /* -------------------------------------------------------------- icons */
+  /* Drawn on a 24px grid with a single stroke so they sit with the type. */
+
+  var ICONS = {
+    work:     '<rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><rect x="13.5" y="13.5" width="7" height="7" rx="1"/>',
+    services: '<path d="M3.5 8.5a2 2 0 0 1 2-2h2l1.5-2h6l1.5 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/>',
+    rates:    '<path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3a1 1 0 0 1 0 1.4l-7.3 7.3a1 1 0 0 1-1.4 0z"/><circle cx="8" cy="8" r="1.4"/>',
+    about:    '<circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.8-4 3.8-6.2 7.5-6.2s6.7 2.2 7.5 6.2"/>',
+    contact:  '<path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-9l-4.5 3.5V17H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/>',
+    instagram:'<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1.1" class="fill"/>',
+    line:     '<path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 3.4 3 6.2 7.1 6.7l-.4 2.7 3.6-2.8c3.7-.6 6.7-3.3 6.7-6.6C20.5 7 16.7 4 12 4z"/>',
+    phone:    '<path d="M6.6 3.5h2.6l1.4 4-2 1.3a10.5 10.5 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a1.8 1.8 0 0 1-2 1.8A16.3 16.3 0 0 1 4.8 5.5a1.8 1.8 0 0 1 1.8-2z"/>',
+    mail:     '<rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/>',
+    arrow:    '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    back:     '<path d="M19 12H5M11 6l-6 6 6 6"/>',
+    out:      '<path d="M8 16 16 8M9.5 8H16v6.5"/>',
+    copy:     '<rect x="8.5" y="8.5" width="11" height="11" rx="1.5"/><path d="M15.5 8.5v-3a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3"/>',
+    play:     '<path d="M8 5.5v13l10.5-6.5z" class="fill"/>',
+    pin:      '<path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>'
+  };
+
+  function icon(name) {
+    return '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+           (ICONS[name] || "") + "</svg>";
   }
 
-  /* ------------------------------------------------------------ sidebar */
+  /* ------------------------------------------------------ contact routes */
+  /* The rows in content.js are the single source: whichever row links to
+     instagram is "the instagram", the row marked copy is "the line id". */
 
-  function buildNav() {
+  function contactKind(r) {
+    if (r.copy) return "line";
+    var h = r.href || "";
+    if (/instagram\.com/.test(h)) return "instagram";
+    if (/^mailto:/.test(h)) return "mail";
+    if (/^tel:/.test(h)) return "phone";
+    return "";
+  }
+  function contactRow(kind) {
+    var rows = (C.contact && C.contact.rows) || [];
+    for (var i = 0; i < rows.length; i++) if (contactKind(rows[i]) === kind) return rows[i];
+    return null;
+  }
+
+  function copyButton(row, cls, inner) {
+    var v = t(row.v);
+    return '<button class="' + cls + ' copy-btn" type="button" data-copy="' + esc(v) + '">' + inner + "</button>";
+  }
+
+  // The block every page ends on: the two fastest ways in, plus everything else.
+  function ctaBlock() {
+    var ig = contactRow("instagram"), line = contactRow("line");
+    return '<section class="cta">' +
+      '<h2 class="cta-title">' + esc(ui("ctaTitle")) + "</h2>" +
+      '<p class="cta-body">' + esc(ui("ctaBody")) + "</p>" +
+      '<div class="cta-actions">' +
+        (ig ? '<a class="btn btn-primary" ' + linkAttrs(ig.href) + ">" + icon("instagram") +
+              "<span>" + esc(ui("dmInstagram")) + "</span></a>" : "") +
+        (line ? copyButton(line, "btn btn-line",
+                  icon("line") + '<span class="btn-lines"><span>line · ' + esc(t(line.v)) + "</span>" +
+                  '<span class="copy-label" aria-live="polite">' + esc(ui("tapToCopy")) + "</span></span>") : "") +
+        '<a class="btn btn-quiet" href="#/contact"><span>' + esc(ui("allContacts")) + "</span>" + icon("arrow") + "</a>" +
+      "</div></section>";
+  }
+
+  /* ---------------------------------------------------------- the chrome */
+
+  var PAGES = [
+    { key: "work",     href: "#/",         label: "navWork" },
+    { key: "services", href: "#/services", label: "navServices" },
+    { key: "rates",    href: "#/rates",    label: "navRates" },
+    { key: "about",    href: "#/about",    label: "navAbout" },
+    { key: "contact",  href: "#/contact",  label: "navContact" }
+  ];
+
+  function buildChrome() {
     document.querySelectorAll("[data-bind]").forEach(function (el) {
       var v = C[el.getAttribute("data-bind")];
       if (v != null) el.textContent = t(v);
     });
+    skip.textContent = ui("skip");
 
-    buildLangToggle();
-    syncThemeBtn();                                   // its label is translated too
-    toggle.textContent = sidebarNav.classList.contains("is-open") ? ui("close") : ui("menu");
-    navLabel.textContent = ui("workLabel");
-    helloBar.innerHTML = "<span>" + esc(ui("sayHello")) + '</span><span aria-hidden="true">&rarr;</span>';
+    langBox.innerHTML = LANGS.map(function (code) {
+      return '<button type="button" class="lang-btn" data-lang="' + code + '"' +
+             ' aria-pressed="' + (code === LANG) + '"' +
+             (code === "th" ? ' lang="th"' : "") + ">" + (code === "th" ? "ไทย" : "EN") + "</button>";
+    }).join("");
+    syncTheme();
 
-    navDisc.innerHTML = DISC_ORDER.map(function (k, i) {
-      var d = C.disciplines[k];
-      if (!d) return "";
-      return '<li><a class="disc-link" href="#/' + esc(k) + '">' +
-             '<span class="disc-n">' + pad(i + 1) + "</span>" +
-             '<span class="disc-name">' + esc(t(d.label)) + "</span></a></li>";
+    navTop.innerHTML = PAGES.map(function (p) {
+      return '<li><a href="' + p.href + '" data-nav="' + p.key + '"' +
+             (p.key === "contact" ? ' class="nav-cta"' : "") + ">" + esc(ui(p.label)) + "</a></li>";
     }).join("");
 
-    navMain.innerHTML = [
-      { href: "#/work",    label: ui("navWork") },
-      { href: "#/about",   label: ui("navAbout") },
-      { href: "#/gear",    label: ui("navGear") },
-      { href: "#/rates",   label: ui("navRates") },
-      { href: "#/contact", label: ui("navContact") }
-    ].map(function (p) {
-      return '<li><a href="' + p.href + '">' + esc(p.label) + "</a></li>";
+    tabbar.innerHTML = PAGES.map(function (p) {
+      return '<a href="' + p.href + '" data-nav="' + p.key + '"' +
+             (p.key === "contact" ? ' class="tab-cta"' : "") + ">" + icon(p.key) +
+             "<span>" + esc(ui(p.label)) + "</span></a>";
     }).join("");
 
-    navWork.innerHTML = C.work.map(function (w) {
-      return '<li><a href="#/work/' + esc(w.slug) + '">' + esc(t(w.client)) + "</a></li>";
-    }).join("") +
-    '<li><a class="nav-dm" href="#/contact">' + esc(ui("dmWork")) + "</a></li>";
-
-    markCurrent(location.hash || "#/");
+    foot.innerHTML = '<div class="foot-inner">' +
+      '<div class="foot-brand"><p class="foot-name">' + esc(C.name) + "</p>" +
+        "<p>" + esc(t(C.tagline)) + " · " + esc(t(C.location)) + "</p></div>" +
+      '<ul class="foot-links">' +
+        PAGES.concat([{ key: "gear", href: "#/gear", label: "navGear" }]).map(function (p) {
+          return '<li><a href="' + p.href + '">' + esc(ui(p.label)) + "</a></li>";
+        }).join("") +
+      "</ul>" +
+      '<p class="foot-copy">' + esc(C.copyright) + "</p></div>";
   }
 
-  function markCurrent(hash) {
-    helloBar.hidden = hash === "#/contact";
-    document.querySelectorAll(".sidebar a").forEach(function (a) {
-      a.removeAttribute("aria-current");
-      if (a.getAttribute("href") === hash) a.setAttribute("aria-current", "page");
+  function markActive(key) {
+    document.querySelectorAll("[data-nav]").forEach(function (a) {
+      if (a.getAttribute("data-nav") === key) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
     });
   }
 
-  toggle.addEventListener("click", function () {
-    var open = sidebarNav.classList.toggle("is-open");
-    toggle.setAttribute("aria-expanded", String(open));
-    toggle.textContent = open ? ui("close") : ui("menu");
-  });
-
   /* -------------------------------------------------------------- media */
 
-  function figure(inner, caption) {
-    return "<figure>" + inner +
+  function photoCount(w) {
+    return (w.media || []).reduce(function (n, m) {
+      return n + (m.type === "image" ? 1 : m.type === "images" ? (m.items || []).length : 0);
+    }, 0);
+  }
+  function reelCount(w) {
+    return (w.media || []).filter(function (m) { return m.type === "instagram"; }).length;
+  }
+
+  // gallery = every photo on the current project page, in order, for the viewer
+  var gallery = [];
+
+  function photo(src, alt) {
+    var i = gallery.push({ src: src, alt: t(alt) || "" }) - 1;
+    return '<button class="zoom" type="button" data-zoom="' + i + '" aria-label="' +
+           esc(t(alt) || ui("details")) + '">' +
+           '<img src="' + esc(src) + '" alt="' + esc(t(alt) || "") + '" loading="lazy" decoding="async"></button>';
+  }
+
+  function figure(inner, caption, cls) {
+    return '<figure' + (cls ? ' class="' + cls + '"' : "") + ">" + inner +
       (caption ? "<figcaption>" + esc(t(caption)) + "</figcaption>" : "") + "</figure>";
   }
 
-  function img(src, alt, eager) {
-    return '<div class="frame"><img src="' + esc(src) + '" alt="' + esc(t(alt) || "") + '"' +
-           (eager ? "" : ' loading="lazy"') + ' decoding="async"></div>';
+  function instagram(m) {
+    // Instagram's own embed markup. embed.js swaps the blockquote for a sized
+    // iframe; until it does — or if a blocker stops it — the link inside is a
+    // working fallback rather than a blank box.
+    return figure(
+      '<blockquote class="instagram-media" data-instgrm-permalink="' + esc(m.src) +
+      '" data-instgrm-version="14"><a class="reel-fallback" href="' + esc(m.src) +
+      '" target="_blank" rel="noopener noreferrer">' + icon("play") +
+      "<span>" + esc(ui("watchInstagram")) + "</span></a></blockquote>", m.caption, "reel");
   }
 
   function renderMedia(blocks) {
-    return (blocks || []).map(function (m) {
+    gallery = [];
+    var out = "", reels = [];
+    function flushReels() {
+      if (reels.length) out += '<div class="reels">' + reels.join("") + "</div>";
+      reels = [];
+    }
+    (blocks || []).forEach(function (m) {
+      if (m.type === "instagram") { reels.push(instagram(m)); return; }
+      flushReels();
       switch (m.type) {
         case "image":
-          return figure(img(m.src, m.alt), m.caption);
-
+          out += figure(photo(m.src, m.alt), m.caption);
+          break;
         case "images":
-          return figure('<div class="grid-2">' + (m.items || []).map(function (it) {
-            return img(it.src, it.alt);
+          out += figure('<div class="pair">' + (m.items || []).map(function (it) {
+            return photo(it.src, it.alt);
           }).join("") + "</div>", m.caption);
-
+          break;
         case "video":
-          return figure(
-            '<video controls preload="metadata" playsinline src="' + esc(m.src) + '"' +
-            (m.poster ? ' poster="' + esc(m.poster) + '"' : "") + "></video>", m.caption);
-
+          out += figure('<video controls preload="metadata" playsinline src="' + esc(m.src) + '"' +
+                        (m.poster ? ' poster="' + esc(m.poster) + '"' : "") + "></video>", m.caption);
+          break;
         case "embed":
-          return figure(
-            '<div class="embed"><iframe src="' + esc(m.src) + '" title="' + esc(t(m.caption) || "Video") +
-            '" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" ' +
-            'allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>', m.caption);
-
-        case "instagram":
-          // Instagram's own embed markup. embed.js swaps the blockquote for a
-          // correctly sized iframe; until it does — or if a blocker stops it —
-          // the link inside is a working fallback rather than a blank box.
-          return figure(
-            '<blockquote class="instagram-media" data-instgrm-permalink="' + esc(m.src) +
-            '" data-instgrm-version="14"><a href="' + esc(m.src) +
-            '" target="_blank" rel="noopener noreferrer">' + esc(ui("watchInstagram")) +
-            " &#8599;</a></blockquote>", m.caption);
-
+          out += figure('<div class="embed"><iframe src="' + esc(m.src) + '" title="' +
+                        esc(t(m.caption) || "Video") + '" loading="lazy" ' +
+                        'referrerpolicy="strict-origin-when-cross-origin" ' +
+                        'allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>', m.caption);
+          break;
         case "audio":
-          return renderTracks(m.tracks || []);
-
-        default:
-          return "";
+          out += '<ol class="tracks">' + (m.tracks || []).map(function (tr) {
+            return "<li><span class=\"track-title\">" + esc(t(tr.title)) + "</span>" +
+                   '<audio controls preload="none" src="' + esc(tr.src) + '"></audio></li>';
+          }).join("") + "</ol>";
+          break;
       }
-    }).join("");
+    });
+    flushReels();
+    return out;
   }
 
-  function renderTracks(tracks) {
-    return '<div class="tracks">' + tracks.map(function (tr, i) {
-      return '<button class="track" data-src="' + esc(tr.src) + '" data-title="' + esc(t(tr.title)) + '">' +
-             '<span class="n">' + pad(i + 1) + "</span>" +
-             "<span>" + esc(t(tr.title)) + "</span>" +
-             '<span class="d">' + esc(tr.length || "") + "</span></button>";
-    }).join("") + "</div>";
-  }
+  /* --------------------------------------------------------------- cards */
 
-  function indexList(items) {
-    return '<div class="index-list">' + items.map(function (w) {
-      return '<a href="#/work/' + esc(w.slug) + '">' +
-             '<span class="c1">' + esc(t(w.client)) + "</span>" +
-             '<span class="c2">' + esc(t(w.kind) || "") + "</span>" +
-             '<span class="c3">' + esc(w.year || "") + "</span></a>";
-    }).join("") +
-    '<a class="dm-row" href="#/contact"><span>' + esc(ui("dmWork")) +
-      '</span><span class="dm-arrow">&rarr;</span></a>' +
-    "</div>";
+  function card(w) {
+    var meta = [t(w.kind), w.year].filter(Boolean).map(esc).join(" · ");
+    var media;
+    if (w.cover) {
+      media = '<img src="' + esc(w.cover) + '" alt="" loading="lazy" decoding="async">';
+    } else {
+      // no still to show (the sports day film only exists as reels): set it in type
+      var n = reelCount(w);
+      media = '<span class="tile">' +
+                '<span class="tile-play">' + icon("play") + "</span>" +
+                '<span class="tile-title">' + esc(t(w.title) || t(w.client)) + "</span>" +
+                '<span class="tile-sub">' + esc(ui("reelTile")) + (n > 1 ? " · " + n : "") + "</span>" +
+              "</span>";
+    }
+    return '<a class="card" href="#/work/' + esc(w.slug) + '" data-slug="' + esc(w.slug) + '"' +
+           ' data-disc="' + esc(w.discipline || "") + '">' +
+           '<span class="card-media">' + media + "</span>" +
+           '<span class="card-text"><span class="card-title">' + esc(t(w.client)) + "</span>" +
+           '<span class="card-meta">' + meta + "</span></span></a>";
   }
 
   /* --------------------------------------------------------------- views */
 
-  function viewHome() {
+  function viewHome(filter) {
     var h = C.home;
-    return (h.cover ? '<div class="media' + (h.cover.mark ? " media-mark" : "") + '">' +
-                      figure(img(h.cover.src, h.cover.alt, true)) + "</div>" : "") +
-           '<h1 class="display">' + esc(t(h.headline)) + "</h1>" +
-           '<div class="lede">' + paras(h.body) + "</div>" +
-           '<div class="disc-cards">' + DISC_ORDER.map(function (k, i) {
-             var d = C.disciplines[k];
-             if (!d) return "";
-             return '<a class="disc-card" href="#/' + esc(k) + '">' +
-                    '<span class="disc-card-n">' + pad(i + 1) + "</span>" +
-                    '<span class="disc-card-t">' + esc(t(d.label)) + "</span>" +
-                    '<span class="disc-card-b">' + esc(t(d.blurb) || "") + "</span>" +
-                    '<span class="disc-card-a">&rarr;</span></a>';
-           }).join("") + "</div>" +
-           cta(h.cta);
+    var items = C.work.filter(function (w) { return !filter || w.discipline === filter; });
+
+    var chips = [{ key: "", href: "#/", label: ui("filterAll"), n: C.work.length }].concat(
+      DISC_ORDER.filter(function (k) { return C.disciplines[k]; }).map(function (k) {
+        return { key: k, href: "#/" + k, label: t(C.disciplines[k].label),
+                 n: C.work.filter(function (w) { return w.discipline === k; }).length };
+      }));
+
+    return '<section class="hero">' +
+        '<p class="eyebrow">' + esc(t(h.eyebrow)) + "</p>" +
+        '<h1 class="hero-title">' + esc(t(h.headline)) + "</h1>" +
+        '<div class="hero-body">' + paras(h.body) + "</div>" +
+        '<div class="hero-actions">' +
+          '<a class="btn btn-primary" href="#/contact"><span>' + esc(ui("askPrice")) + "</span>" + icon("arrow") + "</a>" +
+          '<a class="btn" href="#/rates"><span>' + esc(ui("seePrices")) + "</span></a>" +
+        "</div>" +
+      "</section>" +
+
+      '<section class="work" id="work" aria-labelledby="work-title">' +
+        '<div class="section-head">' +
+          '<h2 class="section-title" id="work-title">' + esc(ui("workHeading")) + "</h2>" +
+          '<div class="chips">' + chips.map(function (c) {
+            return '<a class="chip" data-chip href="' + c.href + '"' +
+                   ((filter || "") === c.key ? ' aria-current="true"' : "") + ">" +
+                   esc(c.label) + ' <span class="chip-n">' + c.n + "</span></a>";
+          }).join("") + "</div>" +
+        "</div>" +
+        '<div class="grid">' + items.map(card).join("") + "</div>" +
+      "</section>" +
+
+      '<section class="offer" aria-labelledby="offer-title">' +
+        '<h2 class="section-title" id="offer-title">' + esc(ui("servicesHeading")) + "</h2>" +
+        '<div class="offer-grid">' + DISC_ORDER.map(function (k, i) {
+          var d = C.disciplines[k];
+          if (!d) return "";
+          return '<a class="offer-card" href="#/services/' + k + '">' +
+                 '<span class="offer-n">' + pad(i + 1) + "</span>" +
+                 '<span class="offer-name">' + esc(t(d.label)) + "</span>" +
+                 '<span class="offer-blurb">' + esc(t(d.blurb) || "") + "</span>" +
+                 '<span class="offer-list">' + (d.services || []).map(function (s) {
+                   return esc(t(s.title));
+                 }).join(" · ") + "</span>" +
+                 '<span class="offer-go">' + icon("arrow") + "</span></a>";
+        }).join("") + "</div>" +
+      "</section>" +
+
+      ctaBlock();
   }
 
-  function viewDiscipline(key) {
-    var d = C.disciplines[key];
-    if (!d) return viewMissing();
-    var mine = workIn(key);
-
-    return (d.cover ? '<div class="media">' + figure(img(d.cover.src, d.cover.alt, true)) + "</div>" : "") +
-           '<h1 class="display">' + esc(t(d.headline)) + "</h1>" +
-           (d.blurb ? '<p class="meta">' + esc(t(d.blurb)) + "</p>" : "") +
-           '<div class="lede">' + paras(d.intro) + "</div>" +
-
-           '<div class="svc">' + d.services.map(function (s, i) {
-             return '<article class="svc-item">' +
-                    '<span class="svc-n">' + pad(i + 1) + "</span>" +
-                    '<div class="svc-body">' +
-                      "<h2>" + esc(t(s.title)) + "</h2>" +
-                      "<p>" + rich(t(s.body)) + "</p>" +
-                      (s.gets ? '<p class="svc-gets"><b>' + esc(ui("youGet")) + "</b> " + esc(t(s.gets)) + "</p>" : "") +
-                      (s.note ? '<p class="svc-note">' + esc(t(s.note)) + "</p>" : "") +
-                    "</div></article>";
-           }).join("") + "</div>" +
-
-           (mine.length
-             ? '<h2 class="section-label">' + esc(ui("selectedWork").replace("{x}", t(d.label))) + "</h2>" +
-               indexList(mine)
-             : "") +
-
-           cta(d.cta);
+  function pageHead(title, intro) {
+    return '<header class="page-head"><h1 class="page-title">' + esc(title) + "</h1>" +
+           (intro ? '<div class="lede">' + paras(intro) + "</div>" : "") + "</header>";
   }
 
-  function viewAbout() {
-    var a = C.about;
-    return (a.cover ? '<div class="media">' + figure(img(a.cover.src, a.cover.alt, true)) + "</div>" : "") +
-           '<h1 class="display">' + esc(t(a.headline)) + "</h1>" +
-           '<div class="lede">' + paras(a.body) + "</div>" +
-           (a.facts && a.facts.length
-             ? '<dl class="rows">' + a.facts.map(function (f) {
-                 return '<div class="row"><dt>' + esc(t(f.k)) + "</dt><dd>" + esc(t(f.v)) + "</dd></div>";
-               }).join("") + "</dl>"
-             : "") +
-           cta(a.cta);
-  }
-
-  function viewGear() {
-    var g = C.gear;
-    if (!g) return viewMissing();
-
-    return '<h1 class="display">' + esc(t(g.headline)) + "</h1>" +
-           (g.intro ? '<div class="lede"><p>' + rich(t(g.intro)) + "</p></div>" : "") +
-           g.groups.map(function (grp) {
-             return '<section class="gear-group">' +
-               '<h2 class="section-label">' + esc(t(grp.title)) + "</h2>" +
-               '<div class="gear-list">' + grp.items.map(function (it) {
-                 var inner = '<span class="gear-name">' + esc(t(it.name)) + "</span>" +
-                             '<span class="gear-note">' + esc(t(it.note) || "") + "</span>" +
-                             '<span class="gear-link">' + (it.url ? "&#8599;" : "") + "</span>";
-                 return it.url
-                   ? '<a class="gear-row" href="' + esc(it.url) + '" target="_blank" rel="noopener noreferrer">' + inner + "</a>"
-                   : '<div class="gear-row">' + inner + "</div>";
-               }).join("") + "</div></section>";
-           }).join("") +
-           cta(g.cta);
+  function viewServices() {
+    return pageHead(ui("servicesHeading")) +
+      DISC_ORDER.map(function (k) {
+        var d = C.disciplines[k];
+        if (!d) return "";
+        var mine = C.work.filter(function (w) { return w.discipline === k; }).length;
+        return '<section class="disc" id="svc-' + k + '">' +
+          '<div class="disc-head"><h2 class="disc-title">' + esc(t(d.headline)) + "</h2>" +
+            (d.blurb ? '<p class="disc-blurb">' + esc(t(d.blurb)) + "</p>" : "") + "</div>" +
+          '<div class="prose">' + paras(d.intro) + "</div>" +
+          '<div class="svc-list">' + (d.services || []).map(function (s, i) {
+            return '<article class="svc">' +
+              '<p class="svc-n">' + pad(i + 1) + "</p>" +
+              '<h3 class="svc-title">' + esc(t(s.title)) + "</h3>" +
+              '<p class="svc-body">' + rich(t(s.body)) + "</p>" +
+              (s.gets ? '<p class="svc-gets"><span>' + esc(ui("youGet")) + "</span>" + esc(t(s.gets)) + "</p>" : "") +
+              (s.note ? '<p class="svc-note">' + esc(t(s.note)) + "</p>" : "") +
+              "</article>";
+          }).join("") + "</div>" +
+          '<p class="disc-links">' +
+            (mine ? '<a class="text-link" href="#/' + k + '">' +
+                    esc(ui("seeDiscWork", { x: t(d.label) })) + "</a>" : "") +
+            '<a class="text-link" href="#/rates">' + esc(ui("seePrices")) + "</a></p>" +
+          "</section>";
+      }).join("") +
+      ctaBlock();
   }
 
   function viewRates() {
     var r = C.rates;
     if (!r) return viewMissing();
+    return pageHead(t(r.headline), r.intro) +
+      '<div class="rate-groups">' + r.groups.map(function (grp) {
+        return '<section class="rate-card"><h2 class="rate-title">' + esc(t(grp.title)) + "</h2>" +
+          '<ul class="rate-list">' + grp.items.map(function (it) {
+            var p = t(it.price);
+            var num = /\d/.test(p);         // a number takes the currency; a word ("dm") stands alone
+            return '<li class="rate-row"><span class="rate-name">' + esc(t(it.name)) +
+                   (it.note ? '<span class="rate-note">' + esc(t(it.note)) + "</span>" : "") + "</span>" +
+                   '<span class="rate-price">' + esc(p) +
+                   (num ? ' <span class="rate-unit">' + esc(r.unit || "") + "</span>" : "") + "</span></li>";
+          }).join("") + "</ul></section>";
+      }).join("") + "</div>" +
+      (r.note ? '<blockquote class="pull"><p>' + rich(t(r.note)) + "</p></blockquote>" : "") +
+      ctaBlock();
+  }
 
-    return '<h1 class="display">' + esc(t(r.headline)) + "</h1>" +
-           (r.intro ? '<div class="lede"><p>' + rich(t(r.intro)) + "</p></div>" : "") +
-           r.groups.map(function (grp) {
-             return '<section class="rate-group">' +
-               '<h2 class="section-label">' + esc(t(grp.title)) + "</h2>" +
-               '<div class="rate-list">' + grp.items.map(function (it) {
-                 var p = t(it.price);
-                 // a number takes the currency; a word ("dm") stands on its own
-                 var money = /\d/.test(p) ? p + " " + (r.unit || "") : p;
-                 return '<div class="rate-row">' +
-                        '<span class="rate-name">' + esc(t(it.name)) + "</span>" +
-                        '<span class="rate-note">' + esc(t(it.note) || "") + "</span>" +
-                        '<span class="rate-price">' + esc(money) + "</span></div>";
-               }).join("") + "</div></section>";
-           }).join("") +
-           (r.note ? '<p class="rate-note-foot">' + rich(t(r.note)) + "</p>" : "") +
-           cta(r.cta);
+  function viewAbout() {
+    var a = C.about;
+    return '<div class="about">' +
+        (a.cover ? '<figure class="about-photo"><img src="' + esc(a.cover.src) + '" alt="' +
+                   esc(t(a.cover.alt)) + '" decoding="async"></figure>' : "") +
+        '<div class="about-text">' +
+          '<h1 class="page-title">' + esc(t(a.headline)) + "</h1>" +
+          '<div class="prose">' + paras(a.body) + "</div>" +
+          (a.facts && a.facts.length ? '<dl class="facts">' + a.facts.map(function (f) {
+             return "<div><dt>" + esc(t(f.k)) + "</dt><dd>" + esc(t(f.v)) + "</dd></div>";
+           }).join("") + "</dl>" : "") +
+          (a.cta ? '<p><a class="btn" href="' + esc(a.cta.href) + '"><span>' + esc(t(a.cta.label)) +
+                   "</span>" + icon("arrow") + "</a></p>" : "") +
+        "</div>" +
+      "</div>" +
+      ctaBlock();
+  }
+
+  function viewGear() {
+    var g = C.gear;
+    if (!g) return viewMissing();
+    return '<p class="crumbs"><a class="back-link" href="#/about">' + icon("back") +
+             "<span>" + esc(ui("navAbout")) + "</span></a></p>" +
+      pageHead(t(g.headline), g.intro) +
+      '<div class="gear-groups">' + g.groups.map(function (grp) {
+        return '<section class="gear-group"><h2 class="rate-title">' + esc(t(grp.title)) + "</h2>" +
+          '<ul class="gear-list">' + grp.items.map(function (it) {
+            var inner = '<span class="gear-name">' + esc(t(it.name)) + "</span>" +
+                        '<span class="gear-note">' + esc(t(it.note) || "") + "</span>" +
+                        (it.url ? icon("out") : "");
+            return "<li>" + (it.url
+              ? '<a class="gear-row" ' + linkAttrs(it.url) + ">" + inner + "</a>"
+              : '<div class="gear-row">' + inner + "</div>") + "</li>";
+          }).join("") + "</ul></section>";
+      }).join("") + "</div>" +
+      ctaBlock();
   }
 
   function viewContact() {
     var c = C.contact;
-    return '<h1 class="display">' + esc(t(c.headline)) + "</h1>" +
-           '<div class="lede"><p>' + rich(t(c.intro)) + "</p></div>" +
-           '<dl class="rows">' + c.rows.map(function (r) {
-             var val = r.copy
-               ? '<button class="copy-btn" type="button" data-copy="' + esc(t(r.v)) + '">' +
-                 esc(t(r.v)) + ' <span class="copy-label" aria-live="polite">' + esc(ui("copy")) +
-                 "</span></button>"
-               : r.href
-               ? '<a class="link-plain" href="' + esc(r.href) + '">' + esc(t(r.v)) + "</a>"
-               : esc(t(r.v));
-             return '<div class="row"><dt>' + esc(t(r.k)) + "</dt><dd>" + val + "</dd></div>";
-           }).join("") + "</dl>";
+    var rows = c.rows || [];
+    // fastest first, whatever order the rows are written in
+    var ORDER = ["instagram", "line", "phone", "mail"];
+    var actions = rows.filter(function (r) { return contactKind(r); }).sort(function (a, b) {
+      return ORDER.indexOf(contactKind(a)) - ORDER.indexOf(contactKind(b));
+    });
+    var details = rows.filter(function (r) { return !contactKind(r); });
+
+    return pageHead(t(c.headline), c.intro) +
+      '<div class="actions">' + actions.map(function (r) {
+        var kind = contactKind(r);
+        var fast = kind === "instagram" || kind === "line";
+        var text = '<span class="action-ico">' + icon(kind) + "</span>" +
+          '<span class="action-text"><span class="action-label">' + esc(t(r.k)) +
+            (fast ? ' <span class="badge">' + esc(ui("fastest")) + "</span>" : "") + "</span>" +
+          // an email may break after the @, never in the middle of a word
+          '<span class="action-value">' + esc(t(r.v)).replace("@", "@<wbr>") + "</span></span>";
+        if (r.copy) {
+          // the hint sits under the id, so a thumb can't miss what tapping does
+          return copyButton(r, "action",
+            text.replace(/<\/span><\/span>$/, '</span><span class="action-hint copy-label" aria-live="polite">' +
+              esc(ui("tapToCopy")) + "</span></span>") +
+            '<span class="action-go">' + icon("copy") + "</span>");
+        }
+        return '<a class="action' + (kind === "instagram" ? " action-primary" : "") + '" ' +
+               linkAttrs(r.href) + ">" + text + '<span class="action-go">' + icon("arrow") + "</span></a>";
+      }).join("") + "</div>" +
+
+      (c.checklist ? '<section class="checklist"><h2 class="section-title">' + esc(ui("whatToSend")) + "</h2>" +
+        "<ol>" + t(c.checklist).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ol></section>" : "") +
+
+      (details.length ? '<section class="details"><h2 class="section-title">' + esc(ui("details")) + "</h2>" +
+        '<dl class="facts">' + details.map(function (r) {
+          var v = r.href ? '<a class="text-link" ' + linkAttrs(r.href) + ">" + esc(t(r.v)) + "</a>" : esc(t(r.v));
+          return "<div><dt>" + esc(t(r.k)) + "</dt><dd>" + v + "</dd></div>";
+        }).join("") + "</dl></section>" : "");
   }
 
-  function viewWorkIndex() {
-    return '<h1 class="display">' + esc(ui("allWork")) + "</h1>" + DISC_ORDER.map(function (k) {
-      var d = C.disciplines[k], mine = workIn(k);
-      if (!d || !mine.length) return "";
-      return '<h2 class="section-label">' + esc(t(d.label)) + "</h2>" + indexList(mine);
-    }).join("");
-  }
+  var lastHome = "#/";              // so "all work" returns to the filter you came from
 
   function viewProject(w) {
-    var meta = [w.date || w.year, t(w.role), t(w.kind)].filter(Boolean).map(esc).join(" &nbsp;·&nbsp; ");
-    return '<div class="media">' + renderMedia(w.media) + "</div>" +
-           "<h1>" + esc(t(w.title) || t(w.client)) + "</h1>" +
-           '<p class="meta">' + meta + "</p>" +
-           (w.blurb ? '<div class="lede">' + paras(w.blurb) + "</div>" : "") +
-           '<p><a class="link-inline" href="#/contact">' + esc(ui("workWithMe")) + "</a></p>";
+    var i = C.work.indexOf(w);
+    var prev = C.work[(i - 1 + C.work.length) % C.work.length];
+    var next = C.work[(i + 1) % C.work.length];
+    var d = C.disciplines[w.discipline];
+    var eyebrow = [d ? t(d.label) : "", t(w.kind)].filter(Boolean).map(esc).join(" · ");
+    var photos = photoCount(w), reels = reelCount(w);
+    var meta = [w.date || w.year, t(w.role),
+                photos ? ui("photos", { n: photos }) : "",
+                reels ? ui("reels", { n: reels }) : ""].filter(Boolean).map(esc).join(" · ");
+
+    function pagerLink(p, dir) {
+      return '<a class="pager-link pager-' + dir + '" href="#/work/' + esc(p.slug) + '">' +
+             '<span class="pager-dir">' + (dir === "prev" ? icon("back") : "") +
+               esc(ui(dir)) + (dir === "next" ? icon("arrow") : "") + "</span>" +
+             '<span class="pager-title">' + esc(t(p.client)) + "</span></a>";
+    }
+
+    return '<p class="crumbs"><a class="back-link" href="' + lastHome + '">' + icon("back") +
+             "<span>" + esc(ui("backToWork")) + "</span></a></p>" +
+      '<header class="project-head">' +
+        '<p class="eyebrow">' + eyebrow + "</p>" +
+        '<h1 class="page-title">' + esc(t(w.title) || t(w.client)) + "</h1>" +
+        (meta ? '<p class="meta">' + meta + "</p>" : "") +
+        (w.blurb ? '<div class="lede">' + paras(w.blurb) + "</div>" : "") +
+      "</header>" +
+      '<div class="media">' + renderMedia(w.media) + "</div>" +
+      (C.work.length > 1 ? '<nav class="pager" aria-label="Projects">' +
+        pagerLink(prev, "prev") + pagerLink(next, "next") + "</nav>" : "") +
+      ctaBlock();
   }
 
   function viewMissing() {
-    return "<h1>" + esc(ui("notFoundTitle")) + "</h1><p>" + esc(ui("notFoundBody")) + "</p>" +
-           '<p><a class="link-inline" href="#/">' + esc(ui("backHome")) + "</a></p>";
+    return pageHead(ui("notFoundTitle"), ui("notFoundBody")) +
+      '<p><a class="btn" href="#/">' + icon("back") + "<span>" + esc(ui("backHome")) + "</span></a></p>";
   }
 
   /* -------------------------------------------------------------- router */
 
-  // Every page except the landing gets one. It walks the history rather than
-  // pointing at a fixed parent, so it undoes whatever the visitor actually did
-  // — and since the boot code forces the first paint to #/, anything deeper was
-  // reached by a hash change, which means there is always a step to go back to.
-  function backBtn() {
-    return '<button class="back" type="button" id="back-btn">&#8592; ' +
-           esc(ui("back")) + "</button>";
-  }
-
-  function isHome(hash) {
-    return hash.replace(/^#\/?/, "").split("/").filter(Boolean).length === 0;
-  }
-
   function resolve(hash) {
     var parts = hash.replace(/^#\/?/, "").split("/").filter(Boolean);
-    var suffix = " — " + C.name;
+    var name = " — " + C.name;
+    var p0 = parts[0];
 
-    if (parts.length === 0)
-      return { html: viewHome(), title: C.name + " — " + t(C.tagline), slate: C.name };
+    if (!p0 || p0 === "work" && !parts[1])
+      return { kind: "home", nav: "work", html: viewHome(""), title: C.name + " — " + t(C.tagline) };
 
-    if (C.disciplines[parts[0]] && !parts[1])
-      return { html: viewDiscipline(parts[0]), title: t(C.disciplines[parts[0]].label) + suffix,
-               slate: t(C.disciplines[parts[0]].label) };
+    if (C.disciplines[p0] && !parts[1])          // old #/film and #/photo links
+      return { kind: "home", nav: "work", html: viewHome(p0), title: t(C.disciplines[p0].label) + name };
 
-    if (parts[0] === "about")
-      return { html: viewAbout(), title: ui("navAbout") + suffix, slate: ui("navAbout") };
-
-    if (parts[0] === "gear")
-      return { html: viewGear(), title: ui("navGear") + suffix, slate: ui("navGear") };
-
-    if (parts[0] === "rates")
-      return { html: viewRates(), title: ui("navRates") + suffix, slate: ui("navRates") };
-
-    if (parts[0] === "contact")
-      return { html: viewContact(), title: ui("navContact") + suffix, slate: ui("navContact") };
-
-    if (parts[0] === "work" && !parts[1])
-      return { html: viewWorkIndex(), title: ui("navWork") + suffix, slate: ui("workLabel") };
-
-    if (parts[0] === "work") {
+    if (p0 === "work") {
       var w = find(parts[1]);
-      if (w) return { html: viewProject(w), title: t(w.client) + suffix,
-                      slate: w.discipline ? t(C.disciplines[w.discipline].label) : ui("workLabel") };
+      if (w) return { kind: "project", nav: "work", html: viewProject(w), title: t(w.client) + name, slug: w.slug };
     }
+    if (p0 === "services")
+      return { kind: "services", nav: "services", html: viewServices(), title: ui("navServices") + name,
+               anchor: parts[1] && C.disciplines[parts[1]] ? "svc-" + parts[1] : null };
+    if (p0 === "rates")   return { kind: "rates",   nav: "rates",   html: viewRates(),   title: ui("navRates") + name };
+    if (p0 === "about")   return { kind: "about",   nav: "about",   html: viewAbout(),   title: ui("navAbout") + name };
+    if (p0 === "gear")    return { kind: "gear",    nav: "about",   html: viewGear(),    title: ui("navGear") + name };
+    if (p0 === "contact") return { kind: "contact", nav: "contact", html: viewContact(), title: ui("navContact") + name };
 
-    return { html: viewMissing(), title: ui("notFoundTitle") + suffix, slate: "404" };
+    return { kind: "missing", nav: "", html: viewMissing(), title: ui("notFoundTitle") + name };
   }
 
+  // Remember how far down each page was, on its own history entry, so the
+  // browser's back button lands exactly where you left — and a fresh link
+  // (no saved position) starts at the top.
+  var saveTimer;
+  window.addEventListener("scroll", function () {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () {
+      if (!viewer.hidden) return;
+      try {
+        var st = history.state && typeof history.state === "object" ? history.state : {};
+        history.replaceState(Object.assign({}, st, { y: window.scrollY }), "");
+      } catch (e) { /* some embedded browsers refuse */ }
+    }, 160);
+  }, { passive: true });
+
+  var last = null;       // the page we're leaving
+  var booted = false;
+
+  function route(opts) {
+    opts = opts || {};
+    var hash = location.hash || "#/";
+    if (!/^#\//.test(hash)) hash = "#/";        // a stray #main etc. — show home
+    var page = resolve(hash);
+    var from = last;
+
+    // switching filters, or the language, keeps you where you are
+    var keep = opts.keep || (from && from.kind === "home" && page.kind === "home");
+
+    view.innerHTML = page.html;
+    document.title = page.title;
+    markActive(page.nav);
+    if (page.kind === "home") lastHome = hash === "#/work" ? "#/" : hash;
+
+    if (!REDUCED && !keep && booted) {
+      view.classList.remove("enter");
+      void view.offsetWidth;                      // restart the fade
+      view.classList.add("enter");
+    }
+
+    if (!keep) {
+      var saved = history.state && typeof history.state.y === "number" ? history.state.y : null;
+      var target = page.anchor && document.getElementById(page.anchor);
+      var card = page.kind === "home" && from && from.slug &&
+                 view.querySelector('.card[data-slug="' + from.slug + '"]');
+      if (saved != null) window.scrollTo(0, saved);
+      else if (target) target.scrollIntoView();
+      else if (card) card.scrollIntoView({ block: "center" });
+      else window.scrollTo(0, 0);
+      if (booted) main.focus({ preventScroll: true });   // screen readers hear the new page
+    }
+
+    processInstagram();
+    last = page;
+    booted = true;
+  }
+
+  // Filter chips replace the address rather than adding to history, so the
+  // back button leaves the page instead of stepping through filters.
+  view.addEventListener("click", function (e) {
+    var chip = e.target.closest && e.target.closest("[data-chip]");
+    if (!chip) return;
+    e.preventDefault();
+    if (location.hash !== chip.getAttribute("href")) location.replace(chip.getAttribute("href"));
+  });
+
+  skip.addEventListener("click", function (e) {
+    e.preventDefault();
+    main.focus();
+  });
+
   // Instagram embeds. The script is fetched the first time a page needs it,
-  // never on pages without one. Because this is a single-page site, every
-  // route change paints fresh blockquotes, so process() has to be called again
-  // after each paint — embed.js only scans the document once on its own.
+  // never on pages without one. Every route paints fresh blockquotes, so
+  // process() runs again after each paint.
   var igRequested = false;
   function processInstagram() {
     if (!view.querySelector("blockquote.instagram-media")) return;
@@ -481,124 +698,89 @@
     document.body.appendChild(sc);
   }
 
-  function paint(page) {
-    view.innerHTML = page.html;
-    document.title = page.title;
+  /* -------------------------------------------------------- photo viewer */
+  /* Tap a photo for full screen. Swipe or arrow keys to move, Esc or the
+     phone's back gesture to close — it adds a history step so "back" closes
+     the photo instead of leaving the project. */
 
-    // stagger the entrance of each top-level block
-    var kids = view.children;
-    for (var i = 0; i < kids.length; i++) kids[i].style.setProperty("--i", i);
+  var viewer   = $("viewer");
+  var vImg     = $("viewer-img");
+  var vCount   = $("viewer-count");
+  var vClose   = $("viewer-close");
+  var vPrev    = $("viewer-prev");
+  var vNext    = $("viewer-next");
+  var vIndex   = 0;
+  var vOpener  = null;
 
-    window.scrollTo(0, 0);
-    var back = document.getElementById("back-btn");
-    if (back) back.addEventListener("click", function () { history.back(); });
-    bindTracks();
-    processInstagram();
-    if (audio.paused && !audio.duration) bar.hidden = true;
+  function showPhoto(i) {
+    if (!gallery.length) return;
+    vIndex = (i + gallery.length) % gallery.length;
+    vImg.src = gallery[vIndex].src;
+    vImg.alt = gallery[vIndex].alt;
+    vCount.textContent = (vIndex + 1) + " / " + gallery.length;
+    vPrev.hidden = vNext.hidden = gallery.length < 2;
   }
 
-  var busy = false;
-
-  // slateOverride lets the language switch flash "ไทย" instead of the page name
-  function route(slateOverride) {
-    var hash = location.hash || "#/";
-    var page = resolve(hash);
-    if (!isHome(hash)) page.html = backBtn() + page.html;
-    markCurrent(hash);
-    if (sidebarNav.classList.contains("is-open")) toggle.click();
-
-    if (REDUCED || busy) { paint(page); return; }
-
-    busy = true;
-    slate.textContent = typeof slateOverride === "string" ? slateOverride : page.slate;
-    wipe.classList.add("is-active", "is-covering");
-
-    // swap the content while the slats have the screen covered
-    setTimeout(function () {
-      paint(page);
-      wipe.classList.remove("is-covering");
-      wipe.classList.add("is-revealing");
-      setTimeout(function () {
-        wipe.classList.remove("is-active", "is-revealing");
-        busy = false;
-      }, 420);
-    }, 400);
+  function openViewer(i, opener) {
+    vOpener = opener;
+    showPhoto(i);
+    viewer.hidden = false;
+    document.documentElement.classList.add("is-locked");
+    try { history.pushState({ viewer: true, y: window.scrollY }, ""); } catch (e) { /* ignore */ }
+    vClose.focus();
   }
 
-  /* -------------------------------------------------------- audio player */
-
-  var audio    = new Audio();
-  var bar      = document.getElementById("player");
-  var btn      = document.getElementById("player-btn");
-  var titleEl  = document.getElementById("player-title");
-  var timeEl   = document.getElementById("player-time");
-  var fill     = document.getElementById("player-fill");
-  var barTrack = fill.parentNode;
-  var current  = null;                    // the <button class="track"> now loaded
-
-  function clock(s) {
-    if (!isFinite(s)) return "0:00";
-    var m = Math.floor(s / 60), r = Math.floor(s % 60);
-    return m + ":" + (r < 10 ? "0" : "") + r;
+  function hideViewer() {
+    if (viewer.hidden) return;
+    viewer.hidden = true;
+    vImg.removeAttribute("src");
+    document.documentElement.classList.remove("is-locked");
+    if (vOpener) vOpener.focus({ preventScroll: true });
   }
 
-  function repaintPlayer() {
-    btn.innerHTML = audio.paused ? "&#9658;" : "&#9612;&#9612;";
-    document.querySelectorAll(".track").forEach(function (tr) {
-      tr.setAttribute("data-state", tr === current && !audio.paused ? "playing" : "idle");
-    });
+  function closeViewer() {
+    if (history.state && history.state.viewer) history.back();   // popstate hides it
+    else hideViewer();
   }
 
-  function play(trackEl) {
-    if (current === trackEl && !audio.paused) { audio.pause(); repaintPlayer(); return; }
-    if (current !== trackEl) {
-      current = trackEl;
-      audio.src = trackEl.getAttribute("data-src");
-      titleEl.textContent = trackEl.getAttribute("data-title");
-      fill.style.width = "0%";
+  window.addEventListener("popstate", function () {
+    if (!viewer.hidden && !(history.state && history.state.viewer)) hideViewer();
+  });
+
+  view.addEventListener("click", function (e) {
+    var z = e.target.closest && e.target.closest("[data-zoom]");
+    if (z) openViewer(+z.getAttribute("data-zoom"), z);
+  });
+
+  vClose.addEventListener("click", closeViewer);
+  vPrev.addEventListener("click", function () { showPhoto(vIndex - 1); });
+  vNext.addEventListener("click", function () { showPhoto(vIndex + 1); });
+  viewer.addEventListener("click", function (e) { if (e.target === viewer) closeViewer(); });
+
+  document.addEventListener("keydown", function (e) {
+    if (viewer.hidden) return;
+    if (e.key === "Escape") closeViewer();
+    else if (e.key === "ArrowLeft") showPhoto(vIndex - 1);
+    else if (e.key === "ArrowRight") showPhoto(vIndex + 1);
+    else if (e.key === "Tab") {                 // keep focus inside the viewer
+      var f = [vClose, vPrev, vNext].filter(function (b) { return !b.hidden; });
+      var at = f.indexOf(document.activeElement);
+      e.preventDefault();
+      f[(at + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
     }
-    bar.hidden = false;
-    audio.play().catch(function () { /* blocked or missing file — see error handler */ });
-    repaintPlayer();
-  }
-
-  function bindTracks() {
-    current = null;
-    document.querySelectorAll(".track").forEach(function (tr) {
-      tr.addEventListener("click", function () { play(tr); });
-    });
-  }
-
-  btn.addEventListener("click", function () {
-    if (!current) return;
-    if (audio.paused) audio.play().catch(function () {}); else audio.pause();
-    repaintPlayer();
   });
 
-  document.getElementById("player-close").addEventListener("click", function () {
-    audio.pause(); bar.hidden = true; repaintPlayer();
-  });
-
-  barTrack.addEventListener("click", function (e) {
-    if (!audio.duration) return;
-    var r = barTrack.getBoundingClientRect();
-    audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
-  });
-
-  audio.addEventListener("timeupdate", function () {
-    timeEl.textContent = clock(audio.currentTime);
-    if (audio.duration) fill.style.width = (audio.currentTime / audio.duration) * 100 + "%";
-  });
-  audio.addEventListener("play",  repaintPlayer);
-  audio.addEventListener("pause", repaintPlayer);
-  audio.addEventListener("ended", function () { fill.style.width = "0%"; repaintPlayer(); });
-  audio.addEventListener("error", function () {
-    audio.pause();                       // so the bar shows ▶ rather than a phantom pause
-    titleEl.textContent = ui("missingFile") + (audio.getAttribute("src") || "");
-    timeEl.textContent = "--:--";
-    fill.style.width = "0%";
-    repaintPlayer();
-  });
+  var touchX = null, touchY = null;
+  viewer.addEventListener("touchstart", function (e) {
+    touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+  }, { passive: true });
+  viewer.addEventListener("touchend", function (e) {
+    if (touchX == null) return;
+    var dx = e.changedTouches[0].clientX - touchX, dy = e.changedTouches[0].clientY - touchY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) showPhoto(vIndex + (dx < 0 ? 1 : -1));
+    else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) closeViewer();          // swipe down to close
+    touchX = touchY = null;
+  }, { passive: true });
 
   /* ------------------------------------------------------- tap to copy */
   // For ids that have no reliable link of their own — a LINE id only opens
@@ -608,9 +790,13 @@
   function copyText(text, btn) {
     var label = btn.querySelector(".copy-label");
     function done() {
-      label.textContent = ui("copied");
+      btn.classList.add("is-copied");
+      if (label) label.textContent = ui("copied");
       clearTimeout(btn._reset);
-      btn._reset = setTimeout(function () { label.textContent = ui("copy"); }, 2600);
+      btn._reset = setTimeout(function () {
+        btn.classList.remove("is-copied");
+        if (label) label.textContent = ui("tapToCopy");
+      }, 2600);
     }
     function fallback() {
       var ta = document.createElement("textarea");
@@ -631,24 +817,14 @@
   }
 
   view.addEventListener("click", function (e) {
-    var btn = e.target.closest && e.target.closest(".copy-btn");
-    if (btn) copyText(btn.getAttribute("data-copy"), btn);
+    var b = e.target.closest && e.target.closest(".copy-btn");
+    if (b) copyText(b.getAttribute("data-copy"), b);
   });
 
   /* ---------------------------------------------------------------- boot */
 
-  // Always open on the home page: a stale bookmark or a hash left over from a
-  // previous visit shouldn't drop a first-time visitor deep inside the site.
-  // replaceState (not location.hash) so this never fires hashchange and never
-  // leaves the old route in history.
-  if (location.hash && location.hash !== "#/") {
-    try {
-      history.replaceState(null, "", location.pathname + location.search + "#/");
-    } catch (e) { location.replace("#/"); }        // file:// in some browsers
-  }
-
   document.documentElement.setAttribute("lang", LANG);
-  buildNav();
-  window.addEventListener("hashchange", function () { route(); });   // no event arg through
+  buildChrome();
+  window.addEventListener("hashchange", function () { route(); });
   route();
 })();
