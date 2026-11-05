@@ -64,10 +64,8 @@ const CONTENT = {
   /* -------------------------------------------------------------- landing */
 
   home: {
-    /* the photo across the top of the home page. Delete the line and the
-       small K mark shows there instead. */
-    cover: { src: "assets/media/covers/home.jpg",
-             alt: "Reverie Production — two of the crew with cameras in the school courtyard, fisheye" },
+    /* add  cover: { src: "assets/media/covers/….jpg", alt: "…" }  here to run a
+       photo across the top of the home page instead of the K mark */
     /* under the REVERIE heading: one line that says what this is, one
        short paragraph, then straight into the work */
     headline: { en: "film and photo, made in lampang.", th: "รับถ่ายวิดีโอ ถ่ายภาพ ลำปาง" },

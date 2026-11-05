@@ -140,9 +140,8 @@ Photos live in [`assets/media/photo/`](assets/media/), grid covers in
 filenames** — those work on your computer but break on some hosts, and the
 failure looks like a missing file.
 
-`assets/media/covers/home.jpg` is the REVERIE PRODUCTION still across the top
-of the home page (set in `home.cover` — delete that line and the small K mark
-comes back). The sports day card uses the YELLOW INWZA title card,
+The home page opens with the K mark; a `home.cover` photo can replace it. The
+sports day card uses the YELLOW INWZA title card,
 `assets/media/covers/sports-day.jpg`. The full-size originals of both are
 kept in `assets/media/film/sports-day/`.
 
