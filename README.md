@@ -203,6 +203,23 @@ the arrows still stay hidden there until you point at something.
 Worth remembering if you add a new row type: give it an `:active` state as well
 as a `:hover` one, or it will feel dead on a phone.
 
+### On a phone
+
+Below 860px the site changes in four ways, all aimed at a customer trying to
+reach you:
+
+- **Type goes to 14px** (15px in Thai) from the desktop's 11.5px, and the side
+  gutter narrows to 18px to give it room.
+- **The menu is one column of seven links** — the two disciplines, then work
+  index, about, gear, price rate, contact. The per-project links are left out
+  there; "work index" lists them all.
+- **A "say hello" bar** sits along the bottom of every page except contact, in
+  the accent colour, so getting in touch is one tap from anywhere. Its wording
+  is `ui.sayHello`.
+- **Tap-to-copy.** A contact row with `copy: true` becomes a button that copies
+  its value — used for the LINE id, which a link can only open if the id is set
+  to be searchable in LINE's privacy settings. A copied id works either way.
+
 ## Your files
 
 Your work goes in **[`assets/media/`](assets/media/)** — three folders, `film`,
