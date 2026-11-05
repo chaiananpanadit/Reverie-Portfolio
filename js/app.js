@@ -383,8 +383,13 @@
                  n: C.work.filter(function (w) { return w.discipline === k; }).length };
       }));
 
-    return '<section class="hero">' +
-        '<div class="hero-mark"><img src="assets/img/logo.svg" alt="" width="132" height="116"></div>' +
+    return (h.cover && h.cover.src
+        ? '<figure class="hero-cover"><span class="frame"><img src="' + esc(h.cover.src) + '" alt="' +
+          esc(t(h.cover.alt)) + '" fetchpriority="high" decoding="async"></span></figure>'
+        : "") +
+      '<section class="hero">' +
+        (h.cover && h.cover.src ? "" :
+          '<div class="hero-mark"><img src="assets/img/logo.svg" alt="" width="132" height="116"></div>') +
         '<h1 class="display">' + esc(C.name) + "</h1>" +
         '<div class="lede"><p class="lead">' + esc(t(h.headline)) + "</p>" + paras(h.body) + "</div>" +
         '<p class="hero-links">' + linkInline("#/contact", ui("askPrice"), "is-accent") +

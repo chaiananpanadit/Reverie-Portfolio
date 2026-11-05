@@ -64,6 +64,10 @@ const CONTENT = {
   /* -------------------------------------------------------------- landing */
 
   home: {
+    /* the photo across the top of the home page. Delete the line and the
+       small K mark shows there instead. */
+    cover: { src: "assets/media/covers/home.jpg",
+             alt: "Reverie Production — two of the crew with cameras in the school courtyard, fisheye" },
     /* under the REVERIE heading: one line that says what this is, one
        short paragraph, then straight into the work */
     headline: { en: "film and photo, made in lampang.", th: "รับถ่ายวิดีโอ ถ่ายภาพ ลำปาง" },
@@ -454,6 +458,9 @@ const CONTENT = {
          2-up: Instagram won't render an embed narrower than 326px.
          The share links' ?vrfl= / ?srtk= tracking tokens are stripped. */
       discipline: "film", slug: "sports-day",
+      /* the film's YELLOW INWZA title card, set whole on black for the grid.
+         Full-size originals: assets/media/film/sports-day/ */
+      cover: "assets/media/covers/sports-day.jpg",
       client: { en: "sports day", th: "กีฬาสี" },
       title:  { en: "SPORTS DAY", th: "กีฬาสี" },
       year: "2026",

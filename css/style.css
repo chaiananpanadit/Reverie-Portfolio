@@ -286,6 +286,8 @@ html[lang="th"] .top-nav a.nav-cta { letter-spacing: 0.02em; }
 
 /* ------------------------------------------------------------- home */
 
+.hero-cover { margin: 0 0 26px; }
+.hero-cover img { width: 100%; aspect-ratio: 1600 / 906; object-fit: cover; }
 .hero { max-width: 640px; }
 .hero-mark { width: 132px; margin: 6px 0 22px; }
 .hero-mark img { width: 100%; filter: invert(var(--dark)); }
