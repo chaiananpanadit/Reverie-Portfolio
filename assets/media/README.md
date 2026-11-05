@@ -49,8 +49,8 @@ player shows a black box.
 ] }
 ```
 
-If a file is missing, the player bar says so and prints the path it wanted —
-so a typo tells you exactly what to fix.
+Each track gets the browser's own audio player. If a file is missing the
+player stays greyed out — check the path for a typo.
 
 ## Web files only — no RAW, no masters
 
@@ -78,13 +78,15 @@ is a horrible thing to debug later.
 
 ## Sizes
 
-The content column is 520px wide, so nothing needs to be huge.
+Photos run up to about 1160px wide on a computer and full width on a phone,
+and every one can be opened full screen, so export around 1600px on the long
+edge — more than that only makes the page slower on mobile data.
 
 | what | size | export |
 | --- | --- | --- |
-| portrait / vertical | 1000 × 1250 | JPEG ~80% |
-| wide / landscape | 1600 × 900 | JPEG ~80% |
-| square | 1200 × 1200 | JPEG ~80% |
+| portrait / vertical | 1067 × 1600 | JPEG ~80% |
+| wide / landscape | 1600 × 1067 | JPEG ~80% |
+| square | 1400 × 1400 | JPEG ~80% |
 | video | 1080p | H.264 mp4 |
 | audio | — | mp3 192–320kbps |
 

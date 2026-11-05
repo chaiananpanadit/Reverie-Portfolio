@@ -1,63 +1,67 @@
 /* ------------------------------------------------------------------
-   reverie — film / photo / sound
+   reverie — film / photo
 
-   Stripped back on purpose: a sheet of paper, a hairline, and the work.
-   No screens, no grain, no plates, no slabs of colour — anything that
-   wasn't the type, the rules or the photographs has been taken out.
+   The original look on the new layout: a sheet of sketchbook paper,
+   monospace type, hairline rules, uppercase headings set wide, and
+   terracotta only where something is numbered or can be pressed.
+   No cards, no shadows, no rounded corners, no blocks of colour —
+   anything that isn't the type, the rules or the photographs stays out.
 
-   Black and white throughout. The paper is a warm off-white — sketchbook
-   stock rather than #fff, which is why the light theme reads soft instead
-   of glaring. Everything visual is tuned from the tokens below.
+   Every colour and size is a token below.
 ------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------ fonts */
+/* IBM Plex Mono for Latin, IBM Plex Sans Thai for Thai, in one stack: a
+   mixed sentence picks the right face per character. Self-hosted so every
+   phone shows the same mono (SIL OFL — see assets/fonts/OFL.txt). Each
+   file only downloads if the page has characters in its range. */
+
+@font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/plex-mono-latin-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../assets/fonts/plex-mono-latin-700.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Plex Sans Thai"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/plex-sans-thai-thai-400.woff2") format("woff2");
+  unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC; }
+@font-face { font-family: "Plex Sans Thai"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("../assets/fonts/plex-sans-thai-thai-600.woff2") format("woff2");
+  unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC; }
+
+/* ----------------------------------------------------------- tokens */
+
 :root {
-  /* The two palettes, each written once.
-     Light is sketchbook paper: warm, faintly grey, never pure white.
-     Dark is that same paper turned right down — warm, not a blue-black. */
+  /* The two palettes, each written once. Light is sketchbook paper: warm,
+     faintly grey, never pure white. Dark is the same paper turned down. */
   --l-bg: #f3f1ed; --l-ink: #171614; --l-ink-soft: #4b4741;
   --l-muted: #6f6b63; --l-rule: #dfdbd3; --l-accent: #a8451c; --l-shade: #e7e3db;
 
   --d-bg: #121110; --d-ink: #ebe7df; --d-ink-soft: #b3ada3;
   --d-muted: #827b71; --d-rule: #2b2825; --d-accent: #e2794b; --d-shade: #1c1a18;
 
-  /* Whichever one is live — light unless a rule below overrides it. */
-  --bg:       var(--l-bg);
-  --ink:      var(--l-ink);
-  --ink-soft: var(--l-ink-soft);
-  --muted:    var(--l-muted);
-  --rule:     var(--l-rule);
-  --shade:    var(--l-shade);
-
-  /* The emphasis colour — what a link or a row goes to when you point at it,
-     and the one thing on the page that isn't paper, ink or a photograph.
-     Terracotta, as the site was originally drawn. One line changes every
-     hover, the focus ring, the player fill and the slate rule together. */
-  --accent:   var(--l-accent);
-
-  --dark:     0;                 /* 0 = sun, 1 = moon. drives the toggle icon. */
+  --bg: var(--l-bg); --ink: var(--l-ink); --ink-soft: var(--l-ink-soft);
+  --muted: var(--l-muted); --rule: var(--l-rule); --shade: var(--l-shade);
+  --accent: var(--l-accent);
+  --dark: 0;                     /* 0 = sun, 1 = moon: drives the toggle icon and the logo */
   color-scheme: light;
 
-  /* Latin falls to the mono faces; Thai characters fall through to the Thai
-     faces after them, so mixed sentences render correctly in one stack. */
-  --mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", "Liberation Mono",
-          "Noto Sans Thai", "IBM Plex Sans Thai", "Leelawadee UI", "Thonburi",
-          "Tahoma", monospace;
+  --mono: "Plex Mono", "Plex Sans Thai", ui-monospace, "SFMono-Regular", Menlo, Consolas,
+          "Liberation Mono", "Noto Sans Thai", "Leelawadee UI", "Thonburi", monospace;
 
-  --fs:       11.5px;
-  --lh:       1.85;
-  --track:    0.015em;
+  --fs:      12px;
+  --lh:      1.85;
+  --track:   0.015em;
 
-  --sidebar:  212px;
-  --gutter:   34px;
-  --measure:  520px;
+  --max:     1040px;
+  --measure: 520px;
+  --gutter:  34px;
+  --top-h:   56px;
+  --tab-h:   0px;
 
-  --ease:     cubic-bezier(.2, .7, .3, 1);
+  --ease:    cubic-bezier(.2, .7, .3, 1);
 }
 
-/* Dark applies when the system asks for it AND the visitor hasn't forced
-   light, or when they've explicitly chosen dark. The two blocks can't be
-   merged — one lives inside a media query — but each is only a remap of the
-   palette above, so the colour values themselves are still written once. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: var(--d-bg); --ink: var(--d-ink); --ink-soft: var(--d-ink-soft);
@@ -75,141 +79,170 @@
   color-scheme: dark;
 }
 
-/* Thai needs more room: taller lines for the vowel marks above and below,
-   a slightly larger size to stay legible, and no letter-spacing — tracking
-   pulls Thai words apart because the script has no spaces between them. */
-html[lang="th"] {
-  --fs:    13px;
-  --lh:    2;
-  --track: 0;
-}
-html[lang="th"] h1,
-html[lang="th"] h2,
-html[lang="th"] .link-inline,
-html[lang="th"] .disc-card-t { letter-spacing: 0.02em; }
-html[lang="th"] h1.display { font-size: 26px; letter-spacing: 0.03em; line-height: 1.35; }
-html[lang="th"] .wipe-slate { letter-spacing: 0.25em; text-indent: 0.25em; }
+/* Thai needs more room: taller lines for the marks above and below, a
+   slightly larger size, and no letter-spacing — tracking pulls Thai words
+   apart because the script has no spaces between them. */
+html[lang="th"] { --fs: 13.5px; --lh: 2; --track: 0; }
 
-* { box-sizing: border-box; }
+/* ------------------------------------------------------------- base */
 
-html { -webkit-text-size-adjust: 100%; }
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--top-h) + 16px); }
+html.is-locked { overflow: hidden; }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  transition: background-color 340ms ease, color 340ms ease;
   font-family: var(--mono);
   font-size: var(--fs);
   line-height: var(--lh);
   letter-spacing: var(--track);
   font-weight: 400;
-  display: grid;
-  grid-template-columns: var(--sidebar) minmax(0, 1fr);
-  align-items: start;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 340ms ease, color 340ms ease;
 }
 
 a { color: inherit; text-decoration: none; }
-p { margin: 0 0 1.15em 0; }   /* not var(--lh) — that token is unitless */
-ul { margin: 0; padding: 0; list-style: none; }
+p { margin: 0 0 1.15em; }
+p:last-child { margin-bottom: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
 img, video { display: block; max-width: 100%; height: auto; }
-
+button { font: inherit; letter-spacing: inherit; color: inherit; }
 ::selection { background: var(--ink); color: var(--bg); }
 
+:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+main:focus { outline: none; }
+
 .skip-link {
-  position: absolute; left: -9999px; top: 0;
-  background: var(--ink); color: var(--bg); padding: 8px 12px; z-index: 50;
+  position: absolute; left: -9999px; top: 0; z-index: 60;
+  background: var(--ink); color: var(--bg); padding: 8px 12px;
 }
 .skip-link:focus { left: 0; }
 
-:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+/* ------------------------------------------------- headings + copy */
 
-/* ---------------------------------------------------------------- sidebar */
-/* Sits on the same paper as the page — no field of colour, no border box.
-   A single hairline is the only thing separating it from the work. */
-
-.sidebar {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 30px 18px 40px 30px;
-  border-right: 1px solid var(--rule);
-  scrollbar-width: thin;
-  scrollbar-color: var(--rule) transparent;
+h1, h2, h3 {
+  font-size: inherit;
+  font-weight: 400;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
 }
-.sidebar::-webkit-scrollbar { width: 6px; }
-.sidebar::-webkit-scrollbar-thumb { background: var(--rule); }
+h1.display {
+  font-size: 32px;
+  line-height: 1.08;
+  letter-spacing: 0.15em;
+  margin: 0 0 10px;
+}
+html[lang="th"] h1, html[lang="th"] h2, html[lang="th"] h3 { letter-spacing: 0.02em; }
+html[lang="th"] h1.display { font-size: 26px; letter-spacing: 0.03em; line-height: 1.35; }
 
-.wordmark {
-  display: block;
+.section-label { color: var(--muted); margin: 0 0 2px; }
+.meta { color: var(--muted); margin: 0 0 18px; }
+.lede { max-width: var(--measure); }
+.lede em { font-style: italic; }
+.lede b, .lede strong { font-weight: 700; color: var(--ink); }
+
+/* the call to action the site has always used: uppercase, bold, underlined */
+.link-inline {
+  display: inline-flex; align-items: center; gap: 0.6em;
+  min-height: 44px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  margin-bottom: 2px;
+  transition: color 160ms ease, transform 220ms var(--ease);
+}
+.link-inline > span:first-child { border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+.link-inline.is-accent { color: var(--accent); }
+html[lang="th"] .link-inline { letter-spacing: 0.02em; }
+
+.link-plain {
+  display: inline-block; padding: 12px 0; margin: -12px 0;      /* a 44px target inside a text row */
+  text-decoration: underline; text-decoration-color: var(--rule);
+  text-decoration-thickness: 1px; text-underline-offset: 4px;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.links { display: flex; flex-wrap: wrap; gap: 0 28px; margin: 16px 0 0; }
+
+.back {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; padding-right: 14px;
+  color: var(--muted); text-transform: lowercase;
+  transition: color 140ms ease, transform 240ms var(--ease);
+}
+.crumbs { margin: 0 0 6px; }
+
+/* ----------------------------------------------------------- header */
+
+.top {
+  position: sticky; top: 0; z-index: 40;
+  background: var(--bg);           /* solid paper, so nothing ghosts through it */
+  border-bottom: 1px solid var(--rule);
+  transition: background-color 340ms ease;
+}
+.top-inner {
+  max-width: calc(var(--max) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  height: var(--top-h);
+  display: flex; align-items: center; gap: 28px;
+}
+
+.brand { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; }
+.wordmark { font-weight: 700; letter-spacing: 0.02em; transition: color 140ms ease; }
+.tagline { color: var(--muted); }
+
+.top-nav { margin-left: auto; }
+.top-nav ul { display: flex; gap: 22px; }
+.top-nav a {
+  position: relative;
+  display: inline-flex; align-items: center; min-height: 44px;
+  color: var(--ink-soft); text-transform: lowercase;
   transition: color 140ms ease;
 }
-.wordmark:hover { color: var(--accent); }
-
-.tagline {
-  color: var(--muted);
-  margin: 0 0 10px 0;
+/* the › marker from the old sidebar, out of flow so nothing shifts */
+.top-nav a::before {
+  content: "\203A";
+  position: absolute; left: -11px;
+  opacity: 0; transform: translateX(-3px);
+  transition: opacity 140ms ease, transform 140ms var(--ease);
 }
+.top-nav a[aria-current] { color: var(--ink); }
+.top-nav a[aria-current]::before { opacity: 1; transform: none; }
+.top-nav a.nav-cta { color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; }
+html[lang="th"] .top-nav a.nav-cta { letter-spacing: 0.02em; }
 
-/* language + theme controls */
+.top-tools { display: flex; align-items: center; gap: 10px; }
 
-.controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 26px;
-}
-
-.lang {
-  display: flex;
-  align-items: baseline;
-  gap: 5px;
-}
+.lang { display: flex; align-items: center; }
 .lang-btn {
-  font: inherit;
-  letter-spacing: var(--track);
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
+  position: relative;
+  min-height: 44px; min-width: 30px; padding: 0 5px;
+  background: none; border: 0; cursor: pointer;
   color: var(--muted);
   transition: color 140ms ease;
 }
-.lang-btn:hover { color: var(--accent); }
-.lang-btn[aria-current] { color: var(--ink); }
+.lang-btn::after { content: ""; position: absolute; inset: 0 -4px; }   /* a thumb-sized target */
+.lang-btn[aria-pressed="true"] { color: var(--ink); }
 .lang-sep { color: var(--muted); opacity: 0.5; }
 
-/* ------------------------------------------------------- sun / moon toggle */
-/* One circle and eight rays. Going dark scales the circle up, slides a masked
-   circle across it to bite out a crescent, and folds the rays away. Every
-   value is interpolated from --dark, so the icon cannot disagree with the
-   palette — they're set by the same rule. */
-
-.theme-btn {
-  margin-left: auto;
-  display: grid;
-  place-items: center;
-  width: 20px; height: 20px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--muted);
-  cursor: pointer;
+.icon-btn {
+  display: grid; place-items: center;
+  width: 44px; height: 44px; margin-right: -14px; padding: 0;
+  background: none; border: 0; cursor: pointer; color: var(--muted);
   transition: color 160ms ease;
 }
-.theme-btn:hover { color: var(--accent); }
 
+/* One circle and eight rays: going dark scales the circle up, bites out a
+   crescent and folds the rays away. Every value is interpolated from --dark,
+   so the icon can never disagree with the palette. */
 .theme-icon { display: block; width: 13px; height: 13px; overflow: visible; }
-
 .theme-orb {
-  transform-box: fill-box;
-  transform-origin: center;
+  transform-box: fill-box; transform-origin: center;
   transform: scale(calc(0.58 + 0.42 * var(--dark)));
   transition: transform 420ms var(--ease);
 }
@@ -218,716 +251,441 @@ img, video { display: block; max-width: 100%; height: auto; }
   transition: transform 420ms var(--ease);
 }
 .theme-rays {
-  transform-box: fill-box;
-  transform-origin: center;
+  transform-box: fill-box; transform-origin: center;
   opacity: calc(1 - var(--dark));
   transform: scale(calc(1 - 0.45 * var(--dark))) rotate(calc(var(--dark) * 40deg));
   transition: transform 420ms var(--ease), opacity 260ms ease;
 }
 
-/* A boxed target rather than an underlined word — the old one was about
-   40x14, which is a hard thing to hit with a thumb. 44px is the usual floor. */
-.menu-toggle {
-  display: none;
-  font: inherit;
-  letter-spacing: var(--track);
-  color: var(--ink);
-  background: none;
-  border: 1px solid var(--rule);
-  min-height: 44px;
-  padding: 0 18px;
-  cursor: pointer;
-  transition: border-color 160ms ease, color 160ms ease;
-}
-.menu-toggle:hover,
-.menu-toggle[aria-expanded="true"] { border-color: var(--ink); color: var(--ink); }
+/* ------------------------------------------------------------- page */
 
-.nav-block { margin-bottom: 26px; }
-
-.nav-label {
-  color: var(--muted);
-  margin: 0 0 2px;
+.view {
+  max-width: calc(var(--max) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 30px var(--gutter) 0;
 }
 
-.sidebar li a {
-  position: relative;
-  display: block;
-  color: var(--ink-soft);
-  text-transform: lowercase;
-  padding: 0.5px 0;
-  transition: color 140ms ease;
-}
-.sidebar li a::before {
-  content: "\203A";              /* › marker, out of flow so nothing shifts */
-  position: absolute;
-  left: -11px;
-  opacity: 0;
-  transform: translateX(-3px);
-  transition: opacity 140ms ease, transform 140ms var(--ease);
-}
-.sidebar li a:hover { color: var(--accent); }
-.sidebar li a:hover::before,
-.sidebar li a[aria-current]::before { opacity: 1; transform: none; }
-.sidebar li a[aria-current] { color: var(--ink); }
-
-/* The three disciplines get numbers, and the numbering is where the accent
-   lives at rest — small, structural, the same role wherever it appears. It is
-   the only coloured thing on the page that isn't a photograph. */
-.nav-disciplines { margin-bottom: 24px; }
-.sidebar li a.disc-link { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 6px; }
-.disc-n { color: var(--accent); transition: color 140ms ease; }
-.disc-name { letter-spacing: 0.04em; }
-.disc-link:hover .disc-n,
-.disc-link[aria-current] .disc-n { color: var(--accent); }
-
-.sidebar li a.nav-dm {
-  color: var(--muted);
-  margin-top: 10px;
-}
-.sidebar li a.nav-dm:hover { color: var(--accent); }
-
-.sidebar-foot {
-  margin-top: 34px;
-  color: var(--muted);
-}
-.sidebar-foot p { margin: 0; }
-
-/* ------------------------------------------------------------------- main */
-
-main {
-  padding: 30px var(--gutter) 140px;
-  min-height: 100vh;
-  min-width: 0;
-}
-
-.view { max-width: var(--measure); }
-
-/* every top-level block rises in sequence — --i is set per block in app.js */
-@keyframes rise {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: none; }
-}
-.view > * {
+/* every top-level block rises in sequence; photos unveil top to bottom */
+@keyframes rise   { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes unveil { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+.view.enter > * {
   animation: rise 460ms var(--ease) both;
   animation-delay: calc(var(--i, 0) * 55ms);
 }
-
-/* ------------------------------------------------------------------ media */
-
-.media { margin: 0 0 26px; }
-.media figure { margin: 0 0 10px; }
-.media figcaption { color: var(--muted); margin-top: 7px; }
-
-/* a logo mark, not a photograph — hold it small so the headline and the first
-   paragraph still land above the fold next to it */
-.media-mark { margin-bottom: 18px; }
-.media-mark .frame { width: 132px; background: none; }
-.media-mark .frame:hover img { transform: none; }
-/* The logo is a flat black glyph on a transparent ground, so on the dark
-   theme it would be black on black. Inverting it there keeps it legible in
-   both — and because it reads the same --dark switch as the palette, it can't
-   fall out of step with it. Matched on the file rather than on .media-mark,
-   so it also covers the mark used as artwork on a project page. */
-.frame img[src$="logo.svg"] { filter: invert(var(--dark)); }
-
-@keyframes unveil {
-  from { clip-path: inset(0 0 100% 0); }
-  to   { clip-path: inset(0 0 0 0); }
-}
-.frame {
-  background: var(--shade);
-  overflow: hidden;
+.view.enter .frame {
   animation: unveil 820ms var(--ease) both;
-  animation-delay: calc(var(--i, 0) * 55ms + 60ms);   /* --i inherits from the block */
+  animation-delay: calc(var(--i, 0) * 55ms + 60ms);
 }
-.frame img {
-  width: 100%;
-  image-orientation: from-image;   /* respect the exif rotation on portrait shots */
-  transition: transform 800ms var(--ease);
-}
-.frame:hover img { transform: scale(1.03); }
 
-.embed {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  background: var(--shade);
+.frame { display: block; background: var(--shade); overflow: hidden; }
+.frame img { width: 100%; image-orientation: from-image; transition: transform 800ms var(--ease); }
+
+.work, .offer, .cta, .disc, .checklist, .details { margin-top: 56px; }
+.page-head, .project-head { max-width: 640px; }
+.page-head { margin-bottom: 10px; }
+
+/* ------------------------------------------------------------- home */
+
+.hero { max-width: 640px; }
+.hero-mark { width: 132px; margin: 6px 0 22px; }
+.hero-mark img { width: 100%; filter: invert(var(--dark)); }
+.hero .lede .lead { color: var(--ink); }
+.hero-links { display: flex; flex-wrap: wrap; gap: 0 28px; margin: 14px 0 0; }
+
+.section-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: 0 24px; margin-bottom: 10px;
 }
-.embed iframe {
+
+.filters { display: flex; align-items: center; gap: 2px; }
+.filter {
+  display: inline-flex; align-items: center; gap: 5px;
+  min-height: 44px; padding: 0 6px;
+  color: var(--muted); text-transform: lowercase;
+  transition: color 140ms ease;
+}
+.filter-n { font-size: 0.85em; opacity: 0.7; }
+.filter[aria-current] {
+  color: var(--ink);
+  text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 5px;
+}
+.filters .lang-sep { padding: 0 2px; }
+
+.grid {
+  display: grid; gap: 30px 14px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+.card { display: block; color: var(--ink-soft); transition: color 140ms ease; }
+.card-media { position: relative; aspect-ratio: 4 / 5; }
+.card-media img { width: 100%; height: 100%; object-fit: cover; }
+.card-cap {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr) auto;
+  gap: 0 12px; align-items: baseline;
+  padding: 9px 0; border-bottom: 1px solid var(--rule);
+}
+.card-n { color: var(--accent); }
+.card-title { color: var(--ink); transition: color 140ms ease; }
+.card-year { color: var(--muted); text-align: right; }
+.card-kind { grid-column: 2 / -1; color: var(--muted); }
+
+/* a card with no still: set in type on the paper's shade */
+.tile {
   position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  border: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; padding: 20px; text-align: center;
 }
+.tile-title { color: var(--ink); text-transform: uppercase; letter-spacing: 0.15em; font-size: 20px; line-height: 1.3; }
+html[lang="th"] .tile-title { letter-spacing: 0.03em; }
+.tile-sub { color: var(--muted); text-transform: lowercase; }
 
-/* Instagram. Until embed.js swaps in its iframe — or if a blocker stops it —
-   the blockquote is a plain hairline box with a working link, never a blank
-   hole. Once the iframe arrives, the radius and margin Instagram puts on it
-   go, to match the rest of the page. Inside the iframe is Instagram's own. */
-.media blockquote.instagram-media {
-  margin: 0;
-  padding: 22px 16px;
-  border: 1px solid var(--rule);
-  background: var(--shade);
-}
-.media blockquote.instagram-media a {
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  border-bottom: 1px solid currentColor;
-  transition: color 160ms ease;
-}
-.media blockquote.instagram-media a:hover { color: var(--accent); }
-.media iframe.instagram-media {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  margin: 0 !important;
-  /* Instagram sets min-width: 326px, which is wider than the column on a
-     360px phone — the whole page would scroll sideways by a couple of
-     pixels. Let it fit the column instead. */
-  min-width: 0 !important;
-  max-width: 100% !important;
-}
-
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;      /* so a shorter frame doesn't stretch into a grey gap */
-  gap: 10px;
-}
-
-/* -------------------------------------------------------- headings + copy */
-
-h1, h2 {
-  font-size: inherit;
-  font-weight: 400;
-  margin: 0 0 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.11em;
-}
-
-h1.display {
-  font-size: 32px;
-  line-height: 1.08;
-  letter-spacing: 0.15em;
-  margin: 0 0 6px;
-}
-
-.section-label {
-  color: var(--muted);
-  margin: 36px 0 2px;
-}
-
-.lede { max-width: 46em; }
-.lede em { font-style: italic; }
-.lede b, .lede strong { font-weight: 700; color: var(--ink); }
-
-.link-inline {
-  display: inline-block;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  font-weight: 700;
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 1px;
-  transition: color 160ms ease, transform 220ms var(--ease);
-}
-.link-inline:hover { color: var(--accent); transform: translateX(3px); }
-
-.link-plain {
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: 1px;
-  transition: color 160ms ease, border-color 160ms ease;
-}
-.link-plain:hover { color: var(--accent); border-color: currentColor; }
-
-.meta {
-  color: var(--muted);
-  margin: 0 0 18px;
-}
-
-/* on every page but the landing — a button, not a link, because it walks the
-   history rather than going to a fixed address */
-.back {
-  display: inline-flex;
-  align-items: center;
-  font: inherit;
-  letter-spacing: var(--track);
-  color: var(--muted);
-  background: none;
-  border: 0;
-  min-height: 40px;
-  padding: 0 14px 0 0;
-  margin-bottom: 8px;
-  cursor: pointer;
-  text-transform: lowercase;
-  transition: color 140ms ease, transform 240ms var(--ease);
-}
-.back:hover { color: var(--accent); transform: translateX(-4px); }
-
-/* --------------------------------------------------- rows (about/contact) */
-
-.rows { margin: 0 0 30px; border-top: 1px solid var(--rule); }
-
-.row {
-  display: grid;
-  grid-template-columns: 128px minmax(0, 1fr);
-  gap: 0 16px;
-  padding: 11px 0;
-  border-bottom: 1px solid var(--rule);
-}
-.row > dt { color: var(--muted); text-transform: lowercase; }
-.row > dd { margin: 0; }
-
-/* ------------------------------------ the three disciplines on the landing */
-
-.disc-cards { border-top: 1px solid var(--rule); margin: 0 0 26px; }
-
+/* the two disciplines, as rows — a wash of the shade sweeps in on hover */
+.disc-cards { border-top: 1px solid var(--rule); }
 .disc-card {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  grid-template-columns: 26px 76px minmax(0, 1fr) 18px;
-  gap: 12px;
-  align-items: baseline;
-  padding: 13px 2px;
+  position: relative; isolation: isolate;
+  display: grid; grid-template-columns: 26px 76px minmax(0, 1fr) 18px;
+  gap: 12px; align-items: baseline;
+  padding: 13px 2px; min-height: 48px;
   border-bottom: 1px solid var(--rule);
   color: var(--ink-soft);
 }
-/* a wash of the shade colour sweeps in from the left — the only "fill" left
-   on the site, and it's a tint of the paper rather than a block of colour */
 .disc-card::before {
-  content: "";
-  position: absolute; inset: 0 -10px;
+  content: ""; position: absolute; inset: 0 -10px; z-index: -1;
   background: var(--shade);
-  transform: scaleX(0);
-  transform-origin: left;
+  transform: scaleX(0); transform-origin: left;
   transition: transform 380ms var(--ease);
-  z-index: -1;
 }
-.disc-card:hover::before { transform: scaleX(1); }
 .disc-card-n { color: var(--accent); }
 .disc-card-t { color: var(--ink); text-transform: uppercase; letter-spacing: 0.11em; }
+html[lang="th"] .disc-card-t { letter-spacing: 0.02em; }
 .disc-card-b { color: var(--muted); }
 .disc-card-a {
-  text-align: right;
-  opacity: 0;
-  transform: translateX(-5px);
+  text-align: right; opacity: 0; transform: translateX(-5px);
   transition: opacity 240ms ease, transform 240ms var(--ease);
 }
-.disc-card:hover { color: var(--accent); }
-.disc-card:hover .disc-card-t,
-.disc-card:hover .disc-card-n { color: var(--accent); }
-.disc-card:hover .disc-card-a { opacity: 1; transform: none; }
 
-/* ----------------------------- the numbered service list on each discipline */
+/* ------------------------------------------------- hairline action rows */
+/* contact buttons, the block at the end of every page, next / previous */
 
-.svc { border-top: 1px solid var(--rule); margin: 0 0 8px; }
+.cta-body { color: var(--muted); max-width: 46ch; margin: 0 0 12px; }
 
+.ix-list { border-top: 1px solid var(--rule); max-width: 640px; }
+.ix {
+  display: grid; grid-template-columns: 128px minmax(0, 1fr) 20px;
+  gap: 0 16px; align-items: baseline;
+  width: 100%; min-height: 48px; padding: 12px 0;
+  background: none; border: 0; border-bottom: 1px solid var(--rule);
+  text-align: left; cursor: pointer;
+  color: var(--ink-soft);
+  transition: color 140ms ease, padding-left 240ms var(--ease);
+}
+.ix-k { color: var(--muted); text-transform: lowercase; }
+.ix-v { color: var(--ink); min-width: 0; }
+.ix-a { text-align: right; color: var(--muted); }
+.ix-more .ix-k { color: var(--ink); }
+.tag {
+  margin-left: 6px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85em; white-space: nowrap;
+}
+.copy-label {
+  display: block; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85em;
+}
+html[lang="th"] .tag, html[lang="th"] .copy-label { letter-spacing: 0; }
+.ix-big .ix { padding: 16px 0; min-height: 60px; }
+.ix-big .ix-val { font-size: 1.15em; }
+
+/* --------------------------------------------------------- services */
+
+.disc-title { font-size: 20px; letter-spacing: 0.15em; line-height: 1.2; margin-bottom: 4px; }
+html[lang="th"] .disc-title { letter-spacing: 0.03em; }
+.disc-n { color: var(--accent); font-size: 12px; letter-spacing: 0; margin-right: 12px; vertical-align: 3px; }
+.disc .lede { margin-bottom: 18px; }
+
+.svc { border-top: 1px solid var(--rule); max-width: 640px; }
 .svc-item {
-  display: grid;
-  grid-template-columns: 26px minmax(0, 1fr);
-  gap: 12px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--rule);
+  display: grid; grid-template-columns: 26px minmax(0, 1fr);
+  gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--rule);
 }
 .svc-n { color: var(--accent); }
-.svc-body h2 { margin: 0 0 5px; }
+.svc-body h3 { margin: 0 0 5px; }
 .svc-body p { margin: 0 0 5px; max-width: var(--measure); }
 .svc-gets b { font-weight: 400; color: var(--muted); text-transform: lowercase; }
 .svc-body .svc-note { color: var(--muted); margin: 0; }
 
-/* -------------------------------------------------------------- gear page */
+/* ------------------------------------------------------------ rates */
 
-.gear-group { margin-bottom: 30px; }
-.gear-group:last-of-type { margin-bottom: 34px; }
+.rate-group { margin-top: 36px; max-width: 640px; }
+.rate-list { border-top: 1px solid var(--rule); }
+.rate-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 0 18px; align-items: baseline;
+  padding: 13px 0; border-bottom: 1px solid var(--rule);
+}
+.rate-name  { color: var(--ink); }
+.rate-note  { color: var(--muted); }
+.rate-price { color: var(--ink); white-space: nowrap; text-align: right; }
+.rate-note-foot {
+  color: var(--muted); max-width: 42ch;
+  margin: 30px 0 0; padding-left: 14px; border-left: 1px solid var(--rule);
+}
 
+/* ------------------------------------------------------------ about */
+
+.about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: start; }
+.about-photo { margin: 0; position: sticky; top: calc(var(--top-h) + 30px); }
+.about-photo img { aspect-ratio: 3 / 4; object-fit: cover; }
+
+.rows { margin: 18px 0 0; border-top: 1px solid var(--rule); max-width: 640px; }
+.row {
+  display: grid; grid-template-columns: 128px minmax(0, 1fr);
+  gap: 0 16px; padding: 11px 0; border-bottom: 1px solid var(--rule);
+}
+.row > dt { color: var(--muted); text-transform: lowercase; }
+.row > dd { margin: 0; }
+
+/* ------------------------------------------------------------- gear */
+
+.gear-group { margin-top: 30px; max-width: 760px; }
 .gear-list { border-top: 1px solid var(--rule); }
-
 .gear-row {
-  display: grid;
-  grid-template-columns: 152px minmax(0, 1fr) 14px;
-  gap: 12px;
-  align-items: baseline;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--rule);
+  display: grid; grid-template-columns: 152px minmax(0, 1fr) 14px;
+  gap: 12px; align-items: baseline;
+  padding: 10px 0; min-height: 44px; border-bottom: 1px solid var(--rule);
   color: var(--ink-soft);
 }
 a.gear-row { transition: color 140ms ease, padding-left 240ms var(--ease); }
-a.gear-row:hover { color: var(--accent); padding-left: 6px; }
-
 .gear-name { color: var(--ink); }
-a.gear-row:hover .gear-name { color: var(--accent); }
 .gear-note { color: var(--muted); }
 .gear-link {
-  text-align: right;
-  color: var(--muted);
-  opacity: 0;
-  transform: translateX(-4px);
+  text-align: right; color: var(--muted);
+  opacity: 0; transform: translateX(-4px);
   transition: opacity 200ms ease, transform 200ms var(--ease);
 }
-a.gear-row:hover .gear-link { opacity: 1; transform: none; color: var(--accent); }
 
-/* ------------------------------------------------------------- rates page */
-/* same rhythm as the gear list, with the number holding the right edge so the
-   column reads as a price list at a glance */
+/* ---------------------------------------------------------- contact */
 
-.rate-group { margin-bottom: 34px; }
+.ix-big { margin-top: 18px; }
+.checklist ol { border-top: 1px solid var(--rule); max-width: 640px; }
+.checklist li {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 12px;
+  padding: 11px 0; border-bottom: 1px solid var(--rule);
+}
+.details .rows { margin-top: 0; }
 
-.rate-list { border-top: 1px solid var(--rule); }
+/* ---------------------------------------------------------- project */
 
-.rate-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-  gap: 0 18px;
-  align-items: baseline;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--rule);
+.project-head .meta { margin-bottom: 14px; }
+.media { margin-top: 26px; }
+.media figure { margin: 0 0 10px; }
+.media figcaption { color: var(--muted); margin-top: 7px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 10px; }
+
+.zoom { width: 100%; padding: 0; border: 0; cursor: zoom-in; }
+
+.reels { display: flex; flex-wrap: wrap; gap: 14px; }
+.reels .reel { flex: 1 1 326px; max-width: 420px; margin: 0; }
+/* Until embed.js swaps in its iframe — or if a blocker stops it — the reel
+   is a hairline box the shape of a phone video, with a working link. */
+.media blockquote.instagram-media {
+  margin: 0; padding: 22px 16px;
+  display: grid; place-items: center; aspect-ratio: 9 / 13;
+  border: 1px solid var(--rule); background: var(--shade);
+}
+.media iframe.instagram-media {
+  border-radius: 0 !important; box-shadow: none !important; margin: 0 !important;
+  min-width: 0 !important; max-width: 100% !important;     /* Instagram asks for 326px; a 360px phone has 324 */
 }
 
-.rate-name  { color: var(--ink); }
-.rate-note  { color: var(--muted); }
-.rate-price { color: var(--ink); white-space: nowrap; }
+.embed { position: relative; aspect-ratio: 16 / 9; background: var(--shade); }
+.embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+video { width: 100%; background: #000; }
 
-.rate-note-foot {
-  color: var(--muted);
-  max-width: 42ch;
-  margin: 30px 0 26px;
-  padding-left: 14px;
-  border-left: 1px solid var(--rule);
+.tracks { border-top: 1px solid var(--rule); }
+.tracks li {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 4px 12px;
+  padding: 11px 0; border-bottom: 1px solid var(--rule);
+}
+.track-n { color: var(--accent); }
+.tracks audio { grid-column: 2; width: 100%; }
+
+.pager { margin-top: 40px; }
+
+/* ----------------------------------------------------------- viewer */
+
+.viewer {
+  position: fixed; inset: 0; z-index: 100;
+  display: grid; place-items: center;
+  background: rgba(12, 11, 10, 0.97);
+  animation: fade 180ms ease both;
+}
+.viewer[hidden] { display: none; }
+@keyframes fade { from { opacity: 0; } }
+.viewer-img { max-width: 100vw; max-height: 100vh; max-height: 100dvh; object-fit: contain; }
+.viewer-count {
+  position: absolute; top: max(14px, env(safe-area-inset-top)); left: 18px; margin: 0;
+  color: rgba(255, 255, 255, 0.7); letter-spacing: 0.1em;
+}
+.viewer-btn {
+  position: absolute; display: grid; place-items: center;
+  width: 48px; height: 48px; padding: 0; cursor: pointer;
+  background: none; border: 1px solid rgba(255, 255, 255, 0.28); color: #fff;
+  font-size: 16px; line-height: 1;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+.viewer-btn[hidden] { display: none; }
+.viewer-close { top: max(8px, env(safe-area-inset-top)); right: 10px; font-size: 22px; border-color: transparent; }
+.viewer-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+.viewer-next { right: 14px; top: 50%; transform: translateY(-50%); }
+
+/* ----------------------------------------------------------- footer */
+
+.foot { margin-top: 72px; border-top: 1px solid var(--rule); color: var(--muted); }
+.foot-inner {
+  max-width: calc(var(--max) + 2 * var(--gutter)); margin: 0 auto;
+  padding: 22px var(--gutter) calc(30px + var(--tab-h));
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 32px;
+}
+.foot-brand { margin: 0; }
+.foot-brand b { color: var(--ink); letter-spacing: 0.02em; margin-right: 8px; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 0 18px; }
+.foot-links a { display: inline-flex; align-items: center; min-height: 44px; text-transform: lowercase; transition: color 140ms ease; }
+.foot-meta { width: 100%; margin: 0; }
+
+/* ------------------------------------------------------------ tab bar */
+
+.tabbar { display: none; }
+
+/* ------------------------------------------------------------ hover */
+/* only where there is a real pointer; on a phone a hover state sticks
+   after the tap */
+
+@media (hover: hover) {
+  .brand:hover .wordmark { color: var(--accent); }
+  .top-nav a:hover { color: var(--accent); }
+  .top-nav a:hover::before { opacity: 1; transform: none; }
+  .lang-btn:hover, .icon-btn:hover { color: var(--accent); }
+  .link-inline:hover { color: var(--accent); transform: translateX(3px); }
+  .link-plain:hover { color: var(--accent); text-decoration-color: currentColor; }
+  .back:hover { color: var(--accent); transform: translateX(-4px); }
+  .filter:hover { color: var(--accent); }
+  .card:hover .card-title { color: var(--accent); }
+  .card:hover .frame img { transform: scale(1.03); }
+  .zoom:hover img { transform: scale(1.03); }
+  .disc-card:hover { color: var(--accent); }
+  .disc-card:hover::before { transform: scaleX(1); }
+  .disc-card:hover .disc-card-t, .disc-card:hover .disc-card-n { color: var(--accent); }
+  .disc-card:hover .disc-card-a { opacity: 1; transform: none; }
+  .ix:hover { color: var(--accent); padding-left: 6px; }
+  .ix:hover .ix-k, .ix:hover .ix-v, .ix:hover .ix-a { color: var(--accent); }
+  a.gear-row:hover { color: var(--accent); padding-left: 6px; }
+  a.gear-row:hover .gear-name { color: var(--accent); }
+  a.gear-row:hover .gear-link { opacity: 1; transform: none; color: var(--accent); }
+  .foot-links a:hover { color: var(--accent); }
+  .viewer-btn:hover { border-color: #fff; }
 }
 
-/* ---------------------------------------------------------- index of work */
-
-.index-list { border-top: 1px solid var(--rule); margin-bottom: 30px; }
-.index-list a {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 118px 56px;
-  gap: 12px;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--rule);
-  color: var(--ink-soft);
-  transition: color 140ms ease, padding-left 240ms var(--ease);
-}
-.index-list a:hover { color: var(--accent); padding-left: 6px; }
-.index-list .c2, .index-list .c3 { color: var(--muted); }
-.index-list .c3 { text-align: right; }
-
-/* "more — dm for details", appended to every work index */
-.index-list a.dm-row {
-  grid-template-columns: minmax(0, 1fr) 20px;
-  color: var(--muted);
-}
-.index-list a.dm-row:hover { color: var(--accent); }
-.dm-arrow {
-  text-align: right;
-  transform: translateX(-4px);
-  opacity: 0;
-  transition: opacity 200ms ease, transform 200ms var(--ease);
-}
-.index-list a.dm-row:hover .dm-arrow { opacity: 1; transform: none; }
-
-/* --------------------------------------------------------- tracks (sound) */
-
-.tracks { border-top: 1px solid var(--rule); margin: 0 0 26px; }
-
-.track {
-  display: grid;
-  grid-template-columns: 22px minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: baseline;
-  width: 100%;
-  padding: 9px 0;
-  border: 0;
-  border-bottom: 1px solid var(--rule);
-  background: none;
-  font: inherit;
-  letter-spacing: inherit;
-  color: var(--ink-soft);
-  text-align: left;
-  cursor: pointer;
-  transition: color 140ms ease, padding-left 240ms var(--ease);
-}
-.track:hover { color: var(--accent); padding-left: 6px; }
-.track .n, .track .d { color: var(--muted); }
-.track[data-state="playing"] { color: var(--ink); }
-.track[data-state="playing"] .n { color: var(--ink); }
-
-/* -------------------------------------------------------- fixed audio bar */
-
-.player {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  z-index: 15;
-  display: grid;
-  grid-template-columns: 26px minmax(0, 1fr) 22px;
-  align-items: center;
-  gap: 12px;
-  padding: 9px 16px 11px;
-  background: var(--bg);
-  border-top: 1px solid var(--rule);
-}
-.player[hidden] { display: none; }
-.player button { font: inherit; background: none; border: 0; color: var(--ink); cursor: pointer; padding: 0; }
-.player button:hover { color: var(--accent); }
-.player-meta { display: flex; justify-content: space-between; gap: 16px; }
-.player-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.player-time { color: var(--muted); white-space: nowrap; }
-.player-bar { grid-column: 2; height: 1px; background: var(--rule); cursor: pointer; }
-.player-bar span { display: block; height: 100%; width: 0; background: var(--accent); }
-
-/* ------------------------------------------------------- page transition */
-/* Six slats sweep down and cover the screen, the destination flashes like a
-   clapperboard slate, then the slats sweep away off the bottom.
-   Timings here are mirrored in app.js — change both together. */
-
-.wipe {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  visibility: hidden;
-  pointer-events: none;
-}
-.wipe.is-active { visibility: visible; pointer-events: auto; }
-
-.wipe-col {
-  background: var(--ink);
-  transform: scaleY(0);
-  transform-origin: top center;
-  will-change: transform;
+/* touch: the arrows that hover keeps hidden are always shown, and a tap tints */
+@media (hover: none) {
+  .disc-card-a, .gear-link { opacity: 1; transform: none; }
+  .disc-card:active::before { transform: scaleX(1); }
+  .ix:active, .card:active .card-title, a.gear-row:active, .link-inline:active, .filter:active { color: var(--accent); }
+  .ix:active .ix-k, .ix:active .ix-v { color: var(--accent); }
 }
 
-@keyframes slatDown { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-@keyframes slatUp   { from { transform: scaleY(1); } to { transform: scaleY(0); } }
+/* -------------------------------------------------------- tablet down */
 
-.wipe.is-covering .wipe-col {
-  animation: slatDown 240ms cubic-bezier(.76, 0, .24, 1) both;
-  animation-delay: calc(var(--i) * 26ms);
-}
-.wipe.is-revealing .wipe-col {
-  transform-origin: bottom center;
-  animation: slatUp 240ms cubic-bezier(.76, 0, .24, 1) both;
-  animation-delay: calc((5 - var(--i)) * 26ms);
+@media (max-width: 900px) {
+  .about { grid-template-columns: 1fr; gap: 26px; }
+  .about-photo { position: static; max-width: 520px; }
+  .about-photo img { aspect-ratio: 4 / 5; }
 }
 
-.wipe-slate {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: var(--bg);
-  text-transform: uppercase;
-  font-size: 13px;
-  letter-spacing: 0.75em;
-  text-indent: 0.75em;
-  opacity: 0;
-}
-.wipe-slate::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: calc(50% + 20px);
-  width: 90px; height: 1px;
-  background: var(--accent);
-  transform: translateX(-50%) scaleX(0);
-}
-
-@keyframes slateIn  { from { opacity: 0; letter-spacing: 0.3em; } to { opacity: 1; letter-spacing: 0.75em; } }
-@keyframes slateOut { from { opacity: 1; } to { opacity: 0; } }
-@keyframes ruleOut  { from { transform: translateX(-50%) scaleX(0); } to { transform: translateX(-50%) scaleX(1); } }
-
-.wipe.is-covering  .wipe-slate { animation: slateIn 260ms var(--ease) 170ms both; }
-.wipe.is-covering  .wipe-slate::after { animation: ruleOut 340ms var(--ease) 210ms both; }
-.wipe.is-revealing .wipe-slate { animation: slateOut 150ms ease both; }
-
-/* ------------------------------------------------------------- responsive */
+/* ------------------------------------------------------------- phone */
+/* 14px mono (15px Thai) is what a phone reads comfortably. The header keeps
+   the name, language and theme; the five pages move to a bar along the
+   bottom — contact in the accent, like the old "say hello" bar. */
 
 @media (max-width: 860px) {
-  /* Phone type. 11.5px is a desktop size; on a handset it's a squint. 14px
-     (15px Thai, for the vowel marks) is what a phone reads comfortably. The
-     gutter narrows to match, which also gives Instagram's embed the 326px
-     it insists on. */
-  :root { --fs: 14px; --gutter: 18px; }
+  :root { --fs: 14px; --gutter: 18px; --top-h: 54px; --tab-h: calc(56px + env(safe-area-inset-bottom)); }
   html[lang="th"] { --fs: 15px; }
 
-  body { grid-template-columns: 1fr; }
+  .top-nav { display: none; }
+  .top-inner { gap: 10px; }
+  .top-tools { margin-left: auto; gap: 4px; }
+  .brand { gap: 10px; }
 
-  .sidebar {
-    position: static;
-    height: auto;
-    overflow: visible;
-    padding: 24px var(--gutter) 0;
-    border-right: 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  /* An explicit 2x2: wordmark + menu on top, tagline + language/theme under
-     it. Left to wrap on its own the button either stranded itself on an empty
-     line or landed between the wordmark and the tagline. */
-  .sidebar-head {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 8px 12px;
-  }
-  .wordmark    { grid-area: 1 / 1; }
-  .menu-toggle { grid-area: 1 / 2; display: block; justify-self: end; }
-  .tagline     { grid-area: 2 / 1; margin-bottom: 0; }
-  .controls    { grid-area: 2 / 2; margin-bottom: 0; justify-self: end; }
-
-  /* One column. Two columns split the menu into misaligned halves — the
-     disciplines stranded on the left while the pages staggered down the
-     right — and contact ended up seventh in a list of thirteen. */
-  .sidebar-nav {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0 20px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 300ms var(--ease);
-  }
-  .sidebar-nav.is-open { max-height: 200vh; }
-  /* The per-project links duplicate "work index", which lists every one;
-     on a phone they only make the menu longer than the screen. */
-  .sidebar-nav nav[aria-label="Work"] { display: none; }
-  .nav-block:first-child { margin-top: 20px; }
-  .sidebar li a { padding: 3.5px 0; }        /* bigger tap targets on touch */
-  .back { min-height: 44px; padding-right: 18px; }
-  .sidebar-foot { grid-column: 1 / -1; margin-top: 0; padding-bottom: 22px; }
-
-  main { padding: 26px var(--gutter) 120px; min-height: 0; }
-  .view { max-width: 560px; }
+  .view { padding-top: 22px; }
   h1.display { font-size: 24px; letter-spacing: 0.12em; }
-  .row { grid-template-columns: 1fr; gap: 0; }
-  .index-list a { grid-template-columns: minmax(0, 1fr) 56px; }
-  .index-list .c2 { display: none; }
+  html[lang="th"] h1.display { font-size: 22px; letter-spacing: 0.02em; }
+  .hero-mark { width: 96px; margin: 4px 0 18px; }
+
+  .work, .offer, .cta, .disc, .checklist, .details { margin-top: 44px; }
+  .section-head { flex-direction: column; align-items: flex-start; margin-bottom: 4px; }
+  .filters { margin-left: -6px; }
+
+  .grid { grid-template-columns: 1fr; gap: 24px; }
+
   .disc-card { grid-template-columns: 22px minmax(0, 1fr) 16px; }
-  /* the blurb drops to its own line; the arrow has to be pinned to the top
-     row explicitly or auto-placement strands it on a third line, at the far
-     left, where it reads as a stray mark rather than as "go" */
   .disc-card-b { grid-column: 2 / -1; grid-row: 2; }
   .disc-card-a { grid-column: 3; grid-row: 1; }
-  .gear-row { grid-template-columns: minmax(0, 1fr) 14px; gap: 0 12px; }
-  .gear-note { grid-column: 1; }
-  .gear-link { grid-row: 1; grid-column: 2; opacity: 1; transform: none; }
-  /* name over note on the left, price stays pinned right */
+
+  .ix { grid-template-columns: 88px minmax(0, 1fr) 16px; gap: 0 12px; }
+
   .rate-row { grid-template-columns: minmax(0, 1fr) auto; gap: 0 12px; }
   .rate-note { grid-column: 1; grid-row: 2; }
   .rate-price { grid-column: 2; grid-row: 1; }
-  .wipe-slate { font-size: 11px; letter-spacing: 0.5em; text-indent: 0.5em; }
-}
 
-/* ------------------------------------------------------------------ touch */
-/* Every interactive cue above is written as a :hover state — the wash behind a
-   discipline row, the arrow that slides in from the left, the nudge to the
-   right. A phone has no hover, so on a touch device not one of them ever
-   fires and every row renders as flat, inert text. That is why the site read
-   as unclickable on a phone while looking fine on a desktop.
+  .row { grid-template-columns: 1fr; gap: 0; }
+  .gear-row { grid-template-columns: minmax(0, 1fr) 14px; gap: 0 12px; }
+  .gear-note { grid-column: 1; }
+  .gear-link { grid-row: 1; grid-column: 2; }
 
-   Nothing new is invented here. The arrows already exist in the markup, so
-   touch simply stops hiding them, and :active stands in for :hover so a tap
-   has feedback. Targets go to the 44px floor while we're here — 9px of
-   padding on an index row is not a thumb-sized target. */
+  .grid-2 { grid-template-columns: 1fr; }
+  .reels .reel { flex-basis: 100%; max-width: none; }
 
-/* ------------------------------------------------------------ say hello */
-/* Phone only: a bar on every page but contact, so getting in touch is one
-   tap from anywhere rather than menu, scan, tap. It is the accent colour —
-   the one coloured action on the site. Text takes var(--bg), which keeps it
-   readable in both themes: paper on terracotta (5.27:1), near-black on the
-   lighter dark-theme terracotta (6.35:1). */
-.hello-bar { display: none; }
-@media (max-width: 860px) {
-  .hello-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
-    z-index: 14;                         /* under the player (15) and the wipe (40) */
-    min-height: 54px;
-    padding: 0 var(--gutter);
-    background: var(--accent);
-    color: var(--bg);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
+  .viewer-prev, .viewer-next { top: auto; bottom: max(18px, env(safe-area-inset-bottom)); transform: none; }
+
+  .tabbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.25fr);
+    height: var(--tab-h); padding-bottom: env(safe-area-inset-bottom);
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+    transition: background-color 340ms ease;
   }
-  .hello-bar[hidden] { display: none; }
-  .hello-bar:active { opacity: 0.85; }
-  main { padding-bottom: 150px; }        /* so the bar never covers the last line */
+  .tabbar a {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    min-width: 0; padding: 0 2px;
+    color: var(--muted); text-transform: lowercase; font-size: 12.5px;
+  }
+  .tabbar a span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tabbar a[aria-current] { color: var(--ink); }
+  .tabbar a[aria-current]::before {
+    content: ""; position: absolute; top: -1px; left: 22%; right: 22%; height: 2px; background: var(--accent);
+  }
+  .tabbar a.tab-cta {
+    margin-bottom: calc(-1 * env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom);
+    background: var(--accent); color: var(--bg);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px;
+  }
+  .tabbar a.tab-cta[aria-current]::before { display: none; }
+  html[lang="th"] .tabbar a { font-size: 13px; letter-spacing: 0; }
+  .tabbar a:active { color: var(--accent); }
+  .tabbar a.tab-cta:active { opacity: 0.85; color: var(--bg); }
+
+  .foot { margin-top: 56px; }
+  .foot-links { gap: 0 16px; }
+  .foot-links a { min-width: 44px; }
 }
 
-/* Tap to copy — the LINE id. Underlined like any other link, with the action
-   named beside it in the accent. The padding/negative margin pair makes the
-   tap target taller without moving anything. */
-.copy-btn {
-  display: inline-block;
-  font: inherit;
-  letter-spacing: inherit;
-  color: inherit;
-  text-align: left;
-  background: none;
-  border: 0;
-  border-bottom: 1px solid var(--rule);
-  padding: 8px 0 1px;
-  margin: -8px 0 0;
-  cursor: pointer;
-  transition: border-color 160ms ease;
-}
-.copy-btn:hover { border-color: currentColor; }
-.copy-label {
-  margin-left: 8px;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.85em;
+@media (max-width: 370px) {
+  .tagline { display: none; }
+  .ix { grid-template-columns: 76px minmax(0, 1fr) 14px; }
 }
 
-@media (hover: none) {
-  /* the affordances hover was keeping to itself */
-  .disc-card-a,
-  .gear-link,
-  .dm-arrow { opacity: 1; transform: none; }
-
-  /* a tap is the only "hover" a phone has, so give it the same wash */
-  .disc-card:active::before { transform: scaleX(1); }
-  .disc-card:active,
-  .disc-card:active .disc-card-t,
-  .disc-card:active .disc-card-n,
-  .index-list a:active,
-  a.gear-row:active,
-  a.gear-row:active .gear-name,
-  .track:active,
-  .sidebar li a:active,
-  .link-inline:active,
-  .link-plain:active { color: var(--accent); }
-
-  /* rows tint on press — the shade wash, not a colour */
-  .index-list a:active,
-  a.gear-row:active,
-  .track:active { background: var(--shade); }
-
-  /* thumb-sized targets */
-  .disc-card    { padding-top: 16px; padding-bottom: 16px; }
-  .index-list a { padding-top: 13px; padding-bottom: 13px; }
-  .gear-row,
-  .rate-row     { padding-top: 13px; padding-bottom: 13px; }
-  .track        { padding-top: 13px; padding-bottom: 13px; }
-  .sidebar li a { padding-top: 9px; padding-bottom: 9px; }    /* 44px at 14px type */
-
-  /* the sidebar's hover marker is dead weight on touch; show it on the
-     current page only, where it means something */
-  .sidebar li a::before { display: none; }
-  .sidebar li a[aria-current]::before { display: block; opacity: 1; transform: none; }
-
-  /* the browser's own grey flash fights the wash above */
-  a, button { -webkit-tap-highlight-color: transparent; }
-}
+/* ------------------------------------------------------------ motion */
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .wipe { display: none; }
-}
-
-@media print {
-  .player, .wipe, .controls, .menu-toggle { display: none; }
-  body { grid-template-columns: 1fr; background: #fff; color: #000; }
-  .sidebar { border-right: 0; height: auto; position: static; }
 }

@@ -24,58 +24,52 @@ const CONTENT = {
 
   /* ------------------------------------------------------------ ui labels */
   /* The words the site itself needs — buttons, section headings, the 404.
-     {x} in selectedWork is replaced with the discipline name. */
+     {x} is replaced with a discipline name, {n} with a number. */
 
   ui: {
     en: {
-      navWork: "work index", navAbout: "about", navGear: "gear",
-      navRates: "price rate", navContact: "contact",
-      workLabel: "work", menu: "menu", close: "close",
-      themeToDark: "switch to dark", themeToLight: "switch to light",
-      dmWork: "more — dm for details",
-      selectedWork: "SELECTED {x} WORK", allWork: "ALL WORK",
-      workWithMe: "WORK WITH ME", youGet: "you get",
-      notFoundTitle: "NOT HERE", notFoundBody: "that page doesn't exist (yet).",
-      backHome: "BACK TO THE START", missingFile: "missing file — add ",
-      back: "back", watchInstagram: "watch on instagram",
-      sayHello: "say hello", copy: "copy", copied: "copied — paste it in line"
+      navWork: "work", navServices: "services", navRates: "prices",
+      navAbout: "about", navContact: "contact", navGear: "gear",
+      skip: "skip to content", themeToDark: "switch to dark", themeToLight: "switch to light",
+      filterAll: "all", workHeading: "selected work", servicesHeading: "what i do",
+      seeWork: "see the work", seePrices: "see prices", askPrice: "ask for a price",
+      seeDiscWork: "see the {x} work", youGet: "you get", next: "next", prev: "previous",
+      close: "close", backToWork: "all work", photos: "{n} photos", reels: "{n} reels",
+      reelTile: "instagram reel", watchInstagram: "watch on instagram",
+      ctaTitle: "got a project?",
+      ctaBody: "dates, place, rough budget. instagram or line is fastest — replies within a day.",
+      dmInstagram: "dm on instagram", allContacts: "all contacts", fastest: "fastest",
+      tapToCopy: "tap to copy", copied: "copied — paste it in line",
+      whatToSend: "what to send", details: "details",
+      notFoundTitle: "NOT HERE", notFoundBody: "that page doesn't exist (yet).", backHome: "back to the start"
     },
     th: {
-      navWork: "งานทั้งหมด", navAbout: "เกี่ยวกับ", navGear: "อุปกรณ์",
-      navRates: "เรทราคา", navContact: "ติดต่อ",
-      workLabel: "งาน", menu: "เมนู", close: "ปิด",
-      themeToDark: "เปลี่ยนเป็นธีมมืด", themeToLight: "เปลี่ยนเป็นธีมสว่าง",
-      dmWork: "งานอื่น ๆ ทักมาถามได้",
-      selectedWork: "งาน{x}ที่เลือกมา", allWork: "งานทั้งหมด",
-      workWithMe: "อยากทำงานด้วยกัน", youGet: "ได้อะไร",
-      notFoundTitle: "ไม่มีหน้านี้", notFoundBody: "หน้านี้ยังไม่มี",
-      backHome: "กลับหน้าแรก", missingFile: "ไม่เจอไฟล์ — ใส่ ",
-      back: "ย้อนกลับ", watchInstagram: "ดูบน instagram",
-      sayHello: "ทักมาคุยกัน", copy: "คัดลอก", copied: "คัดลอกแล้ว — วางในไลน์ได้เลย"
+      navWork: "ผลงาน", navServices: "บริการ", navRates: "ราคา",
+      navAbout: "เกี่ยวกับ", navContact: "ติดต่อ", navGear: "อุปกรณ์",
+      skip: "ข้ามไปเนื้อหา", themeToDark: "เปลี่ยนเป็นธีมมืด", themeToLight: "เปลี่ยนเป็นธีมสว่าง",
+      filterAll: "ทั้งหมด", workHeading: "ผลงาน", servicesHeading: "รับงานอะไรบ้าง",
+      seeWork: "ดูผลงาน", seePrices: "ดูเรทราคา", askPrice: "ทักมาถามราคา",
+      seeDiscWork: "ดูงาน{x}", youGet: "ได้อะไร", next: "ถัดไป", prev: "ก่อนหน้า",
+      close: "ปิด", backToWork: "ผลงานทั้งหมด", photos: "{n} รูป", reels: "{n} คลิป",
+      reelTile: "รีลบน instagram", watchInstagram: "ดูบน instagram",
+      ctaTitle: "มีงานให้ถ่ายไหม",
+      ctaBody: "บอกวัน สถานที่ งบคร่าว ๆ ทักไอจีหรือไลน์เร็วสุด ตอบในวัน",
+      dmInstagram: "ทักไอจี", allContacts: "ช่องทางอื่น", fastest: "เร็วสุด",
+      tapToCopy: "แตะเพื่อคัดลอก", copied: "คัดลอกแล้ว — วางในไลน์ได้เลย",
+      whatToSend: "ส่งอะไรมาบ้าง", details: "รายละเอียด",
+      notFoundTitle: "ไม่มีหน้านี้", notFoundBody: "หน้านี้ยังไม่มี", backHome: "กลับหน้าแรก"
     }
   },
 
   /* -------------------------------------------------------------- landing */
 
   home: {
-    /* the landing image. `mark: true` holds it small — it's a logo, not a
-       photograph, so it shouldn't take the whole column. Drop the flag and
-       point `src` at a photo to run one full-width instead. */
-    cover: { src: "assets/img/logo.svg", alt: "Reverie", mark: true },
-    headline: "REVERIE",
+    /* under the REVERIE heading: one line that says what this is, one
+       short paragraph, then straight into the work */
+    headline: { en: "film and photo, made in lampang.", th: "รับถ่ายวิดีโอ ถ่ายภาพ ลำปาง" },
     body: {
-      en: [
-        "a small studio for <b>film</b> and <b>photo</b>, working out of <em>lampang, thailand</em>.",
-        "one person who shoots it, cuts it, scores it and mixes it. no agency layer, no waiting three weeks for a first draft."
-      ],
-      th: [
-        "สตูดิโอเล็ก ๆ ที่ทำ <b>วิดีโอ</b> กับ <b>ภาพ</b> — base อยู่ <em>ลำปาง</em>",
-        "ถ่ายเอง ตัดเอง ทำเพลงเอง มิกซ์เอง คนเดียวจบ ไม่มีคนกลาง ไม่ต้องรอ 3 อาทิตย์กว่าจะได้ดูดราฟต์แรก"
-      ]
-    },
-    cta: {
-      label: { en: "START A PROJECT", th: "ทักมาคุยกัน" },
-      href: "mailto:chaiananpanadit.direct@gmail.com"
+      en: "one person who shoots it, cuts it, scores it and mixes it. no agency layer, no waiting three weeks for a first draft.",
+      th: "ถ่ายเอง ตัดเอง ทำเพลงเอง มิกซ์เอง คนเดียวจบ ไม่มีคนกลาง ไม่ต้องรอ 3 อาทิตย์กว่าจะได้ดูดราฟต์แรก"
     }
   },
 
@@ -135,8 +129,7 @@ const CONTENT = {
           gets: { en: "one song per setup, video + mixed audio", th: "เพลงละหนึ่งเซ็ต ได้ทั้งวิดีโอและเสียงที่มิกซ์แล้ว" },
           note: { en: "in your room or mine · add songs at a reduced rate", th: "ห้องซ้อมหรือสตูดิโอก็ได้ · เพลงต่อไปคิดถูกลง" }
         }
-      ],
-      cta: { label: { en: "BOOK A SHOOT DAY", th: "จองคิวถ่าย" }, href: "mailto:chaiananpanadit.direct@gmail.com" }
+      ]
     },
 
     /* ------------------------------------------------------------ PHOTO */
@@ -177,8 +170,7 @@ const CONTENT = {
         /* TODO — add more photo services here when you decide them. Copy the
            block above, change the words. e.g. event coverage, 35mm film,
            product on white, lookbook. */
-      ],
-      cta: { label: { en: "BOOK A SHOOT", th: "จองคิวถ่าย" }, href: "mailto:chaiananpanadit.direct@gmail.com" }
+      ]
     },
 
   },
@@ -191,6 +183,14 @@ const CONTENT = {
       en: "tell me the dates, the place, what you need out the other end, and roughly the budget. instagram or line is fastest — i reply within a day.",
       th: "บอกวัน สถานที่ อยากได้งานแบบไหน แล้วก็งบคร่าว ๆ ทักไอจีหรือไลน์เร็วสุด ตอบภายในวันแน่นอน"
     },
+    /* the "what to send" list under the buttons */
+    checklist: {
+      en: ["the date (or dates)", "where it is", "what you want at the end — photos, a clip, a full edit", "a rough budget"],
+      th: ["วันไหน", "ที่ไหน", "อยากได้อะไร รูป คลิปสั้น หรือตัดเต็ม", "งบประมาณคร่าว ๆ"]
+    },
+    /* rows that link to instagram, line (`copy: true`), a phone number or an
+       email become the big buttons at the top of the contact page, fastest
+       first. Everything else is listed underneath as details. */
     rows: [
       { k: "instagram",                        v: "@reverie._exe",                    href: "https://instagram.com/reverie._exe" },
       { k: { en: "email",  th: "อีเมล" },      v: "chaiananpanadit.direct@gmail.com", href: "mailto:chaiananpanadit.direct@gmail.com" },
@@ -211,9 +211,8 @@ const CONTENT = {
 
   about: {
     headline: { en: "ABOUT", th: "เกี่ยวกับ" },
-    /* 3244x4325 straight off the phone — 4.3 MB. Export it at 1000x1250 and
-       save over the same filename when you get a chance. */
-    cover: { src: "assets/media/photo/portrait.jpg", alt: "Chaianan Panadit" },
+    /* a 1200px copy of portrait.jpg (the 4.3 MB original is left untouched) */
+    cover: { src: "assets/media/photo/portrait-web.jpg", alt: "Chaianan Panadit" },
     body: {
       en: [
         "my name is <b>chaianan panadit</b>. call me <b>vi</b> — it's the middle of ri<em>(vi)</em>ère, and it stuck.",
@@ -363,8 +362,7 @@ const CONTENT = {
             url: "https://www.apple.com/macbook-air" }
         ]
       }
-    ],
-    cta: { label: { en: "START A PROJECT", th: "ทักมาคุยกัน" }, href: "mailto:chaiananpanadit.direct@gmail.com" }
+    ]
   },
 
   /* ----------------------------------------------------------------- rates */
@@ -422,8 +420,7 @@ const CONTENT = {
     note: {
       en: "i'd rather do forty interesting jobs than four expensive boring ones. i'll take the brief nobody else wants. — rivi",
       th: "ขอทำงานสนุก ๆ สี่สิบงาน ดีกว่างานแพงแต่น่าเบื่อสี่งาน งานที่ไม่มีใครอยากรับ ส่งมาได้เลย — rivi"
-    },
-    cta: { label: { en: "GET A NUMBER", th: "ขอราคา" }, href: "mailto:chaiananpanadit.direct@gmail.com" }
+    }
   },
 
   /* ----------------------------------------------------------------- work */
@@ -437,7 +434,9 @@ const CONTENT = {
 
        discipline : "film" | "photo"   <- which page it shows up on
        slug       : url id, lowercase, no spaces
-       client     : the label in the sidebar list
+       client     : the name on the grid card
+       cover      : the grid card image (optional — without one the card is
+                    set in type, which is how the sports day reels show)
        media      : any number of blocks —
 
          { type: "image",  src, alt, caption }
@@ -445,7 +444,7 @@ const CONTENT = {
          { type: "video",  src, poster, caption }             local .mp4
          { type: "embed",  src, caption }                     youtube/vimeo
          { type: "instagram", src, caption }                  a post or reel url
-         { type: "audio",  tracks: [{title, src, length}] }   track list + player
+         { type: "audio",  tracks: [{title, src, length}] }   track list
   */
 
   work: [
@@ -472,6 +471,7 @@ const CONTENT = {
        if it comes back). */
     {
       discipline: "photo", slug: "portrait-night",
+      cover: "assets/media/covers/portrait-night.jpg",
       client: { en: "portrait night", th: "พอร์ตเทรตกลางคืน" },
       title:  { en: "PORTRAIT NIGHT", th: "พอร์ตเทรตกลางคืน" },
       kind:   { en: "portrait series", th: "ชุดพอร์ตเทรต" },
@@ -505,6 +505,7 @@ const CONTENT = {
 
     {
       discipline: "photo", slug: "night-streets",
+      cover: "assets/media/covers/night-streets.jpg",
       client: { en: "night streets", th: "ถนนกลางคืน" },
       title:  { en: "NIGHT STREETS", th: "ถนนกลางคืน" },
       kind:   { en: "street series", th: "ชุดภาพถนน" },
@@ -536,6 +537,7 @@ const CONTENT = {
       /* TODO rename this — i called it "fishing days" from what's in the frames.
          Cut any image you don't want: delete its { src, alt } line. */
       discipline: "photo", slug: "fishing-days",
+      cover: "assets/media/covers/fishing-days.jpg",
       client: { en: "fishing days", th: "วันไปตกปลา" },
       title:  { en: "FISHING DAYS", th: "วันไปตกปลา" },
       year: "2026",
@@ -593,6 +595,7 @@ const CONTENT = {
          haven't told me what the day was. Rewrite it, and add the rest of the
          take if you have it: copy an { type: "image", ... } line per frame. */
       discipline: "photo", slug: "festival",
+      cover: "assets/media/covers/festival.jpg",
       client: { en: "festival",  th: "เทศกาล" },
       title:  { en: "FESTIVAL",  th: "เทศกาล" },
       year: "2026",
