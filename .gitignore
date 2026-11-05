@@ -1,0 +1,10 @@
+# GitHub hard-rejects any file over 100 MB, and a GitHub Pages site is capped
+# at 1 GB. Self-hosted masters go on YouTube/Vimeo instead and get embedded.
+assets/media/film/*.mp4
+assets/media/film/*.mov
+assets/media/sound/*.wav
+
+# local editor / OS noise
+*.bak
+Thumbs.db
+.DS_Store

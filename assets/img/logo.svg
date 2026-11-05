@@ -1,0 +1,15 @@
+<!-- The reverie K. Drawn on a transparent ground so it sits directly on the
+     paper rather than in a tile of its own — the stylesheet inverts it for the
+     dark theme (.media-mark .frame img), which is why the fill stays a flat
+     black here. The viewBox is cropped to the glyph, so the mark fills the box
+     it's given instead of floating in empty margin. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="171 281 1221 1071" role="img" aria-label="K">
+  <g fill="#0d0d0d">
+    <!-- stem -->
+    <path d="M668 341 H860 L425 1112 H231 Z"/>
+    <!-- upper arm -->
+    <path d="M1137 341 H1332 L1118 713 H922 Z"/>
+    <!-- lower leg -->
+    <path d="M700 745 L897 742 L1110 1140 L1005 1292 Z"/>
+  </g>
+</svg>
