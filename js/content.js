@@ -384,9 +384,9 @@ const CONTENT = {
         title: { en: "photography", th: "ถ่ายภาพ" },
         items: [
           { name: { en: "photoshoot",   th: "ถ่ายภาพ" },
-            note: { en: "per hour",     th: "ต่อชั่วโมง" }, price: "400–600" },
+            note: { en: "whole set",    th: "ทั้งเซ็ต" }, price: "400–600" },
           { name: { en: "couple photo", th: "ถ่ายคู่" },
-            note: { en: "per hour",     th: "ต่อชั่วโมง" }, price: "500–800" },
+            note: { en: "whole set",    th: "ทั้งเซ็ต" }, price: "500–800" },
           { name: { en: "school event", th: "งานโรงเรียน" },
             note: { en: "full event",   th: "ทั้งงาน" },    price: "1,500–3,000" }
         ]
