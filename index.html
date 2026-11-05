@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>reverie — film, photo, sound</title>
+<meta name="description" content="Reverie — a studio for film, photo and sound by Chaianan Panadit (Vi), Lampang, Thailand. Vlogs, short films, event coverage, live sessions, photoshoots, mixing and score.">
+<meta name="author" content="Chaianan Panadit">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="reverie — film, photo, sound">
+<meta property="og:description" content="A studio for film, photo and sound. Lampang, Thailand.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<script>
+  /* Apply a saved theme before first paint, otherwise a visitor who chose dark
+     on a light system sees a white flash on every page load. */
+  try {
+    var _t = localStorage.getItem('reverie-theme');
+    if (_t === 'light' || _t === 'dark') document.documentElement.setAttribute('data-theme', _t);
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">skip to content</a>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-head">
+    <a class="wordmark" href="#/" data-bind="name">reverie</a>
+    <p class="tagline" data-bind="tagline">tagline</p>
+    <div class="controls">
+      <div class="lang" id="lang" role="group" aria-label="Language"></div>
+
+      <button class="theme-btn" id="theme-btn" type="button" aria-label="Toggle theme">
+        <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <mask id="theme-cut">
+            <rect x="-4" y="-4" width="32" height="32" fill="#fff"/>
+            <circle class="theme-bite" cx="12" cy="12" r="8" fill="#000"/>
+          </mask>
+          <circle class="theme-orb" cx="12" cy="12" r="8" fill="currentColor" mask="url(#theme-cut)"/>
+          <g class="theme-rays" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <line x1="12" y1="0.5" x2="12" y2="3"/>
+            <line x1="12" y1="21"  x2="12" y2="23.5"/>
+            <line x1="0.5" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12"  x2="23.5" y2="12"/>
+            <line x1="4"  y1="4"   x2="5.8" y2="5.8"/>
+            <line x1="18.2" y1="18.2" x2="20" y2="20"/>
+            <line x1="4"  y1="20"  x2="5.8" y2="18.2"/>
+            <line x1="18.2" y1="5.8" x2="20" y2="4"/>
+          </g>
+        </svg>
+      </button>
+    </div>
+
+    <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="sidebar-nav">menu</button>
+  </div>
+
+  <div class="sidebar-nav" id="sidebar-nav">
+    <nav class="nav-block nav-disciplines" aria-label="Disciplines">
+      <ul id="nav-disciplines"></ul>
+    </nav>
+
+    <nav class="nav-block" aria-label="Primary">
+      <ul id="nav-primary"></ul>
+    </nav>
+
+    <nav class="nav-block" aria-label="Work">
+      <p class="nav-label" id="nav-work-label">work</p>
+      <ul id="nav-work"></ul>
+    </nav>
+
+    <footer class="sidebar-foot">
+      <p data-bind="location">—</p>
+      <p data-bind="copyright">—</p>
+    </footer>
+  </div>
+</aside>
+
+<main id="main" tabindex="-1">
+  <div class="view" id="view"></div>
+</main>
+
+<!-- page transition: six slats sweep down, the destination flashes like a
+     clapperboard slate, then they sweep away -->
+<div class="wipe" id="wipe" aria-hidden="true">
+  <span class="wipe-col" style="--i:0"></span>
+  <span class="wipe-col" style="--i:1"></span>
+  <span class="wipe-col" style="--i:2"></span>
+  <span class="wipe-col" style="--i:3"></span>
+  <span class="wipe-col" style="--i:4"></span>
+  <span class="wipe-col" style="--i:5"></span>
+  <span class="wipe-slate" id="wipe-slate"></span>
+</div>
+
+<div class="player" id="player" hidden>
+  <button class="player-btn" id="player-btn" aria-label="Play or pause">&#9658;</button>
+  <div class="player-meta">
+    <span class="player-title" id="player-title"></span>
+    <span class="player-time" id="player-time">0:00</span>
+  </div>
+  <div class="player-bar"><span id="player-fill"></span></div>
+  <button class="player-close" id="player-close" aria-label="Close player">&#215;</button>
+</div>
+
+<script src="js/content.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
