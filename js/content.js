@@ -69,8 +69,8 @@ const CONTENT = {
         "one person who shoots it, cuts it, scores it and mixes it. no agency layer, no waiting three weeks for a first draft."
       ],
       th: [
-        "สตูดิโอเล็ก ๆ ที่ทำ <b>วิดีโอ</b> และ <b>ภาพ</b> อยู่ที่ <em>ลำปาง ประเทศไทย</em>",
-        "คนเดียวถ่ายเอง ตัดเอง ทำเพลงเอง มิกซ์เอง ไม่มีคนกลาง ไม่ต้องรอสามอาทิตย์กว่าจะได้เห็นตัวแรก"
+        "สตูดิโอเล็ก ๆ ที่ทำ <b>วิดีโอ</b> กับ <b>ภาพ</b> — base อยู่ <em>ลำปาง</em>",
+        "ถ่ายเอง ตัดเอง ทำเพลงเอง มิกซ์เอง คนเดียวจบ ไม่มีคนกลาง ไม่ต้องรอ 3 อาทิตย์กว่าจะได้ดูดราฟต์แรก"
       ]
     },
     cta: {
@@ -94,8 +94,8 @@ const CONTENT = {
           "small setups on purpose — a camera, fast glass, a light or two. it keeps the room calm and the day cheap."
         ],
         th: [
-          "กำกับ ถ่าย ตัด เกรดสี มิกซ์เสียง ทำเองหมด ไอเดียจากเฟรมแรกไปถึงไฟล์สุดท้ายเลยไม่ตกหล่นตอนส่งต่อ",
-          "ตั้งใจใช้ของเท่าที่จำเป็น กล้องตัวนึง เลนส์ไว ๆ ไฟสองดวง กองถ่ายเลยไม่วุ่น แล้วก็ไม่แพง"
+          "กำกับ ถ่าย ตัด เกรดสี มิกซ์เสียง ทำเองหมด ไอเดียเลยไม่หล่นหายระหว่างทาง ตั้งแต่เฟรมแรกยัน export ไฟล์สุดท้าย",
+          "ตั้งใจ setup เล็ก ๆ กล้องตัวเดียว เลนส์ไว ๆ ไฟสักดวงสองดวง หน้ากองเลยชิล งบก็ไม่บาน"
         ]
       },
       services: [
@@ -103,37 +103,37 @@ const CONTENT = {
           title: { en: "vlog", th: "vlog" },
           body: {
             en: "personal camera op and editor for creators. travel days, launches, a normal week that needs to look like a story. i shoot it, cut it, and hand you something ready to upload.",
-            th: "รับเป็นตากล้องส่วนตัวและคนตัดให้ครีเอเตอร์ ทริป งานเปิดตัว หรือชีวิตปกติที่อยากให้ออกมาเป็นเรื่องเป็นราว ถ่ายให้ ตัดให้ ส่งเป็นไฟล์ที่พร้อมอัปเลย"
+            th: "ตากล้อง + คนตัดส่วนตัวสำหรับครีเอเตอร์ ไปเที่ยว งานเปิดตัว หรือชีวิตธรรมดาที่อยากให้ออกมาเป็น story ถ่ายให้ ตัดให้ ได้ไฟล์ไปลงได้เลย"
           },
           gets: { en: "1 main edit + 2 vertical cuts", th: "คลิปหลัก 1 ตัว + คลิปแนวตั้ง 2 ตัว" },
-          note: { en: "half day or full day · same-week turnaround", th: "ครึ่งวันหรือเต็มวัน · ได้งานภายในอาทิตย์เดียวกัน" }
+          note: { en: "half day or full day · same-week turnaround", th: "ครึ่งวัน / เต็มวัน · ได้งานในอาทิตย์นั้นเลย" }
         },
         {
           title: { en: "short film", th: "หนังสั้น" },
           body: {
             en: "narrative and documentary shorts. script breakdown, shot list, shoot, edit, colour and sound mix. bring a finished script or a half-formed idea — both work.",
-            th: "หนังสั้นทั้งแบบเล่าเรื่องและสารคดี แตกบท ทำช็อตลิสต์ ถ่าย ตัด เกรด มิกซ์ มีบทมาแล้วก็ได้ มีแค่ไอเดียในหัวก็ได้"
+            th: "หนังสั้นทั้งแนวเล่าเรื่องและสารคดี แตกบท ทำ shot list ถ่าย ตัด เกรด มิกซ์ มีบทมาครบแล้ว หรือมีแค่ไอเดียในหัว ได้หมด"
           },
-          gets: { en: "festival-ready master + trailer cut", th: "ไฟล์มาสเตอร์ที่ส่งเทศกาลได้ + ตัวอย่าง" },
+          gets: { en: "festival-ready master + trailer cut", th: "ไฟล์ master พร้อมส่งเทศกาล + trailer" },
           note: { en: "scoped per project · usually 2–5 shoot days", th: "คิดราคาตามงาน · ปกติถ่าย 2–5 วัน" }
         },
         {
           title: { en: "school event", th: "งานโรงเรียน" },
           body: {
             en: "sports days, concerts, graduations, open houses. multi-cam where it matters, roaming where it doesn't. fast recap cuts while the day still feels fresh.",
-            th: "กีฬาสี คอนเสิร์ต งานจบ งานเปิดบ้าน ตั้งหลายกล้องตรงจุดสำคัญ ที่เหลือเดินถ่ายเก็บบรรยากาศ ตัดรีแคปให้ไวตอนที่ทุกคนยังอินอยู่"
+            th: "กีฬาสี คอนเสิร์ต งานจบ open house ตั้งหลายกล้องตรงจุดสำคัญ ที่เหลือเดินเก็บบรรยากาศ ตัด recap ไว ๆ ตอนทุกคนยังอินอยู่"
           },
-          gets: { en: "3–5 min recap + full-length record + stills", th: "รีแคป 3–5 นาที + ไฟล์เต็ม + ภาพนิ่ง" },
-          note: { en: "single day · recap delivered in 48 hours", th: "วันเดียว · รีแคปได้ใน 48 ชั่วโมง" }
+          gets: { en: "3–5 min recap + full-length record + stills", th: "recap 3–5 นาที + ไฟล์เต็ม + ภาพนิ่ง" },
+          note: { en: "single day · recap delivered in 48 hours", th: "วันเดียว · ได้ recap ใน 48 ชม." }
         },
         {
           title: { en: "live session / studio session", th: "live session / studio session" },
           body: {
             en: "bands and solo artists, played live. multi-angle video cut to a proper audio mix, not the camera mic — i record and mix the sound as part of the job.",
-            th: "วงหรือศิลปินเดี่ยว เล่นสด ถ่ายหลายมุมแล้วตัดเข้ากับเสียงที่มิกซ์จริง ไม่ใช่เสียงไมค์กล้อง อัดเสียงกับมิกซ์ให้ในตัว"
+            th: "วงหรือศิลปินเดี่ยว เล่นสด ถ่ายหลายมุม ตัดเข้ากับเสียงที่มิกซ์จริง ไม่ใช่เสียงไมค์กล้อง อัดเสียง + มิกซ์ให้ด้วยในตัว"
           },
           gets: { en: "one song per setup, video + mixed audio", th: "เพลงละหนึ่งเซ็ต ได้ทั้งวิดีโอและเสียงที่มิกซ์แล้ว" },
-          note: { en: "in your room or mine · add songs at a reduced rate", th: "ถ่ายที่ห้องซ้อมหรือที่สตูดิโอก็ได้ · เพิ่มเพลงคิดถูกลง" }
+          note: { en: "in your room or mine · add songs at a reduced rate", th: "ห้องซ้อมหรือสตูดิโอก็ได้ · เพลงต่อไปคิดถูกลง" }
         }
       ],
       cta: { label: { en: "BOOK A SHOOT DAY", th: "จองคิวถ่าย" }, href: "mailto:chaiananpanadit.direct@gmail.com" }
@@ -143,7 +143,7 @@ const CONTENT = {
     photo: {
       label:    { en: "photo",  th: "ภาพ" },
       headline: { en: "PHOTO",  th: "ภาพ" },
-      blurb:    { en: "stills that don't look stock", th: "ภาพนิ่งที่ไม่เหมือนภาพสต็อก" },
+      blurb:    { en: "stills that don't look stock", th: "รูปที่ไม่ใช่ฟีลภาพสต็อก" },
       cover: { src: "assets/media/photo/night/09183.jpg", alt: "Sitting on the bank at night, lights broken up on the river" },
       intro: {
         en: [
@@ -151,8 +151,8 @@ const CONTENT = {
           "every delivered image is graded and retouched. you get the finished set, not a contact sheet to pick through."
         ],
         th: [
-          "ถ่ายทั้งดิจิทัลและฟิล์ม 35mm ในสตูดิโอหรือนอกสถานที่ เน้นเซ็ตที่กระชับ ได้ภาพไม่เยอะแต่ใช้ได้ทุกใบ",
-          "ทุกภาพที่ส่งผ่านการเกรดสีและรีทัชมาแล้ว ได้เป็นเซ็ตที่เสร็จ ไม่ใช่กองไฟล์ให้ไปนั่งเลือกเอง"
+          "ถ่ายทั้ง digital และฟิล์ม 35mm ในสตูดิโอหรือ on location เน้นเซ็ตกระชับ ไม่ได้ปล่อยรูปเป็นร้อย ได้น้อยกว่าแต่ใช้ได้ทุกใบ",
+          "ทุกรูปที่ส่ง เกรดสี + รีทัชมาแล้ว ได้เป็นเซ็ตที่เสร็จพร้อมใช้ ไม่ใช่กองไฟล์ให้ไปนั่งคัดเอง"
         ]
       },
       services: [
@@ -160,7 +160,7 @@ const CONTENT = {
           title: { en: "short photoshoot", th: "ถ่ายสั้น" },
           body: {
             en: "a focused one-to-two hour session. portraits, a product drop, a fit, a headshot refresh. one location, one look, in and out.",
-            th: "เซสชันสั้น ๆ หนึ่งถึงสองชั่วโมง พอร์ตเทรต ของที่เพิ่งดรอป ชุดที่อยากถ่าย หรืออัปเดตรูปโปรไฟล์ ที่เดียว ลุคเดียว จบไว"
+            th: "เซสชันสั้น ๆ 1–2 ชั่วโมง portrait ของดรอปใหม่ ลุคประจำวัน หรือเปลี่ยนรูปโปรไฟล์ ที่เดียว ลุคเดียว จบไว"
           },
           gets: { en: "15–25 retouched images", th: "ภาพรีทัชแล้ว 15–25 ใบ" },
           note: { en: "1–2 hours · delivered in 3 days", th: "1–2 ชั่วโมง · ส่งงานใน 3 วัน" }
@@ -169,9 +169,9 @@ const CONTENT = {
           title: { en: "social media content shoot", th: "ถ่ายคอนเทนต์ลงโซเชียล" },
           body: {
             en: "a batch shoot that fills your feed for a month. we plan the grid first, then shoot stills and verticals back to back so the whole set hangs together.",
-            th: "ถ่ายรวดเดียวให้พอลงทั้งเดือน วางฟีดก่อนแล้วค่อยถ่ายภาพนิ่งกับคลิปแนวตั้งต่อกันไป ทั้งเซ็ตเลยไปด้วยกันได้"
+            th: "ถ่ายรวดเดียว ลงได้ทั้งเดือน วางฟีดก่อน แล้วถ่ายรูปกับคลิปแนวตั้งต่อกันไปเลย ทั้งเซ็ตเลยดูไปทางเดียวกัน"
           },
-          gets: { en: "40+ stills, crops for feed / story / thumbnail", th: "ภาพ 40+ ใบ พร้อมครอปสำหรับฟีด สตอรี่ และปกคลิป" },
+          gets: { en: "40+ stills, crops for feed / story / thumbnail", th: "รูป 40+ ใบ ครอปไว้ให้แล้วทั้ง feed / story / ปก" },
           note: { en: "half day · monthly retainer available", th: "ครึ่งวัน · รับเป็นรายเดือนได้" }
         }
         /* TODO — add more photo services here when you decide them. Copy the
@@ -189,7 +189,7 @@ const CONTENT = {
     headline: { en: "SAY HELLO", th: "ทักมาได้เลย" },
     intro: {
       en: "tell me the dates, the place, what you need out the other end, and roughly the budget. instagram or line is fastest — i reply within a day.",
-      th: "บอกวันที่ สถานที่ สิ่งที่อยากได้ แล้วก็งบคร่าว ๆ ทักทางไอจีหรือไลน์เร็วสุด ตอบภายในวัน"
+      th: "บอกวัน สถานที่ อยากได้งานแบบไหน แล้วก็งบคร่าว ๆ ทักไอจีหรือไลน์เร็วสุด ตอบภายในวันแน่นอน"
     },
     rows: [
       { k: "instagram",                        v: "@reverie._exe",                    href: "https://instagram.com/reverie._exe" },
@@ -203,7 +203,7 @@ const CONTENT = {
       { k: { en: "based",  th: "อยู่ที่" },     v: { en: "lampang, thailand", th: "ลำปาง ประเทศไทย" } },
       { k: { en: "rates",  th: "ราคา" },       v: { en: "see the price rate", th: "ดูเรทราคา" }, href: "#/rates" },
       { k: { en: "area",   th: "พื้นที่" },     v: { en: "all of lampang · chiang mai", th: "ทั่วลำปาง · เชียงใหม่" } },
-      { k: { en: "travel", th: "เดินทาง" },    v: { en: "free anywhere in lampang. chiang mai adds travel, charged both ways.", th: "ในลำปางไม่คิดค่าเดินทาง ถ้าไปเชียงใหม่คิดค่าเดินทางทั้งขาไปและขากลับ" } }
+      { k: { en: "travel", th: "เดินทาง" },    v: { en: "free anywhere in lampang. chiang mai adds travel, charged both ways.", th: "ในลำปางไม่คิดค่าเดินทาง ไปเชียงใหม่คิดค่าเดินทางไป-กลับ" } }
     ]
   },
 
@@ -224,10 +224,10 @@ const CONTENT = {
       ],
       /* TODO — swap the latin name below for your name written in thai */
       th: [
-        "ชื่อ <b>chaianan panadit</b> เรียก <b>vi</b> ก็ได้ มาจากตรงกลางของคำว่า ri<em>(vi)</em>ère แล้วมันก็ติดมาตั้งแต่นั้น",
-        "reverie ก็คือเรานี่แหละ เริ่มแบบที่หลาย ๆ คนเริ่มกัน ยืมกล้องเขามา โหลด DAW มา แล้วก็ไม่รู้ว่าปุ่มไหนทำอะไรเลย",
-        "ที่ติดใจคือชอบมันทุกส่วน คนส่วนใหญ่จะเลือกทางเดียว ตากล้อง คนตัด คนเกรดสี โปรดิวเซอร์ คนมิกซ์ แต่เราทำสิ่งที่งานต้องการต่อไปเรื่อย ๆ จนทำได้ทั้งสาย เวลาจ้างทำหนัง เพลงประกอบเลยไม่ต้องส่งต่อให้ใคร เวลาจ้างมิกซ์ ก็ได้ยินว่าตรงไหนที่การตัดอยากให้หายใจ",
-        "ตอนนี้ยังเรียนอยู่ บุญวาทย์ ลำปาง แล้วทำงานนี้ควบไปด้วย ไม่ได้บอกไว้เพื่อขอผ่อนผัน แต่แปลว่าตอบแชทวันต่อวัน รับงานที่คนอื่นไม่อยากรับ แล้วก็อยากทำงานสนุก ๆ สี่สิบงาน มากกว่างานน่าเบื่อแพง ๆ สี่งาน",
+        "ชื่อ <b>chaianan panadit</b> เรียก <b>vi</b> ก็ได้ มาจากตรงกลางคำว่า ri<em>(vi)</em>ère เรียกไปเรียกมาเลยติด",
+        "reverie มีอยู่คนเดียวนี่แหละ เริ่มแบบที่ใครหลายคนเริ่ม ยืมกล้องเขามา โหลด DAW มาลองเล่น แล้วก็ไม่รู้เลยว่าปุ่มไหนทำอะไร",
+        "ที่ติดคือชอบมันทุกส่วน คนส่วนใหญ่เลือกสายเดียว ตากล้อง คนตัด คนเกรดสี โปรดิวเซอร์ คนมิกซ์ แต่ทำทุกอย่างที่งานต้องการไปเรื่อย ๆ จนทำได้ครบทั้งสาย จ้างทำหนัง เพลงประกอบก็ไม่ต้องจ้างใครเพิ่ม จ้างมิกซ์ ก็ฟังออกว่าตรงไหนควรเว้นจังหวะ",
+        "ตอนนี้ยังเรียนอยู่ที่บุญวาทย์ ลำปาง แล้วรับงานควบไปด้วย ไม่ได้บอกให้เห็นใจนะ แต่แปลว่าตอบแชทวันต่อวัน งานที่คนอื่นไม่รับก็รับ แล้วก็ขอทำงานสนุก ๆ สี่สิบงาน ดีกว่างานแพงแต่น่าเบื่อสี่งาน",
         "มีงานแปลก ๆ เอามาเลย"
       ]
     },
@@ -251,14 +251,14 @@ const CONTENT = {
     headline: { en: "GEAR", th: "อุปกรณ์" },
     intro: {
       en: "not a shopping list — this is everything that actually gets used. small kit, known deeply, rather than a locker full of things i'd have to look up.",
-      th: "ไม่ใช่ลิสต์ของที่อยากได้ อันนี้คือของที่ได้ใช้จริงทุกชิ้น มีของไม่เยอะแต่รู้จักมันดี ดีกว่ามีเต็มตู้แล้วต้องมานั่งเปิดคู่มือ"
+      th: "ไม่ใช่ wishlist นี่คือของที่ใช้จริงทุกชิ้น ของไม่เยอะแต่รู้จักดีทุกตัว ดีกว่ามีเต็มตู้แล้วต้องมานั่งเปิดคู่มือ"
     },
     groups: [
       {
         title: { en: "camera", th: "กล้อง" },
         items: [
           { name: "sony zv-e10",
-            note: { en: "aps-c mirrorless · the body everything hangs off", th: "มิเรอร์เลส aps-c · ตัวหลักที่ทุกอย่างเกาะอยู่" },
+            note: { en: "aps-c mirrorless · the body everything hangs off", th: "mirrorless aps-c · ตัวหลัก ทุกอย่างต่อจากตัวนี้" },
             url: "https://www.sony.com/electronics/interchangeable-lens-cameras/zv-e10" }
         ]
       },
@@ -266,7 +266,7 @@ const CONTENT = {
         title: { en: "lenses", th: "เลนส์" },
         items: [
           { name: "50mm f/1.8 prime",
-            note: { en: "portraits and low light · the one that makes it look expensive", th: "พอร์ตเทรตกับที่แสงน้อย · ตัวที่ทำให้ภาพดูแพง" },
+            note: { en: "portraits and low light · the one that makes it look expensive", th: "portrait กับที่แสงน้อย · ตัวที่ทำให้รูปดูแพง" },
             url: "https://www.sony.com/electronics/camera-lenses" },
           { name: "anamorphic 1.33x 50mm",
             note: { en: "2.4:1 squeeze · oval flares, wide frame, no crop in post", th: "บีบ 2.4:1 · แฟลร์รี ภาพกว้าง ไม่ต้องครอปทีหลัง" } },
@@ -274,14 +274,14 @@ const CONTENT = {
             note: { en: "power zoom · run-and-gun, vlog wide, always on the body", th: "power zoom · ถ่ายไว ถ่าย vlog มุมกว้าง ติดกล้องตลอด" },
             url: "https://www.sony.com/electronics/camera-lenses" },
           { name: "75-300mm f/4.5-5.6",
-            note: { en: "the long end · compression, stage, sport, anything i can't walk up to", th: "ช่วงเทเล · บีบภาพ งานเวที กีฬา อะไรที่เดินเข้าไปไม่ได้" } }
+            note: { en: "the long end · compression, stage, sport, anything i can't walk up to", th: "ช่วงเทเล · บีบระยะ งานเวที กีฬา อะไรที่เดินเข้าไปใกล้ไม่ได้" } }
         ]
       },
       {
         title: { en: "rig & support", th: "ริกและขาตั้ง" },
         items: [
           { name: "smallrig cage",
-            note: { en: "keeps the body rigid and gives everything a mounting point", th: "ยึดบอดี้ให้แน่น แล้วก็มีจุดต่อของอย่างอื่นได้" },
+            note: { en: "keeps the body rigid and gives everything a mounting point", th: "ล็อกบอดี้ให้นิ่ง มีจุดไว้ต่ออุปกรณ์อื่น" },
             url: "https://www.smallrig.com" },
           { name: "smallrig handlebar",
             note: { en: "top handle · low angles, high angles, long handheld days", th: "ด้ามจับด้านบน · มุมต่ำ มุมสูง ถือยาว ๆ ทั้งวัน" },
@@ -305,7 +305,7 @@ const CONTENT = {
             note: { en: "culling, raw development, batch grading a full shoot", th: "คัดภาพ ล้างไฟล์ raw เกรดทั้งกองรวดเดียว" },
             url: "https://www.adobe.com/products/photoshop-lightroom.html" },
           { name: "touchdesigner",
-            note: { en: "realtime visuals and generative content for live shows", th: "วิชวลเรียลไทม์กับคอนเทนต์เจเนอเรทีฟสำหรับงานแสดงสด" },
+            note: { en: "realtime visuals and generative content for live shows", th: "visual เรียลไทม์ + generative content สำหรับงานโชว์สด" },
             url: "https://derivative.ca" }
         ]
       },
@@ -330,7 +330,7 @@ const CONTENT = {
             note: { en: "the full archetype guitar line, plus vocal", th: "archetype กีตาร์ครบทุกตัว รวมถึงตัว vocal" },
             url: "https://neuraldsp.com" },
           { name: "fabfilter",
-            note: { en: "eq, compression, reverb — the surgical end of a mix", th: "eq คอมเพรสเซอร์ รีเวิร์บ — ฝั่งที่ต้องละเอียดของการมิกซ์" },
+            note: { en: "eq, compression, reverb — the surgical end of a mix", th: "eq, comp, reverb — งานละเอียดของการมิกซ์" },
             url: "https://www.fabfilter.com" },
           { name: "oeksound",
             note: { en: "soothe and spiff · fixing sources instead of masking them", th: "soothe กับ spiff · แก้ที่ต้นทางแทนที่จะกลบ" },
@@ -345,7 +345,7 @@ const CONTENT = {
             note: { en: "amp and pedal modelling", th: "จำลองแอมป์กับเอฟเฟกต์" },
             url: "https://www.native-instruments.com" },
           { name: "valhalla dsp",
-            note: { en: "reverb and delay · the space everything sits in", th: "รีเวิร์บกับดีเลย์ · พื้นที่ที่ทุกอย่างไปวางอยู่" },
+            note: { en: "reverb and delay · the space everything sits in", th: "รีเวิร์บกับดีเลย์ · ให้เสียงมีมิติ มีที่ทาง" },
             url: "https://valhalladsp.com" }
         ]
       },
@@ -375,7 +375,7 @@ const CONTENT = {
     headline: { en: "PRICE RATE", th: "เรทราคา" },
     intro: {
       en: "ranges, not fixed numbers — where a job lands depends on how long it runs, how far it is and how much post it needs. tell me what you're making and i'll give you one number.",
-      th: "เป็นช่วงราคา ไม่ใช่ราคาตายตัว — ขึ้นอยู่กับงานยาวแค่ไหน ไปไกลแค่ไหน แล้วต้องตัดต่อเยอะแค่ไหน บอกมาว่าจะทำอะไร เดี๋ยวตีราคาให้เป็นตัวเลขเดียว"
+      th: "เป็นช่วงราคานะ ไม่ใช่ราคาตายตัว ขึ้นกับงานยาวแค่ไหน ไกลแค่ไหน ต้องตัดต่อเยอะไหม เล่ามาก่อนว่าจะทำอะไร เดี๋ยวตีราคาให้เป๊ะ ๆ"
     },
     groups: [
       {
@@ -421,7 +421,7 @@ const CONTENT = {
     /* the line off the bottom of the price sheet */
     note: {
       en: "i'd rather do forty interesting jobs than four expensive boring ones. i'll take the brief nobody else wants. — rivi",
-      th: "ขอทำงานที่น่าสนใจสี่สิบงาน ดีกว่างานแพงแต่น่าเบื่อสี่งาน งานที่ไม่มีใครอยากทำ เอามาได้เลย — rivi"
+      th: "ขอทำงานสนุก ๆ สี่สิบงาน ดีกว่างานแพงแต่น่าเบื่อสี่งาน งานที่ไม่มีใครอยากรับ ส่งมาได้เลย — rivi"
     },
     cta: { label: { en: "GET A NUMBER", th: "ขอราคา" }, href: "mailto:chaiananpanadit.direct@gmail.com" }
   },
@@ -485,7 +485,7 @@ const CONTENT = {
         ],
         th: [
           "เย็นเดียวริมน้ำที่ลำปาง — สะพานเก่า ทางเดินใต้สะพาน แล้วก็ไฟสายที่ติดตอนประมาณทุ่มนึง",
-          "ถ่ายเปิดรูรับแสงสุดด้วยเลนส์ 50 ไม่ใช้แฟลช ไม่เติมอะไรเลย แสงที่เห็นคือแสงที่มีอยู่ตรงนั้น"
+          "เปิด f กว้างสุดกับเลนส์ 50 ไม่ใช้แฟลช ไม่เติมอะไรเลย แสงที่เห็นคือแสงที่มีอยู่ตรงนั้นจริง ๆ"
         ]
       },
       media: [
@@ -517,8 +517,8 @@ const CONTENT = {
           "signs, shutters, a cart going home. the town keeps its shape after the people go."
         ],
         th: [
-          "เมืองเดิมหลังเที่ยงคืน ตอนที่ไม่เหลือใครแล้ว iso 51200 ถือมือ เกรนเต็มไปหมด ซึ่งนั่นแหละคือสิ่งที่อยากได้",
-          "ป้าย ประตูม้วน รถเข็นที่กำลังกลับบ้าน เมืองยังคงรูปของมันอยู่หลังคนกลับหมดแล้ว"
+          "เมืองเดิมหลังเที่ยงคืน ตอนที่ไม่เหลือใครแล้ว iso 51200 ถือมือ เกรนเต็มไปหมด แต่นั่นแหละที่อยากได้",
+          "ป้าย ประตูม้วน รถเข็นที่กำลังกลับบ้าน คนกลับกันหมดแล้ว แต่เมืองยังอยู่ตรงนั้น"
         ]
       },
       media: [
@@ -547,7 +547,7 @@ const CONTENT = {
           "the kind of shooting that teaches you to be quick: nobody waits for you to change a lens."
         ],
         th: [
-          "สองบ่ายริมน้ำ กับถนนระหว่างทางไปที่นั่น ถ่ายด้วย zv-e10 ใช้แสงที่มี ไม่จัดอะไรเลย แค่ตามไปกับวันนั้น",
+          "สองบ่ายริมน้ำ กับถนนระหว่างทางไปที่นั่น ถ่ายด้วย zv-e10 ใช้แสงที่มี ไม่จัดอะไรเลย ปล่อยให้วันมันพาไป",
           "งานแบบนี้สอนให้ไว เพราะไม่มีใครรอให้เปลี่ยนเลนส์เสร็จก่อน"
         ]
       },
