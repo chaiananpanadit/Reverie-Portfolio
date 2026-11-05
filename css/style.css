@@ -358,6 +358,29 @@ main {
   border: 0;
 }
 
+/* Instagram. Until embed.js swaps in its iframe — or if a blocker stops it —
+   the blockquote is a plain hairline box with a working link, never a blank
+   hole. Once the iframe arrives, the radius and margin Instagram puts on it
+   go, to match the rest of the page. Inside the iframe is Instagram's own. */
+.media blockquote.instagram-media {
+  margin: 0;
+  padding: 22px 16px;
+  border: 1px solid var(--rule);
+  background: var(--shade);
+}
+.media blockquote.instagram-media a {
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  border-bottom: 1px solid currentColor;
+  transition: color 160ms ease;
+}
+.media blockquote.instagram-media a:hover { color: var(--accent); }
+.media iframe.instagram-media {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

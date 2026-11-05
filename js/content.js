@@ -37,7 +37,7 @@ const CONTENT = {
       workWithMe: "WORK WITH ME", youGet: "you get",
       notFoundTitle: "NOT HERE", notFoundBody: "that page doesn't exist (yet).",
       backHome: "BACK TO THE START", missingFile: "missing file — add ",
-      back: "back"
+      back: "back", watchInstagram: "watch on instagram"
     },
     th: {
       navWork: "งานทั้งหมด", navAbout: "เกี่ยวกับ", navGear: "อุปกรณ์",
@@ -49,7 +49,7 @@ const CONTENT = {
       workWithMe: "อยากทำงานด้วยกัน", youGet: "ได้อะไร",
       notFoundTitle: "ไม่มีหน้านี้", notFoundBody: "หน้านี้ยังไม่มี",
       backHome: "กลับหน้าแรก", missingFile: "ไม่เจอไฟล์ — ใส่ ",
-      back: "ย้อนกลับ"
+      back: "ย้อนกลับ", watchInstagram: "ดูบน instagram"
     }
   },
 
@@ -443,16 +443,32 @@ const CONTENT = {
          { type: "images", items: [{src, alt}, ...] }         2-up grid
          { type: "video",  src, poster, caption }             local .mp4
          { type: "embed",  src, caption }                     youtube/vimeo
+         { type: "instagram", src, caption }                  a post or reel url
          { type: "audio",  tracks: [{title, src, length}] }   track list + player
   */
 
   work: [
-    /* "sports day" and "is it really you — live" both removed: the first was
-       an invented write-up on placeholder images, the second pointed at an mp4
-       that was never in the repo, so it rendered a dead player. Live sessions
-       and school events are still offered on the film page as services, and
-       the "more — dm for details" row at the bottom of every work list covers
-       them until there is real work to show. */
+    {
+      /* The real sports day — the film and its behind-the-scenes cut, both
+         Instagram reels. Reels are vertical, so they stack rather than sit
+         2-up: Instagram won't render an embed narrower than 326px.
+         The share links' ?vrfl= / ?srtk= tracking tokens are stripped. */
+      discipline: "film", slug: "sports-day",
+      client: { en: "sports day", th: "กีฬาสี" },
+      title:  { en: "SPORTS DAY", th: "กีฬาสี" },
+      year: "2026",
+      kind:  { en: "school event", th: "งานโรงเรียน" },
+      media: [
+        { type: "instagram", src: "https://www.instagram.com/reel/DfUmoCqoihZ/",
+          caption: { en: "the film", th: "ตัวงาน" } },
+        { type: "instagram", src: "https://www.instagram.com/reel/DfUxTqUobTA/",
+          caption: { en: "behind the scenes", th: "เบื้องหลัง" } }
+      ]
+    },
+    /* "is it really you — live" was removed: it pointed at an mp4 that was
+       never in the repo, so it rendered a dead player. The travel vlog went
+       for the same reason — its YouTube embed rendered blank (id VjtrD92pC9s,
+       if it comes back). */
     {
       discipline: "photo", slug: "portrait-night",
       client: { en: "portrait night", th: "พอร์ตเทรตกลางคืน" },

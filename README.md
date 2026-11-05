@@ -150,6 +150,7 @@ Put any number of these in a project's `media` array; they render top to bottom.
 { type: "video",  src: "assets/media/film/x.mp4",
                   poster: "assets/media/film/x.jpg" }                       // self-hosted
 { type: "embed",  src: "https://player.vimeo.com/video/123456" }            // youtube/vimeo
+{ type: "instagram", src: "https://www.instagram.com/reel/REEL_ID/" }         // a reel or post
 { type: "audio",  tracks: [{title:"Track",
                             src: "assets/media/sound/x.mp3", length:"3:41"}] }
 ```
@@ -159,6 +160,12 @@ Inside `blurb`, `body` and `intro` strings you can use `<b>`, `<em>`, `<br>` and
 
 - **embed** needs the *embed* url, not the share url:
   YouTube `https://www.youtube.com/embed/VIDEO_ID`, Vimeo `https://player.vimeo.com/video/VIDEO_ID`.
+- **instagram** takes the plain post or reel url — strip anything after the `?`
+  in a share link (`?vrfl=`, `?srtk=`, `?igsh=` are tracking tokens). It uses
+  Instagram's own `embed.js`, fetched only on pages that have one, which sizes
+  vertical reels properly. Until it loads, or if an ad-blocker stops it, the
+  block shows a "watch on instagram ↗" link instead of an empty box. The post's
+  account has to be **public** or Instagram won't embed it at all.
 - **audio** tracks appear as a numbered list and drive the player bar pinned to
   the bottom of the screen. If a file is missing the bar says so instead of
   failing silently.
@@ -291,16 +298,13 @@ Pages, or upload by FTP to any host. Nothing needs Node or a database.
 **Real:** the studio name, the about page, every contact detail, the whole gear
 list, and the service lists on the film and photo pages.
 
-**Real work:** every project on the site is yours — `portrait night`,
-`night streets`, `festival` and `fishing days`, all photo. The `fishing days`
+**Real work:** every project on the site is yours — `sports day` on film (the
+reel and its behind-the-scenes), and `portrait night`, `night streets`,
+`festival` and `fishing days` on photo. The `fishing days`
 images are the JPEG previews pulled out of the `.ARW` files rather than your
 own grade, so they are Sony's in-camera rendering; save Lightroom exports over
 them using the same filenames and nothing else needs changing.
 
-**The film page has no work on it.** It still sells four services and the rates
-page still prices them, but there is nothing to show behind them yet, so the
-"more — dm for details" row carries it. Add a `work` entry with
-`discipline: "film"` and it fills in.
 
 **Nothing is self-hosted any more.** There are no `video` blocks and no `audio`
 blocks left in `content.js`, so `assets/media/film/` and `assets/media/sound/`

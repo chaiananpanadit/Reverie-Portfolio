@@ -227,6 +227,16 @@
             '" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" ' +
             'allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>', m.caption);
 
+        case "instagram":
+          // Instagram's own embed markup. embed.js swaps the blockquote for a
+          // correctly sized iframe; until it does — or if a blocker stops it —
+          // the link inside is a working fallback rather than a blank box.
+          return figure(
+            '<blockquote class="instagram-media" data-instgrm-permalink="' + esc(m.src) +
+            '" data-instgrm-version="14"><a href="' + esc(m.src) +
+            '" target="_blank" rel="noopener noreferrer">' + esc(ui("watchInstagram")) +
+            " &#8599;</a></blockquote>", m.caption);
+
         case "audio":
           return renderTracks(m.tracks || []);
 
@@ -447,6 +457,23 @@
     return { html: viewMissing(), title: ui("notFoundTitle") + suffix, slate: "404" };
   }
 
+  // Instagram embeds. The script is fetched the first time a page needs it,
+  // never on pages without one. Because this is a single-page site, every
+  // route change paints fresh blockquotes, so process() has to be called again
+  // after each paint — embed.js only scans the document once on its own.
+  var igRequested = false;
+  function processInstagram() {
+    if (!view.querySelector("blockquote.instagram-media")) return;
+    if (window.instgrm && window.instgrm.Embeds) { window.instgrm.Embeds.process(); return; }
+    if (igRequested) return;               // still loading, or blocked: the link stays
+    igRequested = true;
+    var sc = document.createElement("script");
+    sc.async = true;
+    sc.src = "https://www.instagram.com/embed.js";
+    sc.onload = function () { if (window.instgrm) window.instgrm.Embeds.process(); };
+    document.body.appendChild(sc);
+  }
+
   function paint(page) {
     view.innerHTML = page.html;
     document.title = page.title;
@@ -459,6 +486,7 @@
     var back = document.getElementById("back-btn");
     if (back) back.addEventListener("click", function () { history.back(); });
     bindTracks();
+    processInstagram();
     if (audio.paused && !audio.duration) bar.hidden = true;
   }
 
