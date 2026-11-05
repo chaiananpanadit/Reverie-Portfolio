@@ -97,9 +97,11 @@ which filter it shows under. `slug` is the address (`#/work/your-slug`).
 }
 ```
 
-Without a `cover` the grid card is set in type on the paper's shade —
-that's how the sports day reels show, since there's no still for them.
-Covers are cropped to 4:5 on the grid, so keep the subject near the middle.
+Without a `cover` the grid card is set in type on the paper's shade, with a
+► and the title — handy for a project that's only reels. Covers are cropped
+to 4:5 on the grid, so keep the subject near the middle; a wide frame you
+don't want cropped (like the YELLOW INWZA title card) can be set whole on a
+black 4:5 canvas instead.
 About 1000px wide is plenty; the ones in `assets/media/covers/` are 30–300 KB.
 
 ### Media blocks
@@ -138,10 +140,17 @@ Photos live in [`assets/media/photo/`](assets/media/), grid covers in
 filenames** — those work on your computer but break on some hosts, and the
 failure looks like a missing file.
 
+`assets/media/covers/home.jpg` is the REVERIE PRODUCTION still across the top
+of the home page (set in `home.cover` — delete that line and the small K mark
+comes back). The sports day card uses the YELLOW INWZA title card,
+`assets/media/covers/sports-day.jpg`. The full-size originals of both are
+kept in `assets/media/film/sports-day/`.
+
 `assets/media/photo/portrait.jpg` is the 4.3 MB original of your about photo,
 left untouched; the site uses `portrait-web.jpg`, a 1200px copy at about
 100 KB. `assets/media/covers/og.jpg` is the picture that shows when the link is
-shared in LINE, Messenger or Instagram DMs.
+shared in LINE, Messenger or Instagram DMs — the REVERIE PRODUCTION still,
+cropped to 1200×630.
 
 `assets/img/logo.svg` is the reverie K — the header mark and the browser-tab
 icon. It's black on transparent; the dark theme inverts it.
