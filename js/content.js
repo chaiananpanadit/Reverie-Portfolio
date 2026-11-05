@@ -381,35 +381,35 @@ const CONTENT = {
         title: { en: "photography", th: "ถ่ายภาพ" },
         items: [
           { name: { en: "photoshoot",   th: "ถ่ายภาพ" },
-            note: { en: "per hour",     th: "ต่อชั่วโมง" }, price: "175–300" },
+            note: { en: "per hour",     th: "ต่อชั่วโมง" }, price: "400–600" },
           { name: { en: "couple photo", th: "ถ่ายคู่" },
-            note: { en: "per hour",     th: "ต่อชั่วโมง" }, price: "175–300" },
+            note: { en: "per hour",     th: "ต่อชั่วโมง" }, price: "500–800" },
           { name: { en: "school event", th: "งานโรงเรียน" },
-            note: { en: "full event",   th: "ทั้งงาน" },    price: "250–400" }
+            note: { en: "full event",   th: "ทั้งงาน" },    price: "1,500–3,000" }
         ]
       },
       {
         title: { en: "videography", th: "ถ่ายวิดีโอ" },
         items: [
           { name: { en: "short clips",        th: "คลิปสั้น" },
-            note: { en: "15–30 sec",          th: "15–30 วินาที" },     price: "80–150" },
+            note: { en: "15–30 sec",          th: "15–30 วินาที" },     price: "300–600" },
           { name: { en: "content",            th: "คอนเทนต์" },
-            note: { en: "3–10 min",           th: "3–10 นาที" },        price: "200–300" },
+            note: { en: "3–10 min",           th: "3–10 นาที" },        price: "800–2,000" },
           { name: { en: "school event",       th: "งานโรงเรียน" },
-            note: { en: "full event",         th: "ทั้งงาน" },          price: "300–450" },
+            note: { en: "full event",         th: "ทั้งงาน" },          price: "2,000–4,000" },
           { name: { en: "live / studio session", th: "งานไลฟ์ / สตูดิโอ" },
-            note: { en: "session video",      th: "วิดีโอเซสชัน" },      price: "500–1,000" },
+            note: { en: "session video",      th: "วิดีโอเซสชัน" },      price: "1,500–3,000" },
           { name: { en: "music video",        th: "มิวสิกวิดีโอ" },
-            note: { en: "footage only",       th: "เฉพาะฟุตเทจ" },       price: "400–600" }
+            note: { en: "footage only",       th: "เฉพาะฟุตเทจ" },       price: "1,200–2,500" }
         ]
       },
       {
         title: { en: "post", th: "งานตัดต่อ" },
         items: [
           { name: { en: "simple edit",  th: "ตัดต่อแบบง่าย" },
-            note: { en: "on top of footage",  th: "บวกเพิ่มจากค่าถ่าย" },  price: "100–300" },
+            note: { en: "on top of footage",  th: "บวกเพิ่มจากค่าถ่าย" },  price: "300–800" },
           { name: { en: "full session", th: "เซสชันเต็ม" },
-            note: { en: "interview + colour grade", th: "สัมภาษณ์ + เกรดสี" }, price: "2,000" },
+            note: { en: "interview + colour grade", th: "สัมภาษณ์ + เกรดสี" }, price: "2,500–4,000" },
           { name: { en: "edited music video", th: "มิวสิกวิดีโอตัดจบ" },
             note: { en: "scope decides it", th: "แล้วแต่ขนาดงาน" },
             price: { en: "dm", th: "ทักมา" } }
