@@ -379,6 +379,11 @@ main {
   border-radius: 0 !important;
   box-shadow: none !important;
   margin: 0 !important;
+  /* Instagram sets min-width: 326px, which is wider than the column on a
+     360px phone — the whole page would scroll sideways by a couple of
+     pixels. Let it fit the column instead. */
+  min-width: 0 !important;
+  max-width: 100% !important;
 }
 
 .grid-2 {
@@ -736,6 +741,13 @@ a.gear-row:hover .gear-link { opacity: 1; transform: none; color: var(--accent);
 /* ------------------------------------------------------------- responsive */
 
 @media (max-width: 860px) {
+  /* Phone type. 11.5px is a desktop size; on a handset it's a squint. 14px
+     (15px Thai, for the vowel marks) is what a phone reads comfortably. The
+     gutter narrows to match, which also gives Instagram's embed the 326px
+     it insists on. */
+  :root { --fs: 14px; --gutter: 18px; }
+  html[lang="th"] { --fs: 15px; }
+
   body { grid-template-columns: 1fr; }
 
   .sidebar {
@@ -760,15 +772,21 @@ a.gear-row:hover .gear-link { opacity: 1; transform: none; color: var(--accent);
   .tagline     { grid-area: 2 / 1; margin-bottom: 0; }
   .controls    { grid-area: 2 / 2; margin-bottom: 0; justify-self: end; }
 
+  /* One column. Two columns split the menu into misaligned halves — the
+     disciplines stranded on the left while the pages staggered down the
+     right — and contact ended up seventh in a list of thirteen. */
   .sidebar-nav {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 0 20px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 300ms var(--ease);
   }
   .sidebar-nav.is-open { max-height: 200vh; }
+  /* The per-project links duplicate "work index", which lists every one;
+     on a phone they only make the menu longer than the screen. */
+  .sidebar-nav nav[aria-label="Work"] { display: none; }
   .nav-block:first-child { margin-top: 20px; }
   .sidebar li a { padding: 3.5px 0; }        /* bigger tap targets on touch */
   .back { min-height: 44px; padding-right: 18px; }
@@ -808,6 +826,60 @@ a.gear-row:hover .gear-link { opacity: 1; transform: none; color: var(--accent);
    has feedback. Targets go to the 44px floor while we're here — 9px of
    padding on an index row is not a thumb-sized target. */
 
+/* ------------------------------------------------------------ say hello */
+/* Phone only: a bar on every page but contact, so getting in touch is one
+   tap from anywhere rather than menu, scan, tap. It is the accent colour —
+   the one coloured action on the site. Text takes var(--bg), which keeps it
+   readable in both themes: paper on terracotta (5.27:1), near-black on the
+   lighter dark-theme terracotta (6.35:1). */
+.hello-bar { display: none; }
+@media (max-width: 860px) {
+  .hello-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 14;                         /* under the player (15) and the wipe (40) */
+    min-height: 54px;
+    padding: 0 var(--gutter);
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .hello-bar[hidden] { display: none; }
+  .hello-bar:active { opacity: 0.85; }
+  main { padding-bottom: 150px; }        /* so the bar never covers the last line */
+}
+
+/* Tap to copy — the LINE id. Underlined like any other link, with the action
+   named beside it in the accent. The padding/negative margin pair makes the
+   tap target taller without moving anything. */
+.copy-btn {
+  display: inline-block;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  padding: 8px 0 1px;
+  margin: -8px 0 0;
+  cursor: pointer;
+  transition: border-color 160ms ease;
+}
+.copy-btn:hover { border-color: currentColor; }
+.copy-label {
+  margin-left: 8px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.85em;
+}
+
 @media (hover: none) {
   /* the affordances hover was keeping to itself */
   .disc-card-a,
@@ -838,7 +910,7 @@ a.gear-row:hover .gear-link { opacity: 1; transform: none; color: var(--accent);
   .gear-row,
   .rate-row     { padding-top: 13px; padding-bottom: 13px; }
   .track        { padding-top: 13px; padding-bottom: 13px; }
-  .sidebar li a { padding-top: 12px; padding-bottom: 12px; }
+  .sidebar li a { padding-top: 9px; padding-bottom: 9px; }    /* 44px at 14px type */
 
   /* the sidebar's hover marker is dead weight on touch; show it on the
      current page only, where it means something */

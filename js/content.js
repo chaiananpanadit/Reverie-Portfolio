@@ -37,7 +37,8 @@ const CONTENT = {
       workWithMe: "WORK WITH ME", youGet: "you get",
       notFoundTitle: "NOT HERE", notFoundBody: "that page doesn't exist (yet).",
       backHome: "BACK TO THE START", missingFile: "missing file — add ",
-      back: "back", watchInstagram: "watch on instagram"
+      back: "back", watchInstagram: "watch on instagram",
+      sayHello: "say hello", copy: "copy", copied: "copied — paste it in line"
     },
     th: {
       navWork: "งานทั้งหมด", navAbout: "เกี่ยวกับ", navGear: "อุปกรณ์",
@@ -49,7 +50,8 @@ const CONTENT = {
       workWithMe: "อยากทำงานด้วยกัน", youGet: "ได้อะไร",
       notFoundTitle: "ไม่มีหน้านี้", notFoundBody: "หน้านี้ยังไม่มี",
       backHome: "กลับหน้าแรก", missingFile: "ไม่เจอไฟล์ — ใส่ ",
-      back: "ย้อนกลับ", watchInstagram: "ดูบน instagram"
+      back: "ย้อนกลับ", watchInstagram: "ดูบน instagram",
+      sayHello: "ทักมาคุยกัน", copy: "คัดลอก", copied: "คัดลอกแล้ว — วางในไลน์ได้เลย"
     }
   },
 
@@ -192,15 +194,14 @@ const CONTENT = {
     rows: [
       { k: "instagram",                        v: "@reverie._exe",                    href: "https://instagram.com/reverie._exe" },
       { k: { en: "email",  th: "อีเมล" },      v: "chaiananpanadit.direct@gmail.com", href: "mailto:chaiananpanadit.direct@gmail.com" },
-      { k: { en: "line",   th: "ไลน์" },       v: "Anan19082553" },
-      /* to make the line id tappable on phones, add this to the row above:
-             href: "https://line.me/ti/p/~Anan19082553"
-         test it on your own phone first — it only works if your id is
-         set to be searchable in line's privacy settings. */
+      /* `copy: true` makes the id tap-to-copy, which works whatever your line
+         privacy settings are. A direct link (href: "https://line.me/ti/p/~Anan19082553")
+         would open line straight away, but only if the id is set to be
+         searchable — test that on your own phone before swapping it in. */
+      { k: { en: "line",   th: "ไลน์" },       v: "Anan19082553", copy: true },
       { k: { en: "phone",  th: "เบอร์โทร" },   v: "+66 64 893 1485",                  href: "tel:+66648931485" },
-      { k: "youtube",                          v: { en: "coming soon", th: "เร็ว ๆ นี้" } },
       { k: { en: "based",  th: "อยู่ที่" },     v: { en: "lampang, thailand", th: "ลำปาง ประเทศไทย" } },
-      { k: { en: "rates",  th: "ราคา" },       v: { en: "half day / full day / per song — ask", th: "ครึ่งวัน / เต็มวัน / คิดเป็นเพลง — ทักมาถามได้" } },
+      { k: { en: "rates",  th: "ราคา" },       v: { en: "see the price rate", th: "ดูเรทราคา" }, href: "#/rates" },
       { k: { en: "area",   th: "พื้นที่" },     v: { en: "all of lampang · chiang mai", th: "ทั่วลำปาง · เชียงใหม่" } },
       { k: { en: "travel", th: "เดินทาง" },    v: { en: "free anywhere in lampang. chiang mai adds travel, charged both ways.", th: "ในลำปางไม่คิดค่าเดินทาง ถ้าไปเชียงใหม่คิดค่าเดินทางทั้งขาไปและขากลับ" } }
     ]

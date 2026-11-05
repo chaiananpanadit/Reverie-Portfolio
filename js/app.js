@@ -18,6 +18,7 @@
   var langBox    = document.getElementById("lang");
   var wipe       = document.getElementById("wipe");
   var slate      = document.getElementById("wipe-slate");
+  var helloBar   = document.getElementById("hello-bar");
 
   var DISC_ORDER = ["film", "photo"];
   var LANGS      = ["en", "th"];
@@ -153,6 +154,7 @@
     syncThemeBtn();                                   // its label is translated too
     toggle.textContent = sidebarNav.classList.contains("is-open") ? ui("close") : ui("menu");
     navLabel.textContent = ui("workLabel");
+    helloBar.innerHTML = "<span>" + esc(ui("sayHello")) + '</span><span aria-hidden="true">&rarr;</span>';
 
     navDisc.innerHTML = DISC_ORDER.map(function (k, i) {
       var d = C.disciplines[k];
@@ -181,6 +183,7 @@
   }
 
   function markCurrent(hash) {
+    helloBar.hidden = hash === "#/contact";
     document.querySelectorAll(".sidebar a").forEach(function (a) {
       a.removeAttribute("aria-current");
       if (a.getAttribute("href") === hash) a.setAttribute("aria-current", "page");
@@ -378,7 +381,11 @@
     return '<h1 class="display">' + esc(t(c.headline)) + "</h1>" +
            '<div class="lede"><p>' + rich(t(c.intro)) + "</p></div>" +
            '<dl class="rows">' + c.rows.map(function (r) {
-             var val = r.href
+             var val = r.copy
+               ? '<button class="copy-btn" type="button" data-copy="' + esc(t(r.v)) + '">' +
+                 esc(t(r.v)) + ' <span class="copy-label" aria-live="polite">' + esc(ui("copy")) +
+                 "</span></button>"
+               : r.href
                ? '<a class="link-plain" href="' + esc(r.href) + '">' + esc(t(r.v)) + "</a>"
                : esc(t(r.v));
              return '<div class="row"><dt>' + esc(t(r.k)) + "</dt><dd>" + val + "</dd></div>";
@@ -591,6 +598,41 @@
     timeEl.textContent = "--:--";
     fill.style.width = "0%";
     repaintPlayer();
+  });
+
+  /* ------------------------------------------------------- tap to copy */
+  // For ids that have no reliable link of their own — a LINE id only opens
+  // from a link if the owner has made it searchable, but a copied id can
+  // always be pasted into LINE's search. The clipboard API needs https,
+  // which GitHub Pages is; the textarea fallback covers older browsers.
+  function copyText(text, btn) {
+    var label = btn.querySelector(".copy-label");
+    function done() {
+      label.textContent = ui("copied");
+      clearTimeout(btn._reset);
+      btn._reset = setTimeout(function () { label.textContent = ui("copy"); }, 2600);
+    }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "absolute";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try { if (document.execCommand("copy")) done(); } catch (e) { /* id is still on screen */ }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  view.addEventListener("click", function (e) {
+    var btn = e.target.closest && e.target.closest(".copy-btn");
+    if (btn) copyText(btn.getAttribute("data-copy"), btn);
   });
 
   /* ---------------------------------------------------------------- boot */
