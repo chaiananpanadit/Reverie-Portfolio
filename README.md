@@ -183,6 +183,10 @@ GitHub Pages builds from `main`; a push goes live in about a minute. If a
 change doesn't show, open the site with `?v=2` (any number) on the end of the
 address to skip the phone's cache.
 
+When you change `css/style.css`, `js/app.js` or `js/content.js`, bump the
+`?v=` number on its line in `index.html` too. Phones keep those files for up
+to ten minutes, and a new page with an old stylesheet looks broken.
+
 ## Still to do
 
 - The `festival` blurb only describes what's visible in the frames — marked
