@@ -70,8 +70,8 @@ const CONTENT = {
        short paragraph, then straight into the work */
     headline: { en: "film and photo, made in lampang.", th: "รับถ่ายวิดีโอ ถ่ายภาพ ลำปาง" },
     body: {
-      en: "one person who shoots it, cuts it, scores it and mixes it. no agency layer, no waiting three weeks for a first draft.",
-      th: "ถ่ายเอง ตัดเอง ทำเพลงเอง มิกซ์เอง คนเดียวจบ ไม่มีคนกลาง ไม่ต้องรอ 3 อาทิตย์กว่าจะได้ดูดราฟต์แรก"
+      en: "a small crew that shoots it, cuts it, scores it and mixes it. no agency layer, no waiting three weeks for a first draft.",
+      th: "ทีมเล็ก ๆ ถ่ายเอง ตัดเอง ทำเพลงเอง มิกซ์เอง จบในทีม ไม่มีคนกลาง ไม่ต้องรอ 3 อาทิตย์กว่าจะได้ดูดราฟต์แรก"
     }
   },
 
@@ -86,7 +86,7 @@ const CONTENT = {
       blurb:    { en: "moving image, start to finish", th: "ภาพเคลื่อนไหว ตั้งแต่ต้นจนจบ" },
       intro: {
         en: [
-          "i direct, shoot, cut, grade and mix. that means one person carries the idea from the first frame to the final export, and nothing gets lost in a handover.",
+          "we direct, shoot, cut, grade and mix in-house. the same small crew carries the idea from the first frame to the final export, so nothing gets lost in a handover.",
           "small setups on purpose — a camera, fast glass, a light or two. it keeps the room calm and the day cheap."
         ],
         th: [
@@ -218,17 +218,17 @@ const CONTENT = {
     body: {
       en: [
         "my name is <b>chaianan panadit</b>. call me <b>vi</b> — it's the middle of ri<em>(vi)</em>ère, and it stuck.",
-        "reverie is me, and it started the way these things usually do — a borrowed camera, a cracked daw, and no idea what any of the buttons did.",
-        "what stuck was liking all of it. most people pick a lane: shooter, editor, colourist, producer, mixer. i kept doing whatever the project needed next until i could do the whole chain. so when you hire me for a film, the score isn't outsourced. when you hire me for a mix, i can hear where the edit wants to breathe.",
-        "i'm still at school — bunyawat, in lampang — and running this around it. that's not a disclaimer. it means i answer messages the same day, i'll take the brief nobody else wants, and i'd rather do forty interesting jobs than four expensive boring ones.",
-        "bring me the weird one."
+        "reverie is a small crew — a few friends with cameras, and me running the set. it started the way these things usually do: a borrowed camera, a cracked daw, and no idea what any of the buttons did.",
+        "the set stays small on purpose. one on the main camera, one on the second angle or the lights, one keeping the day moving — then the edit, the grade, the score and the mix all happen in-house. small enough that nobody's standing around, big enough to cover a whole sports day.",
+        "most of us are still at school — bunyawat, in lampang — and run this around it. that's not a disclaimer. it means messages get answered the same day, the brief nobody else wants gets a yes, and we'd rather do forty interesting jobs than four expensive boring ones.",
+        "bring us the weird one."
       ],
       /* TODO — swap the latin name below for your name written in thai */
       th: [
         "ชื่อ <b>chaianan panadit</b> เรียก <b>vi</b> ก็ได้ มาจากตรงกลางคำว่า ri<em>(vi)</em>ère เรียกไปเรียกมาเลยติด",
-        "reverie มีอยู่คนเดียวนี่แหละ เริ่มแบบที่ใครหลายคนเริ่ม ยืมกล้องเขามา โหลด DAW มาลองเล่น แล้วก็ไม่รู้เลยว่าปุ่มไหนทำอะไร",
-        "ที่ติดคือชอบมันทุกส่วน คนส่วนใหญ่เลือกสายเดียว ตากล้อง คนตัด คนเกรดสี โปรดิวเซอร์ คนมิกซ์ แต่ทำทุกอย่างที่งานต้องการไปเรื่อย ๆ จนทำได้ครบทั้งสาย จ้างทำหนัง เพลงประกอบก็ไม่ต้องจ้างใครเพิ่ม จ้างมิกซ์ ก็ฟังออกว่าตรงไหนควรเว้นจังหวะ",
-        "ตอนนี้ยังเรียนอยู่ที่บุญวาทย์ ลำปาง แล้วรับงานควบไปด้วย ไม่ได้บอกให้เห็นใจนะ แต่แปลว่าตอบแชทวันต่อวัน งานที่คนอื่นไม่รับก็รับ แล้วก็ขอทำงานสนุก ๆ สี่สิบงาน ดีกว่างานแพงแต่น่าเบื่อสี่งาน",
+        "reverie คือทีมเล็ก ๆ เพื่อนไม่กี่คนกับกล้องคนละตัว เริ่มแบบที่ใครหลายคนเริ่ม ยืมกล้องเขามา โหลด DAW มาลองเล่น แล้วก็ไม่รู้เลยว่าปุ่มไหนทำอะไร",
+        "ตั้งใจให้กองเล็ก คนนึงถือกล้องหลัก คนนึงเก็บอีกมุมหรือดูไฟ คนนึงคุมคิวให้วันเดินไปได้ ส่วนตัด เกรดสี ทำเพลง มิกซ์ จบในทีมหมด กองเล็กพอที่ไม่มีใครยืนรอ แต่ใหญ่พอจะเก็บกีฬาสีได้ทั้งวัน",
+        "ส่วนใหญ่ยังเรียนอยู่ที่บุญวาทย์ ลำปาง แล้วรับงานควบไปด้วย ไม่ได้บอกให้เห็นใจนะ แต่แปลว่าตอบแชทวันต่อวัน งานที่คนอื่นไม่รับก็รับ แล้วก็ขอทำงานสนุก ๆ สี่สิบงาน ดีกว่างานแพงแต่น่าเบื่อสี่งาน",
         "มีงานแปลก ๆ เอามาเลย"
       ]
     },
@@ -240,7 +240,7 @@ const CONTENT = {
       { k: { en: "area",       th: "พื้นที่" },      v: { en: "all of lampang · chiang mai", th: "ทั่วลำปาง · เชียงใหม่" } },
       { k: { en: "travel",     th: "เดินทาง" },     v: { en: "chiang mai charged both ways", th: "ไปเชียงใหม่คิดค่าเดินทางไปกลับ" } },
       { k: { en: "turnaround", th: "ระยะเวลา" },    v: { en: "days, not weeks", th: "เป็นวัน ไม่ใช่เป็นอาทิตย์" } },
-      { k: { en: "crew size",  th: "ทีม" },         v: { en: "one (more on request)", th: "คนเดียว (เพิ่มได้ถ้าจำเป็น)" } },
+      { k: { en: "crew size",  th: "ทีม" },         v: { en: "a few people — a small set", th: "ทีมเล็ก ไม่กี่คน" } },
       { k: { en: "languages",  th: "ภาษา" },        v: { en: "thai, english", th: "ไทย, อังกฤษ" } }
     ],
     cta: { label: { en: "SEE THE GEAR", th: "ดูอุปกรณ์" }, href: "#/gear" }
