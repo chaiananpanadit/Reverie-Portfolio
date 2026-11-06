@@ -31,7 +31,7 @@ const CONTENT = {
       navWork: "work", navServices: "services", navRates: "prices",
       navAbout: "about", navContact: "contact", navGear: "gear",
       skip: "skip to content", themeToDark: "switch to dark", themeToLight: "switch to light",
-      filterAll: "all", workHeading: "selected work", servicesHeading: "what i do",
+      filterAll: "all", workHeading: "selected work", servicesHeading: "what we do",
       seeWork: "see the work", seePrices: "see prices", askPrice: "ask for a price",
       seeDiscWork: "see the {x} work", youGet: "you get", next: "next", prev: "previous",
       close: "close", backToWork: "all work", photos: "{n} photos", reels: "{n} reels",
@@ -98,7 +98,7 @@ const CONTENT = {
         {
           title: { en: "vlog", th: "vlog" },
           body: {
-            en: "personal camera op and editor for creators. travel days, launches, a normal week that needs to look like a story. i shoot it, cut it, and hand you something ready to upload.",
+            en: "personal camera op and editor for creators. travel days, launches, a normal week that needs to look like a story. we shoot it, cut it, and hand you something ready to upload.",
             th: "ตากล้อง + คนตัดส่วนตัวสำหรับครีเอเตอร์ ไปเที่ยว งานเปิดตัว หรือชีวิตธรรมดาที่อยากให้ออกมาเป็น story ถ่ายให้ ตัดให้ ได้ไฟล์ไปลงได้เลย"
           },
           gets: { en: "1 main edit + 2 vertical cuts", th: "คลิปหลัก 1 ตัว + คลิปแนวตั้ง 2 ตัว" },
@@ -125,7 +125,7 @@ const CONTENT = {
         {
           title: { en: "live session / studio session", th: "live session / studio session" },
           body: {
-            en: "bands and solo artists, played live. multi-angle video cut to a proper audio mix, not the camera mic — i record and mix the sound as part of the job.",
+            en: "bands and solo artists, played live. multi-angle video cut to a proper audio mix, not the camera mic — we record and mix the sound as part of the job.",
             th: "วงหรือศิลปินเดี่ยว เล่นสด ถ่ายหลายมุม ตัดเข้ากับเสียงที่มิกซ์จริง ไม่ใช่เสียงไมค์กล้อง อัดเสียง + มิกซ์ให้ด้วยในตัว"
           },
           gets: { en: "one song per setup, video + mixed audio", th: "เพลงละหนึ่งเซ็ต ได้ทั้งวิดีโอและเสียงที่มิกซ์แล้ว" },
@@ -142,7 +142,7 @@ const CONTENT = {
       cover: { src: "assets/media/photo/night/09183.jpg", alt: "Sitting on the bank at night, lights broken up on the river" },
       intro: {
         en: [
-          "digital and 35mm film, studio or on location. i shoot tight sets rather than huge galleries — fewer frames, all of them usable.",
+          "digital and 35mm film, studio or on location. we shoot tight sets rather than huge galleries — fewer frames, all of them usable.",
           "every delivered image is graded and retouched. you get the finished set, not a contact sheet to pick through."
         ],
         th: [
@@ -182,7 +182,7 @@ const CONTENT = {
   contact: {
     headline: { en: "SAY HELLO", th: "ทักมาได้เลย" },
     intro: {
-      en: "tell me the dates, the place, what you need out the other end, and roughly the budget. instagram or line is fastest — i reply within a day.",
+      en: "tell us the dates, the place, what you need out the other end, and roughly the budget. instagram or line is fastest — we reply within a day.",
       th: "บอกวัน สถานที่ อยากได้งานแบบไหน แล้วก็งบคร่าว ๆ ทักไอจีหรือไลน์เร็วสุด ตอบภายในวันแน่นอน"
     },
     /* the "what to send" list under the buttons */
@@ -218,17 +218,17 @@ const CONTENT = {
     body: {
       en: [
         "my name is <b>chaianan panadit</b>. call me <b>vi</b> — it's the middle of ri<em>(vi)</em>ère, and it stuck.",
-        "reverie is a small crew — a few friends with cameras, and me running the set. it started the way these things usually do: a borrowed camera, a cracked daw, and no idea what any of the buttons did.",
-        "the set stays small on purpose. one on the main camera, one on the second angle or the lights, one keeping the day moving — then the edit, the grade, the score and the mix all happen in-house. small enough that nobody's standing around, big enough to cover a whole sports day.",
-        "most of us are still at school — bunyawat, in lampang — and run this around it. that's not a disclaimer. it means messages get answered the same day, the brief nobody else wants gets a yes, and we'd rather do forty interesting jobs than four expensive boring ones.",
-        "bring us the weird one."
+        "reverie is me, and it started the way these things usually do — a borrowed camera, a cracked daw, and no idea what any of the buttons did.",
+        "what stuck was liking all of it. most people pick a lane: shooter, editor, colourist, producer, mixer. i kept doing whatever the project needed next until i could do the whole chain. so when you hire me for a film, the score isn't outsourced. when you hire me for a mix, i can hear where the edit wants to breathe.",
+        "i'm still at school — bunyawat, in lampang — and running this around it. that's not a disclaimer. it means i answer messages the same day, i'll take the brief nobody else wants, and i'd rather do forty interesting jobs than four expensive boring ones.",
+        "bring me the weird one."
       ],
       /* TODO — swap the latin name below for your name written in thai */
       th: [
         "ชื่อ <b>chaianan panadit</b> เรียก <b>vi</b> ก็ได้ มาจากตรงกลางคำว่า ri<em>(vi)</em>ère เรียกไปเรียกมาเลยติด",
-        "reverie คือทีมเล็ก ๆ เพื่อนไม่กี่คนกับกล้องคนละตัว เริ่มแบบที่ใครหลายคนเริ่ม ยืมกล้องเขามา โหลด DAW มาลองเล่น แล้วก็ไม่รู้เลยว่าปุ่มไหนทำอะไร",
-        "ตั้งใจให้กองเล็ก คนนึงถือกล้องหลัก คนนึงเก็บอีกมุมหรือดูไฟ คนนึงคุมคิวให้วันเดินไปได้ ส่วนตัด เกรดสี ทำเพลง มิกซ์ จบในทีมหมด กองเล็กพอที่ไม่มีใครยืนรอ แต่ใหญ่พอจะเก็บกีฬาสีได้ทั้งวัน",
-        "ส่วนใหญ่ยังเรียนอยู่ที่บุญวาทย์ ลำปาง แล้วรับงานควบไปด้วย ไม่ได้บอกให้เห็นใจนะ แต่แปลว่าตอบแชทวันต่อวัน งานที่คนอื่นไม่รับก็รับ แล้วก็ขอทำงานสนุก ๆ สี่สิบงาน ดีกว่างานแพงแต่น่าเบื่อสี่งาน",
+        "reverie มีอยู่คนเดียวนี่แหละ เริ่มแบบที่ใครหลายคนเริ่ม ยืมกล้องเขามา โหลด DAW มาลองเล่น แล้วก็ไม่รู้เลยว่าปุ่มไหนทำอะไร",
+        "ที่ติดคือชอบมันทุกส่วน คนส่วนใหญ่เลือกสายเดียว ตากล้อง คนตัด คนเกรดสี โปรดิวเซอร์ คนมิกซ์ แต่ทำทุกอย่างที่งานต้องการไปเรื่อย ๆ จนทำได้ครบทั้งสาย จ้างทำหนัง เพลงประกอบก็ไม่ต้องจ้างใครเพิ่ม จ้างมิกซ์ ก็ฟังออกว่าตรงไหนควรเว้นจังหวะ",
+        "ตอนนี้ยังเรียนอยู่ที่บุญวาทย์ ลำปาง แล้วรับงานควบไปด้วย ไม่ได้บอกให้เห็นใจนะ แต่แปลว่าตอบแชทวันต่อวัน งานที่คนอื่นไม่รับก็รับ แล้วก็ขอทำงานสนุก ๆ สี่สิบงาน ดีกว่างานแพงแต่น่าเบื่อสี่งาน",
         "มีงานแปลก ๆ เอามาเลย"
       ]
     },
@@ -240,7 +240,7 @@ const CONTENT = {
       { k: { en: "area",       th: "พื้นที่" },      v: { en: "all of lampang · chiang mai", th: "ทั่วลำปาง · เชียงใหม่" } },
       { k: { en: "travel",     th: "เดินทาง" },     v: { en: "chiang mai charged both ways", th: "ไปเชียงใหม่คิดค่าเดินทางไปกลับ" } },
       { k: { en: "turnaround", th: "ระยะเวลา" },    v: { en: "days, not weeks", th: "เป็นวัน ไม่ใช่เป็นอาทิตย์" } },
-      { k: { en: "crew size",  th: "ทีม" },         v: { en: "a few people — a small set", th: "ทีมเล็ก ไม่กี่คน" } },
+      { k: { en: "crew size",  th: "ทีม" },         v: { en: "one (more on request)", th: "คนเดียว (เพิ่มได้ถ้าจำเป็น)" } },
       { k: { en: "languages",  th: "ภาษา" },        v: { en: "thai, english", th: "ไทย, อังกฤษ" } }
     ],
     cta: { label: { en: "SEE THE GEAR", th: "ดูอุปกรณ์" }, href: "#/gear" }
@@ -251,7 +251,7 @@ const CONTENT = {
   gear: {
     headline: { en: "GEAR", th: "อุปกรณ์" },
     intro: {
-      en: "not a shopping list — this is everything that actually gets used. small kit, known deeply, rather than a locker full of things i'd have to look up.",
+      en: "not a shopping list — this is everything that actually gets used. small kit, known deeply, rather than a locker full of things we'd have to look up.",
       th: "ไม่ใช่ wishlist นี่คือของที่ใช้จริงทุกชิ้น ของไม่เยอะแต่รู้จักดีทุกตัว ดีกว่ามีเต็มตู้แล้วต้องมานั่งเปิดคู่มือ"
     },
     groups: [
@@ -275,7 +275,7 @@ const CONTENT = {
             note: { en: "power zoom · run-and-gun, vlog wide, always on the body", th: "power zoom · ถ่ายไว ถ่าย vlog มุมกว้าง ติดกล้องตลอด" },
             url: "https://www.sony.com/electronics/camera-lenses" },
           { name: "75-300mm f/4.5-5.6",
-            note: { en: "the long end · compression, stage, sport, anything i can't walk up to", th: "ช่วงเทเล · บีบระยะ งานเวที กีฬา อะไรที่เดินเข้าไปใกล้ไม่ได้" } }
+            note: { en: "the long end · compression, stage, sport, anything we can't walk up to", th: "ช่วงเทเล · บีบระยะ งานเวที กีฬา อะไรที่เดินเข้าไปใกล้ไม่ได้" } }
         ]
       },
       {
@@ -374,7 +374,7 @@ const CONTENT = {
   rates: {
     headline: { en: "PRICE RATE", th: "เรทราคา" },
     intro: {
-      en: "ranges, not fixed numbers — where a job lands depends on how long it runs, how far it is and how much post it needs. tell me what you're making and i'll give you one number.",
+      en: "ranges, not fixed numbers — where a job lands depends on how long it runs, how far it is and how much post it needs. tell us what you're making and we'll give you one number.",
       th: "เป็นช่วงราคานะ ไม่ใช่ราคาตายตัว ขึ้นกับงานยาวแค่ไหน ไกลแค่ไหน ต้องตัดต่อเยอะไหม เล่ามาก่อนว่าจะทำอะไร เดี๋ยวตีราคาให้เป๊ะ ๆ"
     },
     groups: [
@@ -420,8 +420,8 @@ const CONTENT = {
     unit: "THB",
     /* the line off the bottom of the price sheet */
     note: {
-      en: "i'd rather do forty interesting jobs than four expensive boring ones. i'll take the brief nobody else wants. — rivi",
-      th: "ขอทำงานสนุก ๆ สี่สิบงาน ดีกว่างานแพงแต่น่าเบื่อสี่งาน งานที่ไม่มีใครอยากรับ ส่งมาได้เลย — rivi"
+      en: "we'd rather do forty interesting jobs than four expensive boring ones. we'll take the brief nobody else wants. — reverie",
+      th: "ขอทำงานสนุก ๆ สี่สิบงาน ดีกว่างานแพงแต่น่าเบื่อสี่งาน งานที่ไม่มีใครอยากรับ ส่งมาได้เลย — reverie"
     }
   },
 
